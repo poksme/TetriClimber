@@ -8,7 +8,7 @@ namespace TetriClimber
 {
     public class ATetrimino
     {
-        private     List<Action> orientations = null;
+        protected   List<Action> orientations = null;
         protected   List<Block> shape = null;
         private     int orientation;
         protected   SpriteManager.ESprite color;
@@ -25,6 +25,7 @@ namespace TetriClimber
             shape.Add(new Block());
             shape.Add(new Block());
             shape.Add(new Block());
+            orientations[orientation].Invoke();
         }
 
         public void rightShift()

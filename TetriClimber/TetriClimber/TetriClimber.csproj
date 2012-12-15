@@ -121,7 +121,7 @@
     <Compile Include="App1.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="SpriteManager.cs" />
-    <Compile Include="Tetrimino.cs" />
+    <Compile Include="TetriL.cs" />
     <Compile Include="TetriminoFactory.cs" />
     <Compile Include="TextureManager.cs" />
   </ItemGroup>
