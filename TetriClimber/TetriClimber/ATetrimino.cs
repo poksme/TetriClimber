@@ -8,11 +8,11 @@ namespace TetriClimber
 {
     public class ATetrimino
     {
-        List<Action> orientations = null;
-        List<Block> shape = null;
-        int orientation;
-        SpriteManager.ESprite color;
-        Vector2 position;
+        private     List<Action> orientations = null;
+        protected   List<Block> shape = null;
+        private     int orientation;
+        protected   SpriteManager.ESprite color;
+        protected   Vector2 position;
 
         public ATetrimino()
         {
@@ -25,6 +25,18 @@ namespace TetriClimber
             shape.Add(new Block());
             shape.Add(new Block());
             shape.Add(new Block());
+        }
+
+        public void rightShift()
+        {
+            orientation = (orientation + 1) % orientations.Count;
+            orientations[orientation].Invoke();
+        }
+
+        public void leftShift()
+        {
+            orientation = (orientation - 1 >= 0) ? (orientation - 1) : (orientations.Count - 1);
+            orientations[orientation].Invoke();
         }
 
         public abstract void pos1();
