@@ -20,7 +20,6 @@ namespace TetriClimber
     public class App : Microsoft.Xna.Framework.Game
     {
         private readonly GraphicsDeviceManager graphics;
-        private static SpriteBatch spriteBatch;
 
         private TouchTarget touchTarget;
         private Color backgroundColor = new Color(81, 81, 81);
@@ -29,7 +28,12 @@ namespace TetriClimber
         private UserOrientation currentOrientation = UserOrientation.Bottom;
         private Matrix screenTransform = Matrix.Identity;
 
+        // FOR SINGLETON PURPOSE 
+        private static SpriteBatch spriteBatch;
         private static ContentManager content;
+        private static Game game;
+        //
+
         /// <summary>
         /// The target receiving all surface input for the application.
         /// </summary>
@@ -45,7 +49,11 @@ namespace TetriClimber
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            // FOR SINGLETON PURPOSE
             content = Content;
+            game = this;
+            //
         }
 
         #region Initialization
@@ -273,6 +281,7 @@ namespace TetriClimber
 
         #endregion
 
+        // FOR SINGLETON PURPOSE
         public static ContentManager ContentManager
         {
             get { return content; }
@@ -282,5 +291,11 @@ namespace TetriClimber
         {
             get { return spriteBatch; }
         }
+
+        public static Game Game
+        {
+            get { return game; }
+        }
+        //
     }
 }

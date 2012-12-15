@@ -6,10 +6,11 @@ using Microsoft.Xna.Framework;
 
 namespace TetriClimber
 {
-    public abstract class AScene : DrawableGameComponent
+    public class Play : AScene
     {
-        public AScene() : base(App.Game)
+        public Play() : base()
         {
+
         }
     }
 }

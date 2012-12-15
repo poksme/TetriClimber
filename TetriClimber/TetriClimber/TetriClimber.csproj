@@ -116,19 +116,20 @@
     <Compile Include="ATetrimino.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="MenuManager.cs" />
+    <Compile Include="Play.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="App1.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="SpriteManager.cs" />
-    <Compile Include="TetriL.cs" />
+    <Compile Include="Tetrimini\TetriL.cs" />
     <Compile Include="TetriminoFactory.cs" />
-    <Compile Include="TetriS.cs" />
-    <Compile Include="TetriT.cs" />
-    <Compile Include="TetriZ.cs" />
-    <Compile Include="TetriO.cs" />
-    <Compile Include="TetriP.cs" />
-    <Compile Include="TetriQ.cs" />
+    <Compile Include="Tetrimini\TetriS.cs" />
+    <Compile Include="Tetrimini\TetriT.cs" />
+    <Compile Include="Tetrimini\TetriZ.cs" />
+    <Compile Include="Tetrimini\TetriO.cs" />
+    <Compile Include="Tetrimini\TetriP.cs" />
+    <Compile Include="Tetrimini\TetriQ.cs" />
     <Compile Include="TextureManager.cs" />
   </ItemGroup>
   <ItemGroup>
