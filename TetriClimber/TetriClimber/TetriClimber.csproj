@@ -113,6 +113,7 @@
   <ItemGroup>
     <Compile Include="AScene.cs" />
     <Compile Include="Block.cs" />
+    <Compile Include="ATetrimino.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="MenuManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
