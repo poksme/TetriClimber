@@ -31,12 +31,16 @@ namespace TetriClimber
         {
             orientation = (orientation + 1) % orientations.Count;
             orientations[orientation].Invoke();
+            foreach (Block b in shape)
+                b.setOrientation(orientation);
         }
 
         public void leftShift()
         {
             orientation = (orientation - 1 >= 0) ? (orientation - 1) : (orientations.Count - 1);
             orientations[orientation].Invoke();
+            foreach (Block b in shape)
+                b.setOrientation(orientation);
         }
 
         public override void Draw(GameTime gameTime)

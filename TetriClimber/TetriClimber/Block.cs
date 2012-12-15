@@ -10,6 +10,7 @@ namespace TetriClimber
     {
         private Vector2 pos = Vector2.Zero;
         private SpriteManager.ESprite color;
+        private float orientation;
 
         public Block(SpriteManager.ESprite color) : base(App.Game)
         {
@@ -29,12 +30,17 @@ namespace TetriClimber
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            SpriteManager.Instance.drawAtPos(color, new Vector2(pos.X * 115, pos.Y * 115));
+            SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(pos.X * Constants.Measures.blockSize, pos.Y * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+        }
+
+        public void setOrientation(int orientation)
+        {
+            this.orientation = MathHelper.ToRadians(orientation * 90);
         }
     }
 }
