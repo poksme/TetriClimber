@@ -126,6 +126,9 @@
     <Compile Include="TetriS.cs" />
     <Compile Include="TetriT.cs" />
     <Compile Include="TetriZ.cs" />
+    <Compile Include="TetriO.cs" />
+    <Compile Include="TetriP.cs" />
+    <Compile Include="TetriQ.cs" />
     <Compile Include="TextureManager.cs" />
   </ItemGroup>
   <ItemGroup>
