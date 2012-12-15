@@ -17,10 +17,10 @@ namespace TetriClimber
     /// <summary>
     /// This is the main type for your application.
     /// </summary>
-    public class App1 : Microsoft.Xna.Framework.Game
+    public class App : Microsoft.Xna.Framework.Game
     {
         private readonly GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
+        private static SpriteBatch spriteBatch;
 
         private TouchTarget touchTarget;
         private Color backgroundColor = new Color(81, 81, 81);
@@ -29,6 +29,7 @@ namespace TetriClimber
         private UserOrientation currentOrientation = UserOrientation.Bottom;
         private Matrix screenTransform = Matrix.Identity;
 
+        private static ContentManager content;
         /// <summary>
         /// The target receiving all surface input for the application.
         /// </summary>
@@ -40,10 +41,11 @@ namespace TetriClimber
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public App1()
+        public App()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            content = Content;
         }
 
         #region Initialization
@@ -190,6 +192,11 @@ namespace TetriClimber
 
             GraphicsDevice.Clear(backgroundColor);
 
+
+            SpriteManager.Instance.begin();
+            SpriteManager.Instance.drawAtPos(SpriteManager.ESprite.L, Vector2.Zero);
+            SpriteManager.Instance.end();
+
             //TODO: Add your drawing code here
             //TODO: Avoid any expensive logic if application is neither active nor previewed
 
@@ -265,5 +272,15 @@ namespace TetriClimber
         }
 
         #endregion
+
+        public static ContentManager ContentManager
+        {
+            get { return content; }
+        }
+
+        public static SpriteBatch SpriteBatch
+        {
+            get { return spriteBatch; }
+        }
     }
 }

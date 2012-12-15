@@ -25,7 +25,7 @@ namespace TetriClimber
             // Apply Surface globalization settings
             GlobalizationSettings.ApplyToCurrentThread();
 
-            using (App1 app = new App1())
+            using (App app = new App())
             {
                 app.Run();
             }
