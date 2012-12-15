@@ -123,6 +123,9 @@
     <Compile Include="SpriteManager.cs" />
     <Compile Include="TetriL.cs" />
     <Compile Include="TetriminoFactory.cs" />
+    <Compile Include="TetriS.cs" />
+    <Compile Include="TetriT.cs" />
+    <Compile Include="TetriZ.cs" />
     <Compile Include="TextureManager.cs" />
   </ItemGroup>
   <ItemGroup>

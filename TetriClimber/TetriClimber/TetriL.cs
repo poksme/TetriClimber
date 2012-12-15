@@ -7,7 +7,6 @@ namespace TetriClimber
 {
     public class TetriL : ATetrimino
     {
-
         public TetriL():base()
         {
             color = SpriteManager.ESprite.L;
