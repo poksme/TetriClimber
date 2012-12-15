@@ -7,9 +7,8 @@ namespace TetriClimber
 {
     public class TetriO : ATetrimino
     {
-        public TetriO():base()
+        public TetriO():base(SpriteManager.ESprite.O)
         {
-            color = SpriteManager.ESprite.O;
         }
 
         public override void  pos1()

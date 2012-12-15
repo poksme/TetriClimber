@@ -11,5 +11,15 @@ namespace TetriClimber
         public AScene() : base(App.Game)
         {
         }
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
     }
 }

@@ -6,12 +6,14 @@ using Microsoft.Xna.Framework;
 
 namespace TetriClimber
 {
-    public class Block
+    public class Block : DrawableGameComponent
     {
-        Vector2 pos = Vector2.Zero;
+        private Vector2 pos = Vector2.Zero;
+        private SpriteManager.ESprite color;
 
-        public Block()
+        public Block(SpriteManager.ESprite color) : base(App.Game)
         {
+            this.color = color;
         }
 
         public void setPosition(Vector2 coord)
@@ -22,6 +24,17 @@ namespace TetriClimber
         public void setPosition(int x, int y)
         {
             pos = new Vector2((float)x, (float)y);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+            SpriteManager.Instance.drawAtPos(color, new Vector2(pos.X * 115, pos.Y * 115));
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
         }
     }
 }

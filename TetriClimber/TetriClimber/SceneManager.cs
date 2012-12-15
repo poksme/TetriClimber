@@ -14,7 +14,7 @@ namespace TetriClimber
 
         private SceneManager():base(App.Game)
         {
-            scenes.add(EScene.PLAY, new Play());
+            scenes.Add(EScene.PLAY, new Play());
         }
 
         public static SceneManager Instance
@@ -25,8 +25,18 @@ namespace TetriClimber
                     instance = new SceneManager();
                 return instance;
             }
-        
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+            scenes[EScene.PLAY].Draw(gameTime);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            scenes[EScene.PLAY].Update(gameTime);
+        }
     }
 }

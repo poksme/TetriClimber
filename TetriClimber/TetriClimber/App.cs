@@ -177,6 +177,7 @@ namespace TetriClimber
                     // ReadOnlyTouchPointCollection touches = touchTarget.GetState();
                 }
 
+                SceneManager.Instance.Update(gameTime);
                 // TODO: Add your update logic here
             }
 
@@ -202,7 +203,8 @@ namespace TetriClimber
 
 
             SpriteManager.Instance.begin();
-            SpriteManager.Instance.drawAtPos(SpriteManager.ESprite.L, Vector2.Zero);
+            SceneManager.Instance.Draw(gameTime);
+            //SpriteManager.Instance.drawAtPos(SpriteManager.ESprite.L, Vector2.Zero);
             SpriteManager.Instance.end();
 
             //TODO: Add your drawing code here

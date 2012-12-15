@@ -7,9 +7,8 @@ namespace TetriClimber
 {
     public class TetriZ : ATetrimino
     {
-        public TetriZ():base()
+        public TetriZ():base(SpriteManager.ESprite.Z)
         {
-            color = SpriteManager.ESprite.Z;
             orientations.Add(pos2);
         }
 

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace TetriClimber
 {
-    class SpriteManager
+    public class SpriteManager
     {
         public enum ESprite { Z, T, Q, S, L, P, O };
         private Dictionary<ESprite, KeyValuePair<Rectangle, TextureManager.ETexture>> sprites = null;
