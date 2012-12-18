@@ -15,6 +15,9 @@ namespace TetriClimber
         private ATetrimino currTetrimino;
         private KeyboardState oldState;
 
+        private TimeSpan lat = new TimeSpan(10000000);
+        private TimeSpan cur = new TimeSpan(0);
+
         public Play() : base()
         {
             board = new Block[22][];
@@ -34,21 +37,38 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            KeyboardState newState = Keyboard.GetState();
+            cur = cur.Add(gameTime.ElapsedGameTime);
+            if (TimeSpan.Compare(cur, lat) > 0)
+            {
+                if (App.ToucheInput.getState(AUserInput.EInput.RIGHT))
+                {
+                    currTetrimino.rightShift();
+                }
+                if (App.ToucheInput.getState(AUserInput.EInput.LEFT))
+                {
+                    currTetrimino.leftShift();
+                }
+                if (App.ToucheInput.getState(AUserInput.EInput.DOWN))
+                {
+                    currTetrimino = tetriminoFactory.getTetrimino();
+                }
+                cur = new TimeSpan(0);
+            }
+            //KeyboardState newState = Keyboard.GetState();
 
-            if (newState.IsKeyDown(Keys.Left) && !oldState.IsKeyDown(Keys.Left))
-            {
-                currTetrimino.leftShift();
-            }
-            if (newState.IsKeyDown(Keys.Right) && !oldState.IsKeyDown(Keys.Right))
-            {
-                currTetrimino.rightShift();
-            }
-            if (newState.IsKeyDown(Keys.Down) && !oldState.IsKeyDown(Keys.Down))
-            {
-                currTetrimino = tetriminoFactory.getTetrimino();
-            }
-            oldState = newState;
+            //if (newState.IsKeyDown(Keys.Left) && !oldState.IsKeyDown(Keys.Left))
+            //{
+            //    currTetrimino.leftShift();
+            //}
+            //if (newState.IsKeyDown(Keys.Right) && !oldState.IsKeyDown(Keys.Right))
+            //{
+            //    currTetrimino.rightShift();
+            //}
+            //if (newState.IsKeyDown(Keys.Down) && !oldState.IsKeyDown(Keys.Down))
+            //{
+            //    currTetrimino = tetriminoFactory.getTetrimino();
+            //}
+            //oldState = newState;
         }
     }
 }

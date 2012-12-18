@@ -21,23 +21,25 @@ namespace TetriClimber
     {
         private readonly GraphicsDeviceManager graphics;
 
-        private TouchTarget touchTarget;
+        private static TouchTarget touchTarget;
         private Color backgroundColor = new Color(81, 81, 81);
         private bool applicationLoadCompleteSignalled;
 
         private UserOrientation currentOrientation = UserOrientation.Bottom;
         private Matrix screenTransform = Matrix.Identity;
 
+        private static TouchInput ti;
+
         // FOR SINGLETON PURPOSE 
         private static SpriteBatch spriteBatch;
         private static ContentManager content;
-        private static App game;
+        private static Game game;
         //
 
         /// <summary>
         /// The target receiving all surface input for the application.
         /// </summary>
-        public TouchTarget TouchTarget
+        public static TouchTarget TouchTarget
         {
             get { return touchTarget; }
         }
@@ -53,6 +55,7 @@ namespace TetriClimber
             // FOR SINGLETON PURPOSE
             content = Content;
             game = this;
+            ti = new TouchInput();
             //
         }
 
@@ -96,6 +99,8 @@ namespace TetriClimber
             // Create a target for surface input.
             touchTarget = new TouchTarget(Window.Handle, EventThreadChoice.OnBackgroundThread);
             touchTarget.EnableInput();
+            touchTarget.TouchMove += new EventHandler<TouchEventArgs>(ti.Move);
+            touchTarget.TouchUp += new EventHandler<TouchEventArgs>(ti.Up);
         }
 
         #endregion
@@ -172,6 +177,7 @@ namespace TetriClimber
             {
                 if (ApplicationServices.WindowAvailability == WindowAvailability.Interactive)
                 {
+                    ti.update();
                     // TODO: Process touches, 
                     // use the following code to get the state of all current touch points.
                     // ReadOnlyTouchPointCollection touches = touchTarget.GetState();
@@ -288,6 +294,10 @@ namespace TetriClimber
         {
             get { return content; }
         }
+        public static TouchInput ToucheInput
+        {
+            get { return ti; }
+        }
 
         public static SpriteBatch SpriteBatch
         {
@@ -298,6 +308,6 @@ namespace TetriClimber
         {
             get { return game; }
         }
-        //
+        
     }
 }

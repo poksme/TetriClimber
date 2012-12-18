@@ -22,7 +22,7 @@ namespace TetriClimber
             inputs.Add(EInput.TAP, Keys.Space);
         }
 
-        protected override void update()
+        public override void update()
         {
             newState = Keyboard.GetState();
             foreach (KeyValuePair<EInput, Keys> input in inputs)

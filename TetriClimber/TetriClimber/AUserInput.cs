@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
+using System.Reflection;
 
 namespace TetriClimber
 {
     public abstract class AUserInput
     {
         public enum EInput {UP, DOWN, LEFT, RIGHT, TAP}
+        public enum EType {KEYBOARD, TOUCH}
         protected Dictionary<EInput, bool> state;
+        private Dictionary<EType, ConstructorInfo> inputConstructors;
 
         public AUserInput()
         {
