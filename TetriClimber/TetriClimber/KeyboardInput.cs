@@ -10,19 +10,28 @@ namespace TetriClimber
     {
         private KeyboardState newState;
         private KeyboardState oldState;
+        private Dictionary<EInput, Keys> inputs;
 
         public KeyboardInput() : base()
         {
             oldState = Keyboard.GetState();
+            inputs.Add(EInput.UP, Keys.Up);
+            inputs.Add(EInput.DOWN, Keys.Down);
+            inputs.Add(EInput.LEFT, Keys.Left);
+            inputs.Add(EInput.RIGHT, Keys.Right);
+            inputs.Add(EInput.TAP, Keys.Space);
         }
 
-        public override void begin()
+        protected override void update()
         {
             newState = Keyboard.GetState();
-        }
-
-        public override void end()
-        {
+            foreach (KeyValuePair<EInput, Keys> input in inputs)
+            {
+                if (newState.IsKeyDown(input.Value) && !oldState.IsKeyDown(input.Value))
+                    state[input.Key] = true;
+                else
+                    state[input.Key] = false;
+            }
             oldState = newState;
         }
     }

@@ -26,8 +26,6 @@ namespace TetriClimber
             return state[e];
         }
 
-        public abstract void begin();
-        protected abstract void update();
-        public abstract void end();
+        public abstract void update();
     }
 }
