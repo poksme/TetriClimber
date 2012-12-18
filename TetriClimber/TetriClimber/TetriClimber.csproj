@@ -115,6 +115,7 @@
     <Compile Include="Block.cs" />
     <Compile Include="ATetrimino.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="GameSession.cs" />
     <Compile Include="MenuManager.cs" />
     <Compile Include="Play.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
