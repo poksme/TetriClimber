@@ -117,6 +117,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="GameSession.cs" />
     <Compile Include="AUserInput.cs" />
+    <Compile Include="KeyboardInput.cs" />
     <Compile Include="MenuManager.cs" />
     <Compile Include="Play.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
