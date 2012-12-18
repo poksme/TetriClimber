@@ -31,13 +31,13 @@ namespace TetriClimber
         // FOR SINGLETON PURPOSE 
         private static SpriteBatch spriteBatch;
         private static ContentManager content;
-        private static Game game;
+        private static App game;
         //
 
         /// <summary>
         /// The target receiving all surface input for the application.
         /// </summary>
-        protected TouchTarget TouchTarget
+        public TouchTarget TouchTarget
         {
             get { return touchTarget; }
         }
