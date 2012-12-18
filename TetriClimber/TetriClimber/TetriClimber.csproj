@@ -133,6 +133,7 @@
     <Compile Include="Tetrimini\TetriP.cs" />
     <Compile Include="Tetrimini\TetriQ.cs" />
     <Compile Include="TextureManager.cs" />
+    <Compile Include="TouchInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

@@ -9,12 +9,16 @@ namespace TetriClimber
     public abstract class AUserInput
     {
         public enum EInput {UP, DOWN, LEFT, RIGHT, TAP}
-        Dictionary<EInput, bool> state;
+        protected Dictionary<EInput, bool> state;
 
         public AUserInput()
         {
             state = new Dictionary<EInput, bool>();
-            fillState();
+            state.Add(EInput.UP, false);
+            state.Add(EInput.DOWN, false);
+            state.Add(EInput.LEFT, false);
+            state.Add(EInput.RIGHT, false);
+            state.Add(EInput.TAP, false);
         }
 
         public bool getState(EInput e)
@@ -23,7 +27,7 @@ namespace TetriClimber
         }
 
         public abstract void begin();
-        protected abstract void fillState();
+        protected abstract void update();
         public abstract void end();
     }
 }
