@@ -114,6 +114,7 @@
     <Compile Include="AScene.cs" />
     <Compile Include="Block.cs" />
     <Compile Include="ATetrimino.cs" />
+    <Compile Include="Board.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="GameSession.cs" />
     <Compile Include="AUserInput.cs" />

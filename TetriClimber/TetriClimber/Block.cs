@@ -8,7 +8,10 @@ namespace TetriClimber
 {
     public class Block : DrawableGameComponent
     {
-        private Vector2 pos = Vector2.Zero;
+        private Vector2 posRel = Vector2.Zero;
+        public Vector2 PosRel { get { return posRel; } }
+        private Vector2 posAbs = Vector2.Zero;
+        public Vector2 PosAbs { get { return posAbs; } }
         private SpriteManager.ESprite color;
         private float orientation;
 
@@ -19,18 +22,18 @@ namespace TetriClimber
 
         public void setPosition(Vector2 coord)
         {
-            pos = coord;
+            posRel = coord;
         }
 
         public void setPosition(int x, int y)
         {
-            pos = new Vector2((float)x, (float)y);
+            posRel = new Vector2((float)x, (float)y);
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(pos.X * Constants.Measures.blockSize, pos.Y * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize);
+            SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(posRel.X * Constants.Measures.blockSize, posRel.Y * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize);
         }
 
         public override void Update(GameTime gameTime)

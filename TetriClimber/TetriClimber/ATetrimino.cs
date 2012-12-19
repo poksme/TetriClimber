@@ -11,7 +11,7 @@ namespace TetriClimber
         protected   List<Action> orientations = null;
         protected   List<Block> shape = null;
         private     int orientation;
-        protected   Vector2 position;
+        protected   Vector2 posRel;
 
         public ATetrimino(SpriteManager.ESprite color) : base(App.Game)
         {
@@ -56,5 +56,12 @@ namespace TetriClimber
         }
 
         public abstract void pos1();
+
+        public List<Block> getBlocks()
+        {
+            return shape;
+        }
+
+        public Vector2 PosRel { get;}
     }
 }

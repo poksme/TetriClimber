@@ -7,8 +7,7 @@ namespace TetriClimber
 {
     public class GameSession
     {
-        //Double Array Board;
-        //Score
+        Board board;
         
         public GameSession()
         {
