@@ -6,13 +6,13 @@ using Microsoft.Xna.Framework;
 
 namespace TetriClimber
 {
-    public class Board
+    public class Board : DrawableGameComponent
     {
         Vector2 pos;
         Vector2 size;
         Block[][] grid;
 
-        public Board(Vector2 size)
+        public Board(Vector2 size) : base(App.Game)
         {
             pos = Vector2.Zero;
             this.size = size;
@@ -25,12 +25,16 @@ namespace TetriClimber
             }
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
         }
 
-        public void Draw()
+        public override void  Draw(GameTime gameTime)
         {
+ 	        base.Draw(gameTime);
+            SpriteManager.Instance.drawRectangleAbsPos(new Rectangle(20, 20, (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), 
+                                                        Color.White * 0.5f);
         }
 
         public bool isFullLine(int Y)

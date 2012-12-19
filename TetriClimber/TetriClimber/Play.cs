@@ -9,7 +9,7 @@ namespace TetriClimber
 {
     public class Play : AScene
     {
-        private Block[][] board;
+        private Board board;
         private TetriminoFactory tetriminoFactory;
         private ATetrimino nextTetrimino;
         private ATetrimino currTetrimino;
@@ -20,9 +20,9 @@ namespace TetriClimber
 
         public Play() : base()
         {
-            board = new Block[22][];
-            for (int x = 0; x < board.Length; x++)
-                board[x] = new Block[10];
+            board = new Board(new Vector2(10, 22));
+            //for (int x = 0; x < board.Length; x++)
+            //    board[x] = new Block[10];
             tetriminoFactory = TetriminoFactory.Instance;
             nextTetrimino = tetriminoFactory.getTetrimino();
             currTetrimino = tetriminoFactory.getTetrimino();
@@ -31,6 +31,7 @@ namespace TetriClimber
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+            board.Draw(gameTime);
             currTetrimino.Draw(gameTime);
         }
 

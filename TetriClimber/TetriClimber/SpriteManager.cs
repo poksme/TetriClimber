@@ -58,5 +58,9 @@ namespace TetriClimber
             // WHY DO WE NEED TO ADD PADDING ?
             App.SpriteBatch.Draw(textureManager.getTexture(sprites[es].Value), new Vector2(pos.X + sprtSize / 2, pos.Y + sprtSize / 2), sprites[es].Key, Color.White, ort, new Vector2(Constants.Measures.spriteSquareSize / 2f), sprtSize / Constants.Measures.spriteSquareSize, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
         }
+        public void drawRectangleAbsPos(Rectangle rec, Color col)
+        {
+            App.SpriteBatch.Draw(textureManager.getTexture(TextureManager.ETexture.RECTANGLE), rec, col);
+        }
     }
 }

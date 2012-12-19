@@ -308,6 +308,9 @@ namespace TetriClimber
         {
             get { return game; }
         }
-        
+        public GraphicsDevice GraphicDevice
+        {
+            get { return graphics.GraphicsDevice; }
+        }
     }
 }

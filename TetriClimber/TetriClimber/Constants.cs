@@ -33,7 +33,7 @@ namespace TetriClimber
         public static class Measures
         {
             public const int spriteSquareSize = 115;
-            public const float blockSize = 90f;
+            public const float blockSize = 40f;
         }
     }
 }
