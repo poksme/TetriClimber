@@ -118,7 +118,6 @@ namespace TetriClimber
             int height = (InteractiveSurface.PrimarySurfaceDevice != null)
                             ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaHeight
                             : Screen.PrimaryScreen.WorkingArea.Height;
-
             Form form = (Form)Form.FromHandle(Window.Handle);
             form.ClientSize = new Size(width, height);
             form.WindowState = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)

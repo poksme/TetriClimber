@@ -62,5 +62,19 @@ namespace TetriClimber
         {
             App.SpriteBatch.Draw(textureManager.getTexture(TextureManager.ETexture.RECTANGLE), rec, col);
         }
+
+        public void drawBoardedRectangleAbsPos(Rectangle rec, Color col, int BorderSize, Color BorderColor)
+        {
+            Rectangle[] borders =  
+            {
+                new Rectangle(rec.X - BorderSize, rec.Y - BorderSize, rec.Width + BorderSize * 2, BorderSize),
+                new Rectangle(rec.X - BorderSize, rec.Y + rec.Height, rec.Width + BorderSize * 2, BorderSize),
+                new Rectangle(rec.X - BorderSize, rec.Y, BorderSize, rec.Height),
+                new Rectangle(rec.X + rec.Width, rec.Y, BorderSize, rec.Height), 
+            };
+            foreach (Rectangle border in borders)
+                App.SpriteBatch.Draw(textureManager.getTexture(TextureManager.ETexture.RECTANGLE), border, BorderColor);
+            App.SpriteBatch.Draw(textureManager.getTexture(TextureManager.ETexture.RECTANGLE), rec, col);
+        }
     }
 }

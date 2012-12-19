@@ -22,7 +22,8 @@ namespace TetriClimber
         private readonly GraphicsDeviceManager graphics;
 
         private static TouchTarget touchTarget;
-        private Color backgroundColor = new Color(81, 81, 81);
+        //private Color backgroundColor = new Color(81, 81, 81);
+        private Color backgroundColor = Color.Wheat;
         private bool applicationLoadCompleteSignalled;
 
         private UserOrientation currentOrientation = UserOrientation.Bottom;

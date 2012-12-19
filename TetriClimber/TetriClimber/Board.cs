@@ -33,8 +33,10 @@ namespace TetriClimber
         public override void  Draw(GameTime gameTime)
         {
  	        base.Draw(gameTime);
-            SpriteManager.Instance.drawRectangleAbsPos(new Rectangle(20, 20, (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), 
-                                                        Color.White * 0.5f);
+            //SpriteManager.Instance.drawRectangleAbsPos(new Rectangle(20, 20, (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), 
+            //                                            Color.White * 0.5f);
+            SpriteManager.Instance.drawBoardedRectangleAbsPos(new Rectangle(20, 20, (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), Color.White * 0.5f,
+                                                              Constants.Measures.borderSize, Constants.Color.border);
         }
 
         public bool isFullLine(int Y)

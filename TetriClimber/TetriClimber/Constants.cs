@@ -9,31 +9,43 @@ namespace TetriClimber
     {
         public static class Color
         {
-            public const int p1Dark = 0x87cdde;
-            public const int p1Light = 0xafdde9;
-            public const int p2Dark = 0xd35f5f;
-            public const int p2Light = 0xe08b8b;
-            public const int tDark = 0xc6afe9;
-            public const int tLight = 0xe3d7f4;
-            public const int sDark = 0xffe680;
-            public const int sLight = 0xfff2c0;
-            public const int qDark = 0x62d2ee;
-            public const int qLight = 0xaaeeff;
-            public const int lDark = 0xffccaa;
-            public const int lLight = 0xffe6d5;
-            public const int pDark = 0x6cf3d7;
-            public const int pLight = 0xaaffee;
-            public const int zDark = 0xc1ff99;
-            public const int zLight = 0xdbffc7;
-            public const int oDark = 0xffaacc;
-            public const int oLight = 0xffd5e5;
-            public const int border = 0xcecece;
-            public const int background = 0xffffff;
+            public static  Microsoft.Xna.Framework.Color HexToColor(String hexString)
+            {
+                Microsoft.Xna.Framework.Color actColor = Microsoft.Xna.Framework.Color.White;
+                if ((hexString.StartsWith("#"))&&(hexString.Length==7))
+                    actColor = new Microsoft.Xna.Framework.Color(
+                        int.Parse(hexString.Substring(1,2), System.Globalization.NumberStyles.HexNumber), 
+                        int.Parse(hexString.Substring(3,2), System.Globalization.NumberStyles.HexNumber),
+                        int.Parse(hexString.Substring(5,2), System.Globalization.NumberStyles.HexNumber)
+                        );
+                return actColor;
+            }
+            public static Microsoft.Xna.Framework.Color p1Dark = HexToColor("#87cdde");
+            public static Microsoft.Xna.Framework.Color p1Light = HexToColor("#afdde9");
+            public static Microsoft.Xna.Framework.Color p2Dark = HexToColor("#d35f5f");
+            public static Microsoft.Xna.Framework.Color p2Light = HexToColor("#e08b8b");
+            public static Microsoft.Xna.Framework.Color tDark = HexToColor("#c6afe9");
+            public static Microsoft.Xna.Framework.Color tLight = HexToColor("#e3d7f4");
+            public static Microsoft.Xna.Framework.Color sDark = HexToColor("#ffe680");
+            public static Microsoft.Xna.Framework.Color sLight = HexToColor("#fff2c0");
+            public static Microsoft.Xna.Framework.Color qDark = HexToColor("#62d2ee");
+            public static Microsoft.Xna.Framework.Color qLight = HexToColor("#aaeeff");
+            public static Microsoft.Xna.Framework.Color lDark = HexToColor("#ffccaa");
+            public static Microsoft.Xna.Framework.Color lLight = HexToColor("#ffe6d5");
+            public static Microsoft.Xna.Framework.Color pDark = HexToColor("#6cf3d7");
+            public static Microsoft.Xna.Framework.Color pLight = HexToColor("#aaffee");
+            public static Microsoft.Xna.Framework.Color zDark = HexToColor("#c1ff99");
+            public static Microsoft.Xna.Framework.Color zLight = HexToColor("#dbffc7");
+            public static Microsoft.Xna.Framework.Color oDark = HexToColor("#ffaacc");
+            public static Microsoft.Xna.Framework.Color oLight = HexToColor("#ffd5e5");
+            public static Microsoft.Xna.Framework.Color border = HexToColor("#cecece");
+            public static Microsoft.Xna.Framework.Color background = HexToColor("#ffffff");
         }
         public static class Measures
         {
             public const int spriteSquareSize = 115;
             public const float blockSize = 40f;
+            public const int borderSize = 5;
         }
     }
 }
