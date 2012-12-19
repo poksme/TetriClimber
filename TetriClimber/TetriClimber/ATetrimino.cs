@@ -22,7 +22,7 @@ namespace TetriClimber
         public ATetrimino(SpriteManager.ESprite color) : base(App.Game)
         {
             orientation = 0;
-            Vector2 position = new Vector2(3, -1);
+            Vector2 posRel = new Vector2(3, -1);
             orientations = new List<Action>();
             orientations.Add(pos1);
             shape = new List<Block>();
@@ -59,6 +59,7 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
         }
 
         public abstract void pos1();
@@ -68,6 +69,20 @@ namespace TetriClimber
             return shape;
         }
 
+<<<<<<< HEAD
         //public Vector2 PosRel { get { return posRel;} }
+=======
+        public Vector2 PosRel { get;}
+
+        public void DownOneStep()
+        {
+            posRel.Y++;
+            foreach (Block b in shape)
+            {
+                Vector2 pos = b.PosAbs;
+                pos.Y += Constants.Measures.blockSize;
+            }
+        }
+>>>>>>> 40e08966dddbe5e9172af3e8e53e7d14b6296cef
     }
 }
