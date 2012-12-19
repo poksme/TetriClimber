@@ -9,7 +9,7 @@ namespace TetriClimber
     public class Block : DrawableGameComponent
     {
         private Vector2 posRel = Vector2.Zero;
-        public Vector2 PosRel { get { return posRel; } }
+        public Vector2 PosRel { get { return posRel; }}
         private Vector2 posAbs = Vector2.Zero;
         public Vector2 PosAbs { get { return posAbs; } }
         private SpriteManager.ESprite color;
