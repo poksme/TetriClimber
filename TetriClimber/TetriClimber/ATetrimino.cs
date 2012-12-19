@@ -69,11 +69,6 @@ namespace TetriClimber
             return shape;
         }
 
-<<<<<<< HEAD
-        //public Vector2 PosRel { get { return posRel;} }
-=======
-        public Vector2 PosRel { get;}
-
         public void DownOneStep()
         {
             posRel.Y++;
@@ -83,6 +78,5 @@ namespace TetriClimber
                 pos.Y += Constants.Measures.blockSize;
             }
         }
->>>>>>> 40e08966dddbe5e9172af3e8e53e7d14b6296cef
     }
 }
