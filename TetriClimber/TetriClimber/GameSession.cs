@@ -30,13 +30,23 @@ namespace TetriClimber
              if (cur > lat)
              {
                  cur = TimeSpan.Zero;
-                 if (currTetrimino.PosRel.Y < Constants.Measures.boardBlockHeight - 2 - currTetrimino.getMostDownBlock().PosRel.Y)
-                     currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
-                 else
+                 List<Block> shapes = currTetrimino.getBlocks();
+                 bool hit = false;
+                 foreach (Block b in shapes)
+                 {
+                     if (currTetrimino.PosRel.Y + b.PosRel.Y > Constants.Measures.boardBlockHeight - 2)
+                     {
+                         hit = true;
+                         break;
+                     }
+                 }
+                 if (hit)
                  {
                      board.pushBlocks(currTetrimino);
                      currTetrimino = tetriminoFactory.getTetrimino();
                  }
+                 else
+                     currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
              }
 
         }

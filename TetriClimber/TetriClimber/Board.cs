@@ -37,6 +37,11 @@ namespace TetriClimber
             //                                            Color.White * 0.5f);
             SpriteManager.Instance.drawBoardedRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin), (int)(Constants.Measures.upBoardMargin), (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), Color.White * 0.5f,
                                                               Constants.Measures.borderSize, Constants.Color.border);
+            for (int y = 0; y < Constants.Measures.boardBlockHeight; y++)
+                for (int x = 0; x < Constants.Measures.boardBlockWidth; x++)
+                    if (grid[y][x] != null)
+                        SpriteManager.Instance.drawRotatedAtPos(grid[y][x].Color, new Vector2(Constants.Measures.leftBoardMargin + x * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + y * Constants.Measures.blockSize), grid[y][x].Orientation, Constants.Measures.blockSize);
+                        //SpriteManager.Instance.drawAtPos(grid[y][x].Color, new Vector2(x * Constants.Measures.blockSize, y * Constants.Measures.blockSize));
         }
 
         public bool isFullLine(int Y)

@@ -14,7 +14,17 @@ namespace TetriClimber
         public Vector2 PosAbs { get { return posAbs; } }
         private ATetrimino container;
         private SpriteManager.ESprite color;
+
+        public SpriteManager.ESprite Color
+        {
+            get { return color; }
+        }
+
         private float orientation;
+        public float Orientation
+        {
+            get { return orientation; }
+        }
 
         public Block(SpriteManager.ESprite color, ATetrimino cont) : base(App.Game)
         {
