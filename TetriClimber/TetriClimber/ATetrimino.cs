@@ -22,7 +22,7 @@ namespace TetriClimber
         public ATetrimino(SpriteManager.ESprite color) : base(App.Game)
         {
             orientation = 0;
-            Vector2 posRel = new Vector2(3, -1);
+            posRel = new Vector2(3, -3);
             orientations = new List<Action>();
             orientations.Add(pos1);
             shape = new List<Block>();
