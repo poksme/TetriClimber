@@ -12,12 +12,14 @@ namespace TetriClimber
         public Vector2 PosRel { get { return posRel; }}
         private Vector2 posAbs = Vector2.Zero;
         public Vector2 PosAbs { get { return posAbs; } }
+        private ATetrimino container;
         private SpriteManager.ESprite color;
         private float orientation;
 
-        public Block(SpriteManager.ESprite color) : base(App.Game)
+        public Block(SpriteManager.ESprite color, ATetrimino cont) : base(App.Game)
         {
             this.color = color;
+            container = cont;
         }
 
         public void setPosition(Vector2 coord)
@@ -33,7 +35,7 @@ namespace TetriClimber
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(posRel.X * Constants.Measures.blockSize, posRel.Y * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize);
+            SpriteManager.Instance.drawRotatedAtPos(color, new Vector2((posRel.X + container.PosRel.X) * Constants.Measures.blockSize, (posRel.Y + container.PosRel.Y) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize);
         }
 
         public override void Update(GameTime gameTime)

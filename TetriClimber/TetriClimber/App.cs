@@ -150,7 +150,7 @@ namespace TetriClimber
             //if (currentOrientation == UserOrientation.Top)
             //{
               //  Console.Out.WriteLine("Vertical Orientataion");
-                screenTransform = inverted;
+                //screenTransform = inverted;
             //}
 
             base.Initialize();

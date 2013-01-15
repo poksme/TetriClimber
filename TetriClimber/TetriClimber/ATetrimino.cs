@@ -11,7 +11,7 @@ namespace TetriClimber
         protected   List<Action> orientations = null;
         protected   List<Block> shape = null;
         private     int orientation;
-        private Vector2 posRel;
+        private     Vector2 posRel;
 
         public Vector2 PosRel
         {
@@ -26,10 +26,10 @@ namespace TetriClimber
             orientations = new List<Action>();
             orientations.Add(pos1);
             shape = new List<Block>();
-            shape.Add(new Block(color));
-            shape.Add(new Block(color));
-            shape.Add(new Block(color));
-            shape.Add(new Block(color));
+            shape.Add(new Block(color, this));
+            shape.Add(new Block(color, this));
+            shape.Add(new Block(color, this));
+            shape.Add(new Block(color, this));
             orientations[orientation].Invoke();
         }
 

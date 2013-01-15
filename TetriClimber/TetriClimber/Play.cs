@@ -9,10 +9,7 @@ namespace TetriClimber
 {
     public class Play : AScene
     {
-        private Board board;
-        private TetriminoFactory tetriminoFactory;
-        private ATetrimino nextTetrimino;
-        private ATetrimino currTetrimino;
+        private GameSession player1;
 
         private TimeSpan lat = new TimeSpan(10000000 / 2);
         private TimeSpan cur = new TimeSpan(0);
@@ -20,19 +17,13 @@ namespace TetriClimber
 
         public Play() : base()
         {
-            board = new Board(new Vector2(10, 22));
-            //for (int x = 0; x < board.Length; x++)
-            //    board[x] = new Block[10];
-            tetriminoFactory = TetriminoFactory.Instance;
-            nextTetrimino = tetriminoFactory.getTetrimino();
-            currTetrimino = tetriminoFactory.getTetrimino();
+            player1 = new GameSession();
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            board.Draw(gameTime);
-            currTetrimino.Draw(gameTime);
+            player1.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
@@ -43,13 +34,17 @@ namespace TetriClimber
                 cur = new TimeSpan(0);
             if (App.ToucheInput.getDownTime(AUserInput.EInput.RIGHT) == gameTime.ElapsedGameTime ||
                 (App.ToucheInput.getDownTime(AUserInput.EInput.RIGHT) > lat && cur == TimeSpan.Zero))
-                    currTetrimino.rightShift();
+                player1.rightMove();
+            if (App.ToucheInput.getDownTime(AUserInput.EInput.TAP) == gameTime.ElapsedGameTime ||
+                (App.ToucheInput.getDownTime(AUserInput.EInput.TAP) > lat && cur == TimeSpan.Zero))
+                player1.rightShift();
             if (App.ToucheInput.getDownTime(AUserInput.EInput.LEFT) == gameTime.ElapsedGameTime ||
                 (App.ToucheInput.getDownTime(AUserInput.EInput.LEFT) > lat && cur == TimeSpan.Zero))
-                currTetrimino.leftShift();
+                 player1.leftMove();
             if (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime ||
                 (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) > lat && cur == TimeSpan.Zero))
-                currTetrimino = tetriminoFactory.getTetrimino();
+                player1.dropDown();
+            player1.Update(gameTime);
         }
     }
 }
