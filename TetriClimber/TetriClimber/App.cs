@@ -188,7 +188,7 @@ namespace TetriClimber
             {
                 if (ApplicationServices.WindowAvailability == WindowAvailability.Interactive)
                 {
-                    ti.update();
+                    ti.Update(gameTime);
                     // TODO: Process touches, 
                     // use the following code to get the state of all current touch points.
                     // ReadOnlyTouchPointCollection touches = touchTarget.GetState();

@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 
 namespace TetriClimber
 {
     public class KeyboardInput : AUserInput
     {
-        private KeyboardState newState;
-        private KeyboardState oldState;
         private Dictionary<EInput, Keys> inputs;
 
         public KeyboardInput() : base()
         {
             inputs = new Dictionary<EInput, Keys>();
-            oldState = Keyboard.GetState();
             inputs.Add(EInput.UP, Keys.Up);
             inputs.Add(EInput.DOWN, Keys.Down);
             inputs.Add(EInput.LEFT, Keys.Left);
@@ -23,29 +21,15 @@ namespace TetriClimber
             inputs.Add(EInput.TAP, Keys.Space);
         }
 
-        public override void update()
+        public override void Update(GameTime gameTime)
         {
-            newState = Keyboard.GetState();
+            base.Update(gameTime);
             foreach (KeyValuePair<EInput, Keys> input in inputs)
             {
-                if (newState.IsKeyDown(input.Value))// && !oldState.IsKeyDown(input.Value))
-                {
-                    Console.Out.WriteLine("Vrai");
-                    state[input.Key] = true;
-                }
+                if (Keyboard.GetState().IsKeyDown(input.Value))
+                    state[input.Key] += gameTime.ElapsedGameTime;
                 else
-                {
-                    //Console.Out.WriteLine("Faux");
-                   // state[input.Key] = false;
-                }
-            }
-            oldState = newState;
-        }
-        public void reset()
-        {
-            foreach (KeyValuePair<EInput, Keys> input in inputs)
-            {
-                state[input.Key] = false;
+                    state[input.Key] = TimeSpan.Zero;
             }
         }
     }

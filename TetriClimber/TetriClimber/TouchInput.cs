@@ -20,23 +20,17 @@ namespace TetriClimber
         }
 
 
-        public override void update()
+        public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
              foreach (EInput e in Enum.GetValues(typeof(EInput)))
-                state[e] = false;
+                state[e] = TimeSpan.Zero;
              if (move && newPos.X > oldPos.X && newPos.X - oldPos.X > newPos.Y - oldPos.Y)
-             {
-                 state[EInput.RIGHT] = true;
-             }
+                 state[EInput.RIGHT] = TimeSpan.Zero;
              else if (move && newPos.X < oldPos.X && oldPos.X - newPos.X > oldPos.Y - newPos.Y)
-             {
-                 state[EInput.LEFT] = true;
-             }
+                 state[EInput.LEFT] = TimeSpan.Zero;
              else if (move && newPos.Y > oldPos.Y)
-             {
-                 state[EInput.DOWN] = true;
-             }
-
+                 state[EInput.DOWN] = TimeSpan.Zero;
         }
 
        
