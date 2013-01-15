@@ -30,7 +30,13 @@ namespace TetriClimber
              if (cur > lat)
              {
                  cur = TimeSpan.Zero;
-                 currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
+                 if (currTetrimino.PosRel.Y < Constants.Measures.boardBlockHeight - 2 - currTetrimino.getMostDownBlock().PosRel.Y)
+                     currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
+                 else
+                 {
+                     board.pushBlocks(currTetrimino);
+                     currTetrimino = tetriminoFactory.getTetrimino();
+                 }
              }
 
         }
@@ -45,6 +51,16 @@ namespace TetriClimber
         public void rightShift()
         {
             currTetrimino.rightShift();
+            //Vector2 pos = currTetrimino.PosRel;
+            //List<Block> shape;
+
+            //currTetrimino.rightShift();
+            //shape = currTetrimino.getBlocks();
+            //Block rightest = currTetrimino.getMostRightBlock();
+            //if (!(currTetrimino.PosRel.X < Constants.Measures.boardBlockWidth - currTetrimino.getMostRightBlock().PosRel.X - 1))
+            //{
+            //    currTetrimino.leftMove();
+            //}
         }
 
         public void leftShift()
@@ -57,14 +73,16 @@ namespace TetriClimber
             Console.Out.WriteLine("Down not implemented");
         }
 
-        internal void rightMove()
+        public void rightMove()
         {
-            currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X + 1f, currTetrimino.PosRel.Y);
+            if (currTetrimino.PosRel.X < Constants.Measures.boardBlockWidth - currTetrimino.getMostRightBlock().PosRel.X - 1)
+                currTetrimino.rightMove();
         }
 
-        internal void leftMove()
+        public void leftMove()
         {
-            currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X - 1f, currTetrimino.PosRel.Y);
+            if (currTetrimino.PosRel.X > -currTetrimino.getMostLeftBlock().PosRel.X)
+                currTetrimino.leftMove();
         }
     }
 }

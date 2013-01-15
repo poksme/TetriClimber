@@ -58,5 +58,10 @@ namespace TetriClimber
                 grid[(int)(pos.Y + ty)][(int)(pos.X + tx)] = b;
             }
         }
+
+        public bool isBusyCase(Vector2 coord)
+        {
+            return (grid[(int)coord.Y][(int)coord.X] == null);
+        }
     }
 }

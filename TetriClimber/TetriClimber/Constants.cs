@@ -46,6 +46,8 @@ namespace TetriClimber
             public const int spriteSquareSize = 115;
             public const float blockSize = 40f;
             public const int borderSize = 5;
+            public const int boardBlockWidth = 10;
+            public const int boardBlockHeight = 22;
         }
     }
 }

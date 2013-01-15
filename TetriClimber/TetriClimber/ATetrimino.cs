@@ -49,6 +49,16 @@ namespace TetriClimber
                 b.setOrientation(orientation);
         }
 
+        public void leftMove()
+        {
+            posRel.X--;
+        }
+
+        public void rightMove()
+        {
+            posRel.X++;
+        }
+
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
@@ -77,6 +87,39 @@ namespace TetriClimber
                 Vector2 pos = b.PosAbs;
                 pos.Y += Constants.Measures.blockSize;
             }
+        }
+
+        public Block getMostRightBlock()
+        {
+            Block max = shape[0];
+            foreach (Block b in shape)
+            {
+                if (max.PosRel.X < b.PosRel.X)
+                    max = b;
+            }
+            return max;
+        }
+
+        public Block getMostLeftBlock()
+        {
+            Block max = shape[0];
+            foreach (Block b in shape)
+            {
+                if (max.PosRel.X > b.PosRel.X)
+                    max = b;
+            }
+            return max;
+        }
+
+        public Block getMostDownBlock()
+        {
+            Block max = shape[0];
+            foreach (Block b in shape)
+            {
+                if (max.PosRel.Y > b.PosRel.Y)
+                    max = b;
+            }
+            return max;
         }
     }
 }
