@@ -12,7 +12,7 @@ namespace TetriClimber
             public static  Microsoft.Xna.Framework.Color HexToColor(String hexString)
             {
                 Microsoft.Xna.Framework.Color actColor = Microsoft.Xna.Framework.Color.White;
-                if ((hexString.StartsWith("#"))&&(hexString.Length==7))
+                if (hexString.StartsWith("#") && hexString.Length == 7)
                     actColor = new Microsoft.Xna.Framework.Color(
                         int.Parse(hexString.Substring(1,2), System.Globalization.NumberStyles.HexNumber), 
                         int.Parse(hexString.Substring(3,2), System.Globalization.NumberStyles.HexNumber),
@@ -48,6 +48,11 @@ namespace TetriClimber
             public const int borderSize = 5;
             public const int boardBlockWidth = 10;
             public const int boardBlockHeight = 22;
+            public const float leftBoardMargin = 20f;
+            public const float upBoardMargin = 20f;
+            public const float boardWidth = 10f;
+            public const float boardHeight = 22f;
+
         }
     }
 }

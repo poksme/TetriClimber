@@ -35,7 +35,9 @@ namespace TetriClimber
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            SpriteManager.Instance.drawRotatedAtPos(color, new Vector2((posRel.X + container.PosRel.X) * Constants.Measures.blockSize, (posRel.Y + container.PosRel.Y) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize);
+            if (posRel.X + container.PosRel.X < Constants.Measures.boardWidth && posRel.X + container.PosRel.X >= 0f &&
+                posRel.Y + container.PosRel.Y < Constants.Measures.boardHeight && posRel.Y + container.PosRel.Y >= 0f)
+                SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(Constants.Measures.leftBoardMargin + (posRel.X + container.PosRel.X) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (posRel.Y + container.PosRel.Y) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize);
         }
 
         public override void Update(GameTime gameTime)
