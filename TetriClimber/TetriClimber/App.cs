@@ -27,9 +27,10 @@ namespace TetriClimber
         private bool applicationLoadCompleteSignalled;
 
         private UserOrientation currentOrientation = UserOrientation.Bottom;
+
         private Matrix screenTransform = Matrix.Identity;
 
-        private static TouchInput ti;
+        private static AUserInput ti;
 
         // FOR SINGLETON PURPOSE 
         private static SpriteBatch spriteBatch;
@@ -52,11 +53,14 @@ namespace TetriClimber
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
+            graphics.SupportedOrientations = DisplayOrientation.Portrait;
+           
             // FOR SINGLETON PURPOSE
             content = Content;
             game = this;
-            ti = new TouchInput();
+            //ti = new TouchInput();
+            ti = new KeyboardInput();
+            //graphics.ToggleFullScreen();
             //
         }
 
@@ -76,7 +80,9 @@ namespace TetriClimber
             Program.InitializeWindow(Window);
             // Set the graphics device buffers.
             graphics.PreferredBackBufferWidth = Program.WindowSize.Width;
+            //graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = Program.WindowSize.Height;
+            //graphics.PreferredBackBufferHeight = 450;
             graphics.ApplyChanges();
             // Make sure the window is in the right location.
             Program.PositionWindow();
@@ -98,10 +104,13 @@ namespace TetriClimber
                 return;
 
             // Create a target for surface input.
-            touchTarget = new TouchTarget(Window.Handle, EventThreadChoice.OnBackgroundThread);
-            touchTarget.EnableInput();
-            touchTarget.TouchMove += new EventHandler<TouchEventArgs>(ti.Move);
-            touchTarget.TouchUp += new EventHandler<TouchEventArgs>(ti.Up);
+            if (ti is TouchInput)
+            {
+                touchTarget = new TouchTarget(Window.Handle, EventThreadChoice.OnBackgroundThread);
+                touchTarget.EnableInput();
+                touchTarget.TouchMove += new EventHandler<TouchEventArgs>((ti as TouchInput).Move);
+                touchTarget.TouchUp += new EventHandler<TouchEventArgs>((ti as TouchInput).Up);
+            }
         }
 
         #endregion
@@ -123,7 +132,7 @@ namespace TetriClimber
             InitializeSurfaceInput();
 
             // Set the application's orientation based on the orientation at launch
-            currentOrientation = ApplicationServices.InitialOrientation;
+            //currentOrientation = ApplicationServices.InitialOrientation;
 
             // Subscribe to surface window availability events
             ApplicationServices.WindowInteractive += OnWindowInteractive;
@@ -133,15 +142,16 @@ namespace TetriClimber
             // Setup the UI to transform if the UI is rotated.
             // Create a rotation matrix to orient the screen so it is viewed correctly
             // when the user orientation is 180 degress different.
-            Matrix inverted = Matrix.CreateRotationZ(MathHelper.ToRadians(180)) *
+            Matrix inverted = Matrix.CreateRotationZ(MathHelper.ToRadians(90)) *
                        Matrix.CreateTranslation(graphics.GraphicsDevice.Viewport.Width,
-                                                 graphics.GraphicsDevice.Viewport.Height,
+                                                 0,
                                                  0);
 
-            if (currentOrientation == UserOrientation.Top)
-            {
+            //if (currentOrientation == UserOrientation.Top)
+            //{
+              //  Console.Out.WriteLine("Vertical Orientataion");
                 screenTransform = inverted;
-            }
+            //}
 
             base.Initialize();
         }
@@ -209,7 +219,9 @@ namespace TetriClimber
             GraphicsDevice.Clear(backgroundColor);
 
 
-            SpriteManager.Instance.begin();
+            //SpriteManager.Instance.begin();
+            //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, screenTransform);
             SceneManager.Instance.Draw(gameTime);
             //SpriteManager.Instance.drawAtPos(SpriteManager.ESprite.L, Vector2.Zero);
             SpriteManager.Instance.end();
@@ -295,7 +307,7 @@ namespace TetriClimber
         {
             get { return content; }
         }
-        public static TouchInput ToucheInput
+        public static AUserInput ToucheInput
         {
             get { return ti; }
         }

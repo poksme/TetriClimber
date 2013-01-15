@@ -21,10 +21,10 @@ namespace TetriClimber
             // Disable the WinForms unhandled exception dialog.
             // SurfaceShell will notify the user.
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
-
+            
             // Apply Surface globalization settings
             GlobalizationSettings.ApplyToCurrentThread();
-
+            
             using (App app = new App())
             {
                 app.Run();

@@ -14,6 +14,7 @@ namespace TetriClimber
 
         public KeyboardInput() : base()
         {
+            inputs = new Dictionary<EInput, Keys>();
             oldState = Keyboard.GetState();
             inputs.Add(EInput.UP, Keys.Up);
             inputs.Add(EInput.DOWN, Keys.Down);
@@ -27,12 +28,25 @@ namespace TetriClimber
             newState = Keyboard.GetState();
             foreach (KeyValuePair<EInput, Keys> input in inputs)
             {
-                if (newState.IsKeyDown(input.Value) && !oldState.IsKeyDown(input.Value))
+                if (newState.IsKeyDown(input.Value))// && !oldState.IsKeyDown(input.Value))
+                {
+                    Console.Out.WriteLine("Vrai");
                     state[input.Key] = true;
+                }
                 else
-                    state[input.Key] = false;
+                {
+                    //Console.Out.WriteLine("Faux");
+                   // state[input.Key] = false;
+                }
             }
             oldState = newState;
+        }
+        public void reset()
+        {
+            foreach (KeyValuePair<EInput, Keys> input in inputs)
+            {
+                state[input.Key] = false;
+            }
         }
     }
 }

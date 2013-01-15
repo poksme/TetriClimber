@@ -13,9 +13,8 @@ namespace TetriClimber
         private TetriminoFactory tetriminoFactory;
         private ATetrimino nextTetrimino;
         private ATetrimino currTetrimino;
-        private KeyboardState oldState;
 
-        private TimeSpan lat = new TimeSpan(10000000);
+        private TimeSpan lat = new TimeSpan(10000000/20);
         private TimeSpan cur = new TimeSpan(0);
 
         public Play() : base()
@@ -43,7 +42,13 @@ namespace TetriClimber
             {
                 if (App.ToucheInput.getState(AUserInput.EInput.RIGHT))
                 {
+                    Console.Out.WriteLine("DROITE");
                     currTetrimino.rightShift();
+                }
+                else
+                {
+                    Console.Out.WriteLine("NO DROITE");
+
                 }
                 if (App.ToucheInput.getState(AUserInput.EInput.LEFT))
                 {
@@ -54,22 +59,11 @@ namespace TetriClimber
                     currTetrimino = tetriminoFactory.getTetrimino();
                 }
                 cur = new TimeSpan(0);
+                if (App.ToucheInput is KeyboardInput)
+                {
+                    (App.ToucheInput as KeyboardInput).reset();
+                }
             }
-            //KeyboardState newState = Keyboard.GetState();
-
-            //if (newState.IsKeyDown(Keys.Left) && !oldState.IsKeyDown(Keys.Left))
-            //{
-            //    currTetrimino.leftShift();
-            //}
-            //if (newState.IsKeyDown(Keys.Right) && !oldState.IsKeyDown(Keys.Right))
-            //{
-            //    currTetrimino.rightShift();
-            //}
-            //if (newState.IsKeyDown(Keys.Down) && !oldState.IsKeyDown(Keys.Down))
-            //{
-            //    currTetrimino = tetriminoFactory.getTetrimino();
-            //}
-            //oldState = newState;
         }
     }
 }
