@@ -20,7 +20,7 @@ namespace TetriClimber
             tetriminoFactory = TetriminoFactory.Instance;
             currTetrimino = tetriminoFactory.getTetrimino();
             cur = TimeSpan.Zero;
-            lat = new TimeSpan(10000000);
+            lat = new TimeSpan(10000000/3);
         }
 
         public override void  Update(GameTime gameTime)
@@ -30,23 +30,15 @@ namespace TetriClimber
              if (cur > lat)
              {
                  cur = TimeSpan.Zero;
-                 List<Block> shapes = currTetrimino.getBlocks();
-                 bool hit = false;
-                 foreach (Block b in shapes)
-                 {
-                     if (currTetrimino.PosRel.Y + b.PosRel.Y > Constants.Measures.boardBlockHeight - 2)
-                     {
-                         hit = true;
-                         break;
-                     }
-                 }
-                 if (hit)
+                 if (tetriminoCanGoingDown())
+                    currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
+                 else
                  {
                      board.pushBlocks(currTetrimino);
+                     board.checkFullLine();
                      currTetrimino = tetriminoFactory.getTetrimino();
                  }
-                 else
-                     currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
+                    
              }
 
         }
@@ -85,14 +77,41 @@ namespace TetriClimber
 
         public void rightMove()
         {
-            if (currTetrimino.PosRel.X < Constants.Measures.boardBlockWidth - currTetrimino.getMostRightBlock().PosRel.X - 1)
-                currTetrimino.rightMove();
+            List<Block> shapes = currTetrimino.getBlocks();
+            foreach (Block b in shapes)
+            {
+                if (currTetrimino.PosRel.X + b.PosRel.X >= Constants.Measures.boardBlockWidth - 1)
+                    return ;
+                if (board.isBusyCase(new Vector2(currTetrimino.PosRel.X + b.PosRel.X + 1, currTetrimino.PosRel.Y + b.PosRel.Y)))
+                    return ;
+            }
+            currTetrimino.rightMove();
         }
 
         public void leftMove()
         {
-            if (currTetrimino.PosRel.X > -currTetrimino.getMostLeftBlock().PosRel.X)
-                currTetrimino.leftMove();
+            List<Block> shapes = currTetrimino.getBlocks();
+            foreach (Block b in shapes)
+            {
+                if (currTetrimino.PosRel.X + b.PosRel.X <= 0)
+                    return;
+                if (board.isBusyCase(new Vector2(currTetrimino.PosRel.X + b.PosRel.X - 1, currTetrimino.PosRel.Y + b.PosRel.Y)))
+                    return;
+            }
+            currTetrimino.leftMove();
+        }
+
+        public bool tetriminoCanGoingDown()
+        {
+            List<Block> shapes = currTetrimino.getBlocks();
+            foreach (Block b in shapes)
+            {
+                if (currTetrimino.PosRel.Y + b.PosRel.Y > Constants.Measures.boardBlockHeight - 2)
+                    return false;
+                if (board.isBusyCase(new Vector2(currTetrimino.PosRel.X + b.PosRel.X, currTetrimino.PosRel.Y + b.PosRel.Y + 1)))
+                    return false;
+            }
+            return true;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace TetriClimber
         Vector2 pos;
         Vector2 size;
         Block[][] grid;
+        HashSet<int> updatedLine;
 
         public Board(Vector2 size) : base(App.Game)
         {
@@ -52,8 +53,19 @@ namespace TetriClimber
             return true;
         }
 
+        public void removeLine(int Y)
+        {
+            for (int i = 0; i < (int)size.X; i++)
+                grid[Y][i] = null;
+            for (; Y > 0; Y--)
+                grid[Y] = grid[Y - 1];
+            for (int x = 0; x < (int)size.X; x++)
+                grid[0][x] = null;
+        }
+
         public void pushBlocks(ATetrimino t)
         {
+            updatedLine = new HashSet<int>();
             List<Block> blocks = t.getBlocks();
             int tx = (int)t.PosRel.X;
             int ty = (int)t.PosRel.Y;
@@ -61,12 +73,22 @@ namespace TetriClimber
             {
                 Vector2 pos = b.PosRel;
                 grid[(int)(pos.Y + ty)][(int)(pos.X + tx)] = b;
+                updatedLine.Add((int)(pos.Y + ty));
             }
         }
 
         public bool isBusyCase(Vector2 coord)
         {
-            return (grid[(int)coord.Y][(int)coord.X] == null);
+            if ((int)coord.Y >= 0)
+                return (grid[(int)coord.Y][(int)coord.X] != null);
+            return false;
+        }
+
+        public void checkFullLine()
+        {
+            foreach (int l in updatedLine)
+                if (isFullLine(l))
+                    removeLine(l);
         }
     }
 }
