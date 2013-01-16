@@ -44,7 +44,7 @@ namespace TetriClimber
         public static class Measures
         {
             public const int spriteSquareSize = 115;
-            public const float blockSize = 40f;
+            public const float blockSize = 30f; // 40f
             public const int borderSize = 5;
             public const int boardBlockWidth = 10;
             public const int boardBlockHeight = 22;
@@ -52,7 +52,10 @@ namespace TetriClimber
             public const float upBoardMargin = 20f;
             public const float boardWidth = 10f;
             public const float boardHeight = 22f;
+            public const int kickDegree = 2;
 
+            public const int portraitHeight = 889;
+            public const int portraitWidth = 500;
         }
     }
 }

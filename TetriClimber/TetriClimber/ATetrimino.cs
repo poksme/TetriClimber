@@ -59,6 +59,25 @@ namespace TetriClimber
             posRel.X++;
         }
 
+        public void downMove()
+        {
+            posRel.Y++;
+        }
+
+        public void upMove()
+        {
+            posRel.Y--;
+        }
+
+        public bool overlap(Board board)
+        {
+            foreach (Block b in shape)
+                if (board.isOutOfBond(new Vector2(PosRel.X + b.PosRel.X, PosRel.Y + b.PosRel.Y)) ||
+                    board.isBusyCase(new Vector2(PosRel.X + b.PosRel.X, PosRel.Y + b.PosRel.Y)))
+                    return true;
+            return false;
+        }
+
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);

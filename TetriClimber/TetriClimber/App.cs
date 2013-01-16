@@ -23,7 +23,7 @@ namespace TetriClimber
 
         private static TouchTarget touchTarget;
         //private Color backgroundColor = new Color(81, 81, 81);
-        private Color backgroundColor = Color.Wheat;
+        //private Color backgroundColor = Color.Gray;
         private bool applicationLoadCompleteSignalled;
 
         private UserOrientation currentOrientation = UserOrientation.Bottom;
@@ -150,7 +150,7 @@ namespace TetriClimber
             //if (currentOrientation == UserOrientation.Top)
             //{
               //  Console.Out.WriteLine("Vertical Orientataion");
-                //screenTransform = inverted;
+            //screenTransform = inverted;
             //}
 
             base.Initialize();
@@ -216,7 +216,7 @@ namespace TetriClimber
 
             //TODO: Rotate the UI based on the value of screenTransform here if desired
 
-            GraphicsDevice.Clear(backgroundColor);
+            GraphicsDevice.Clear(Constants.Color.background);
 
 
             //SpriteManager.Instance.begin();

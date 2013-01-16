@@ -58,7 +58,8 @@ namespace TetriClimber
             for (int i = 0; i < (int)size.X; i++)
                 grid[Y][i] = null;
             for (; Y > 0; Y--)
-                grid[Y] = grid[Y - 1];
+                for (int i = 0; i <(int)size.X; i++)
+                    grid[Y][i] = grid[Y - 1][i];
             for (int x = 0; x < (int)size.X; x++)
                 grid[0][x] = null;
         }
@@ -81,6 +82,14 @@ namespace TetriClimber
         {
             if ((int)coord.Y >= 0)
                 return (grid[(int)coord.Y][(int)coord.X] != null);
+            return false;
+        }
+
+        public bool isOutOfBond(Vector2 coord)
+        {
+            if ((int)coord.Y < 0 || (int)coord.Y >= Constants.Measures.boardBlockHeight ||
+                (int)coord.X < 0 || (int)coord.X >= Constants.Measures.boardBlockWidth)
+                return true;
             return false;
         }
 

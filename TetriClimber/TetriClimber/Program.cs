@@ -38,7 +38,8 @@ namespace TetriClimber
         {
             get
             {
-                return ((Form)Form.FromHandle(Window.Handle)).DesktopBounds.Size;
+                //return ((Form)Form.FromHandle(Window.Handle)).DesktopBounds.Size;
+                return new Size(Constants.Measures.portraitWidth, Constants.Measures.portraitHeight);
             }
         }
 
@@ -118,6 +119,8 @@ namespace TetriClimber
             int height = (InteractiveSurface.PrimarySurfaceDevice != null)
                             ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaHeight
                             : Screen.PrimaryScreen.WorkingArea.Height;
+            height = Constants.Measures.portraitHeight; //889;
+            width = Constants.Measures.portraitWidth; //500;
             Form form = (Form)Form.FromHandle(Window.Handle);
             form.ClientSize = new Size(width, height);
             form.WindowState = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)

@@ -20,7 +20,7 @@ namespace TetriClimber
             tetriminoFactory = TetriminoFactory.Instance;
             currTetrimino = tetriminoFactory.getTetrimino();
             cur = TimeSpan.Zero;
-            lat = new TimeSpan(10000000/3);
+            lat = new TimeSpan(10000000/6); // 3
         }
 
         public override void  Update(GameTime gameTime)
@@ -50,9 +50,53 @@ namespace TetriClimber
              currTetrimino.Draw(gameTime);
         }
 
+        private bool kickIt(int degree)
+        {
+            if (!currTetrimino.overlap(board))
+                return true;
+            if (degree > Constants.Measures.kickDegree)
+                return false;
+            if (currTetrimino.overlap(board))
+            {
+                for (int i = 0; i < degree; i++)
+                {
+                    currTetrimino.rightMove();
+                    if (!currTetrimino.overlap(board))
+                        return true;
+                }
+            }
+            if (currTetrimino.overlap(board))
+            {
+                for (int i = 0; i < degree; i++)
+                    currTetrimino.leftMove();
+                for (int i = 0; i < degree; i++)
+                {
+                    currTetrimino.leftMove();
+                    if (!currTetrimino.overlap(board))
+                        return true;
+                }
+            }
+            if (currTetrimino.overlap(board))
+            {
+                for (int i = 0; i < degree; i++)
+                    currTetrimino.rightMove();
+                for (int i = 0; i < degree; i++)
+                {
+                    currTetrimino.upMove();
+                    if (!currTetrimino.overlap(board))
+                        return true;
+                }
+                for (int i = 0; i < degree; i++)
+                    currTetrimino.downMove();
+            }
+            return kickIt(degree + 1);
+        }
+
         public void rightShift()
         {
             currTetrimino.rightShift();
+            if (kickIt(1) == false)
+                currTetrimino.leftShift();
             //Vector2 pos = currTetrimino.PosRel;
             //List<Block> shape;
 
