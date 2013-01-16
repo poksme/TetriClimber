@@ -140,5 +140,12 @@ namespace TetriClimber
             }
             return max;
         }
+
+        //public void dropDown(Board b)
+        //{
+        //    while (!overlap(b))
+        //        downMove();
+        //    upMove();
+        //}
     }
 }

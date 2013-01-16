@@ -112,11 +112,15 @@ namespace TetriClimber
         public void leftShift()
         {
             currTetrimino.leftShift();
+            if (kickIt(1) == false)
+                currTetrimino.rightShift();
         }
 
         public void dropDown()
         {
-            Console.Out.WriteLine("Down not implemented");
+            while (tetriminoCanGoingDown())
+                currTetrimino.downMove();
+            Console.Out.WriteLine("droping down");
         }
 
         public void rightMove()

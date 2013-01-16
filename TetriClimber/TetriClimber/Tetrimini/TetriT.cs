@@ -14,7 +14,7 @@ namespace TetriClimber
             orientations.Add(pos4);
         }
 
-        public void pos3()
+        public void pos2()
         {
             shape[0].setPosition(1, 0);
             shape[1].setPosition(1, 1);
@@ -22,7 +22,7 @@ namespace TetriClimber
             shape[3].setPosition(0, 1);
         }
 
-        public void pos4()
+        public void pos3()
         {
             shape[0].setPosition(0, 1);
             shape[1].setPosition(1, 1);
@@ -30,7 +30,7 @@ namespace TetriClimber
             shape[3].setPosition(1, 0);
         }
 
-        public override void pos1()
+        public void pos4()
         {
             shape[0].setPosition(1, 0);
             shape[1].setPosition(1, 1);
@@ -38,7 +38,7 @@ namespace TetriClimber
             shape[3].setPosition(2, 1);
         }
 
-        public void pos2()
+        public override void pos1()
         {
             shape[0].setPosition(0, 1);
             shape[1].setPosition(1, 1);
