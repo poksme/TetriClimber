@@ -1,3 +1,8 @@
 Content\blocks.xnb
+Content\ClearLineSFX.xnb
+Content\DropSFX.xnb
+Content\FastDropSFX.xnb
+Content\ShiftSFX.xnb
+Content\StageMusic.xnb
 Resources\icon.png
 TetriClimber.xml

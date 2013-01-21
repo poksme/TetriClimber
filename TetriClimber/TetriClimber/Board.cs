@@ -95,9 +95,15 @@ namespace TetriClimber
 
         public void checkFullLine()
         {
+            int i = 0;
             foreach (int l in updatedLine)
                 if (isFullLine(l))
+                {
                     removeLine(l);
+                    i++;
+                }
+            if (i != 0)
+                SoundManager.Instance.play(SoundManager.ESound.CLEARLINE, 0.25f * (float)i, 1f);
         }
     }
 }

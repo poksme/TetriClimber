@@ -18,6 +18,7 @@ namespace TetriClimber
         public Play() : base()
         {
             player1 = new GameSession();
+            SoundManager.Instance.bgmPlay();
         }
 
         public override void Draw(GameTime gameTime)
