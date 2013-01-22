@@ -91,7 +91,7 @@ namespace TetriClimber
             return false;
         }
 
-        public void checkFullLine()
+        public int checkFullLine()
         {
             int i = 0;
             foreach (int l in updatedLine)
@@ -102,6 +102,7 @@ namespace TetriClimber
                 }
             if (i != 0)
                 SoundManager.Instance.play(SoundManager.ESound.CLEARLINE, 0.25f * (float)i, 1f);
+            return i;
         }
     }
 }

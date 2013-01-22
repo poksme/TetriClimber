@@ -121,7 +121,8 @@
     <Compile Include="AUserInput.cs" />
     <Compile Include="KeyboardInput.cs" />
     <Compile Include="MenuManager.cs" />
-    <Compile Include="Play.cs" />
+    <Compile Include="OnePlayer.cs" />
+    <Compile Include="APlay.cs" />
     <Compile Include="PlayerControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

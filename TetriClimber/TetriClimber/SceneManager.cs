@@ -14,7 +14,7 @@ namespace TetriClimber
 
         private SceneManager():base(App.Game)
         {
-            scenes.Add(EScene.PLAY, new Play());
+            scenes.Add(EScene.PLAY, new OnePlayer());
         }
 
         public static SceneManager Instance

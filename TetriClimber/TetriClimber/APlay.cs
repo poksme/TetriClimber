@@ -7,20 +7,18 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetriClimber
 {
-    public class Play : AScene
+    public class APlay : AScene
     {
-        private GameSession player1;
         private PlayerControl control;
-        private TimeSpan lat = new TimeSpan(10000000 / 2);
-        private TimeSpan cur = new TimeSpan(0);
-        private TimeSpan turnLat = new TimeSpan(10000000 / 10);
+        protected TimeSpan lat = new TimeSpan(10000000 / 2);
+        protected TimeSpan cur = new TimeSpan(0);
+        protected TimeSpan turnLat = new TimeSpan(10000000 / 10);
 
         private Vector2 tmpOrtSize = new Vector2(0.2f, 50f);
         private Vector2 tmpPos = new Vector2();
 
-        public Play() : base()
+        public APlay() : base()
         {
-            player1 = new GameSession();
             control = new PlayerControl();
             SoundManager.Instance.bgmPlay();
         }
@@ -35,7 +33,7 @@ namespace TetriClimber
             SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X - 250f, tmpPos.Y), TextureManager.ETexture.PINK_CROSS, tmpOrtSize.X, tmpOrtSize.Y);
             SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X, tmpPos.Y - 250f), TextureManager.ETexture.VIOLET_HEXAGONE, tmpOrtSize.X, tmpOrtSize.Y);
             SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X - 750f, tmpPos.Y), TextureManager.ETexture.YELLOW_LINES, tmpOrtSize.X, tmpOrtSize.Y);
-            player1.Draw(gameTime);
+           
             control.Draw(gameTime);
         }
 
@@ -47,24 +45,6 @@ namespace TetriClimber
             tmpOrtSize.X += 0.001f;
             //tmpOrtSize.Y -= 1f;
             cur += gameTime.ElapsedGameTime;
-            if (gameTime.ElapsedGameTime != TimeSpan.Zero)
-            {
-                if (cur >= turnLat)
-                    cur = new TimeSpan(0);
-                if (App.ToucheInput.getDownTime(AUserInput.EInput.RIGHT) == gameTime.ElapsedGameTime ||
-                    (App.ToucheInput.getDownTime(AUserInput.EInput.RIGHT) > lat && cur == TimeSpan.Zero))
-                    player1.rightMove();
-                if (App.ToucheInput.getDownTime(AUserInput.EInput.TAP) == gameTime.ElapsedGameTime ||
-                    (App.ToucheInput.getDownTime(AUserInput.EInput.TAP) > lat && cur == TimeSpan.Zero))
-                    player1.rightShift();
-                if (App.ToucheInput.getDownTime(AUserInput.EInput.LEFT) == gameTime.ElapsedGameTime ||
-                    (App.ToucheInput.getDownTime(AUserInput.EInput.LEFT) > lat && cur == TimeSpan.Zero))
-                    player1.leftMove();
-                if (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime ||
-                    (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) > lat && cur == TimeSpan.Zero))
-                    player1.dropDown();
-            }
-            player1.Update(gameTime);
             control.Update(gameTime);
         }
     }

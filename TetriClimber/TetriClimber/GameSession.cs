@@ -13,9 +13,11 @@ namespace TetriClimber
         private ATetrimino currTetrimino;
         private TimeSpan cur;
         private TimeSpan lat;
+        private int score;
 
         public GameSession():base(App.Game)
         {
+            score = 0;
             board = new Board(new Vector2(Constants.Measures.boardBlockWidth, Constants.Measures.boardBlockHeight));
             tetriminoFactory = TetriminoFactory.Instance;
             currTetrimino = tetriminoFactory.getTetrimino();
@@ -37,7 +39,8 @@ namespace TetriClimber
                      if (SoundManager.Instance.getPlayingSound() != SoundManager.ESound.FASTDROP)
                          SoundManager.Instance.play(SoundManager.ESound.DROP);
                      board.pushBlocks(currTetrimino);
-                     board.checkFullLine();
+                     int nbLines = board.checkFullLine();
+                     score += nbLines * nbLines * 100;
                      currTetrimino = tetriminoFactory.getTetrimino();
                  }        
              }
@@ -48,6 +51,7 @@ namespace TetriClimber
  	         base.Draw(gameTime);
              board.Draw(gameTime);
              currTetrimino.Draw(gameTime);
+             Console.Out.WriteLine(score);
         }
 
         private bool kickIt(int degree)
@@ -99,16 +103,6 @@ namespace TetriClimber
                 currTetrimino.leftShift();
             else
                 SoundManager.Instance.play(SoundManager.ESound.SHIFT);
-            //Vector2 pos = currTetrimino.PosRel;
-            //List<Block> shape;
-
-            //currTetrimino.rightShift();
-            //shape = currTetrimino.getBlocks();
-            //Block rightest = currTetrimino.getMostRightBlock();
-            //if (!(currTetrimino.PosRel.X < Constants.Measures.boardBlockWidth - currTetrimino.getMostRightBlock().PosRel.X - 1))
-            //{
-            //    currTetrimino.leftMove();
-            //}
         }
 
         public void leftShift()
