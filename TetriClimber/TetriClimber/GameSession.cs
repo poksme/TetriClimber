@@ -14,46 +14,60 @@ namespace TetriClimber
         private TimeSpan cur;
         private TimeSpan lat;
         private int score;
+        private Climby climby;
+        private Dictionary<Climby.EState, Action> state;
 
-        public GameSession():base(App.Game)
+        public GameSession(SpriteManager.ESprite playerType):base(App.Game)
         {
-            score = 0;
             board = new Board(new Vector2(Constants.Measures.boardBlockWidth, Constants.Measures.boardBlockHeight));
+            climby = new Climby(playerType);
             tetriminoFactory = TetriminoFactory.Instance;
             currTetrimino = tetriminoFactory.getTetrimino();
             cur = TimeSpan.Zero;
             lat = new TimeSpan(10000000/6); // 3
+            score = 0;
+            state = new Dictionary<Climby.EState, Action>();
+            #region Climby State
+            state.Add(Climby.EState.FALL, climbyFall);
+            state.Add(Climby.EState.CLIMB, climbyClimb);
+            state.Add(Climby.EState.MOVE, climbyMove);
+            state.Add(Climby.EState.STOP, climbyStop);
+            #endregion
         }
 
-        public override void  Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
- 	         base.Update(gameTime);
-             cur += gameTime.ElapsedGameTime;
-             if (cur > lat)
-             {
-                 cur = TimeSpan.Zero;
-                 if (tetriminoCanGoingDown())
-                    currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
-                 else
-                 {
-                     if (SoundManager.Instance.getPlayingSound() != SoundManager.ESound.FASTDROP)
-                         SoundManager.Instance.play(SoundManager.ESound.DROP);
-                     board.pushBlocks(currTetrimino);
-                     int nbLines = board.checkFullLine();
-                     score += nbLines * nbLines * 100;
-                     currTetrimino = tetriminoFactory.getTetrimino();
-                 }        
-             }
+ 	        base.Update(gameTime);
+            cur += gameTime.ElapsedGameTime;
+            if (cur > lat)
+            {
+                cur = TimeSpan.Zero;
+                if (tetriminoCanGoingDown())
+                currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
+                else
+                {
+                    if (SoundManager.Instance.getPlayingSound() != SoundManager.ESound.FASTDROP)
+                        SoundManager.Instance.play(SoundManager.ESound.DROP);
+                    board.pushBlocks(currTetrimino);
+                    int nbLines = board.checkFullLine();
+                    score += nbLines * nbLines * 100;
+                    currTetrimino = tetriminoFactory.getTetrimino();
+                }        
+            }
+            state[climby.State]();
+            climby.Update(gameTime);
         }
 
-        public override void  Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
  	         base.Draw(gameTime);
              board.Draw(gameTime);
              currTetrimino.Draw(gameTime);
+             climby.Draw(gameTime);
              Console.Out.WriteLine(score);
         }
 
+        #region Tetrimino Action
         private bool kickIt(int degree)
         {
             if (!currTetrimino.overlap(board))
@@ -156,6 +170,23 @@ namespace TetriClimber
                     return false;
             }
             return true;
+        }
+        #endregion
+
+        private void climbyFall()
+        {
+        }
+
+        private void climbyClimb()
+        {
+        }
+
+        private void climbyMove()
+        {
+        }
+
+        private void climbyStop()
+        {
         }
     }
 }

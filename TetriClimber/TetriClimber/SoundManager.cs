@@ -59,11 +59,13 @@ namespace TetriClimber
         }
         internal void bgmPause()
         {
+            return;
             bgm_.Pause();
         }
 
         internal void stopPlaying()
         {
+            return;
             if (!playing.IsDisposed)
             {
                 playing.Stop();
@@ -79,12 +81,13 @@ namespace TetriClimber
 
         internal void setBgmPitch(float p)
         {
+            return;
             bgm_.Pitch = p;
         }
 
         internal ESound getPlayingSound()
         {
-            return ESound.BGM;
+            return ESound.NONE;
             if (playing.State == SoundState.Playing)
                 return cur;
             return ESound.NONE;

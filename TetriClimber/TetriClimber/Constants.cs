@@ -50,8 +50,8 @@ namespace TetriClimber
             public const float boardBlockHeight = 20f;
             public static float leftBoardMargin = (float)Math.Round((portraitWidth - boardBlockWidth * blockSize) / 2f);
             public static float upBoardMargin = (float)Math.Round((portraitHeight - boardBlockHeight * blockSize) / 2f);
-            public const float boardWidth = 10f;
-            public const float boardHeight = 20f;
+            public const float boardWidth = boardBlockWidth * blockSize;
+            public const float boardHeight = boardBlockHeight * blockSize;
             public const int kickDegree = 2;
             public const float buttonSize = 50f;
             public const float portraitHeight = 889f;

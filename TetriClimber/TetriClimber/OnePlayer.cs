@@ -12,7 +12,7 @@ namespace TetriClimber
 
         public OnePlayer():base()
         {
-            player1 = new GameSession();
+            player1 = new GameSession(SpriteManager.ESprite.CLIMBYBLUE);
         }
 
         public override void Update(GameTime gameTime)
