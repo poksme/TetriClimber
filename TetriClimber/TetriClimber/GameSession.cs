@@ -34,13 +34,13 @@ namespace TetriClimber
                     currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
                  else
                  {
+                     if (SoundManager.Instance.getPlayingSound() != SoundManager.ESound.FASTDROP)
+                         SoundManager.Instance.play(SoundManager.ESound.DROP);
                      board.pushBlocks(currTetrimino);
                      board.checkFullLine();
                      currTetrimino = tetriminoFactory.getTetrimino();
-                 }
-                    
+                 }        
              }
-
         }
 
         public override void  Draw(GameTime gameTime)
@@ -97,6 +97,8 @@ namespace TetriClimber
             currTetrimino.rightShift();
             if (kickIt(1) == false)
                 currTetrimino.leftShift();
+            else
+                SoundManager.Instance.play(SoundManager.ESound.SHIFT);
             //Vector2 pos = currTetrimino.PosRel;
             //List<Block> shape;
 
@@ -112,11 +114,15 @@ namespace TetriClimber
         public void leftShift()
         {
             currTetrimino.leftShift();
+            if (kickIt(1) == false)
+                currTetrimino.rightShift();
         }
 
         public void dropDown()
         {
-            Console.Out.WriteLine("Down not implemented");
+            while (tetriminoCanGoingDown())
+                currTetrimino.downMove();
+            SoundManager.Instance.play(SoundManager.ESound.FASTDROP);
         }
 
         public void rightMove()
