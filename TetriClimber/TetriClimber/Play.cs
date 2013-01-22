@@ -10,6 +10,7 @@ namespace TetriClimber
     public class Play : AScene
     {
         private GameSession player1;
+        private PlayerControl control;
 
         private TimeSpan lat = new TimeSpan(10000000 / 2);
         private TimeSpan cur = new TimeSpan(0);
@@ -18,12 +19,14 @@ namespace TetriClimber
         public Play() : base()
         {
             player1 = new GameSession();
+            control = new PlayerControl();
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
             player1.Draw(gameTime);
+            control.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
@@ -45,6 +48,7 @@ namespace TetriClimber
                 (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) > lat && cur == TimeSpan.Zero))
                 player1.dropDown();
             player1.Update(gameTime);
+            control.Update(gameTime);
         }
     }
 }

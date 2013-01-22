@@ -8,7 +8,7 @@ namespace TetriClimber
 {
     public class SpriteManager
     {
-        public enum ESprite { Z, T, Q, S, L, P, O };
+        public enum ESprite { Z, T, Q, S, L, P, O, PAUSE, LEFT, RIGHT };
         private Dictionary<ESprite, KeyValuePair<Rectangle, TextureManager.ETexture>> sprites = null;
         private TextureManager textureManager = null;
         private static SpriteManager instance = null;
@@ -24,7 +24,10 @@ namespace TetriClimber
             sprites.Add(ESprite.S, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(115,  345, 115, 115),  TextureManager.ETexture.TETRIMINO));
             sprites.Add(ESprite.L, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(345,  345, 115, 115),  TextureManager.ETexture.TETRIMINO));
             sprites.Add(ESprite.P, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(460,  345, 115, 115),  TextureManager.ETexture.TETRIMINO));
-            sprites.Add(ESprite.O, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(690,  345, 115, 115),  TextureManager.ETexture.TETRIMINO));
+            sprites.Add(ESprite.O, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(690, 345, 115, 115), TextureManager.ETexture.TETRIMINO));
+            sprites.Add(ESprite.PAUSE, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(0, 230, 115, 115), TextureManager.ETexture.TETRIMINO));
+            sprites.Add(ESprite.LEFT, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(2 * 115, 2 * 115, 115, 115), TextureManager.ETexture.TETRIMINO));
+            sprites.Add(ESprite.RIGHT, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(115, 2 * 115, 115, 115), TextureManager.ETexture.TETRIMINO));
             #endregion
         }
 
@@ -41,6 +44,11 @@ namespace TetriClimber
         public void begin()
         {
             App.SpriteBatch.Begin();
+        }
+
+        public void drawAtRecPos(ESprite es, Rectangle rec)
+        {
+            App.SpriteBatch.Draw(textureManager.getTexture(sprites[es].Value), rec, sprites[es].Key, Color.White);
         }
 
         public void drawAtPos(ESprite es, Vector2 pos)

@@ -44,18 +44,18 @@ namespace TetriClimber
         public static class Measures
         {
             public const int spriteSquareSize = 115;
-            public const float blockSize = 30f; // 40f
+            public const float blockSize = 35f; // 40f
             public const int borderSize = 5;
-            public const int boardBlockWidth = 10;
-            public const int boardBlockHeight = 22;
-            public const float leftBoardMargin = 20f;
-            public const float upBoardMargin = 20f;
+            public const float boardBlockWidth = 10f;
+            public const float boardBlockHeight = 20f;
+            public static float leftBoardMargin = (float)Math.Round((portraitWidth - boardBlockWidth * blockSize) / 2f);
+            public static float upBoardMargin = (float)Math.Round((portraitHeight - boardBlockHeight * blockSize) / 2f);
             public const float boardWidth = 10f;
-            public const float boardHeight = 22f;
+            public const float boardHeight = 20f;
             public const int kickDegree = 2;
-
-            public const int portraitHeight = 889;
-            public const int portraitWidth = 500;
+            public const float buttonSize = 50f;
+            public const float portraitHeight = 889f;
+            public const float portraitWidth = 500f;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace TetriClimber
 
         public GameSession():base(App.Game)
         {
-            board = new Board(new Vector2(10, 22));
+            board = new Board(new Vector2(Constants.Measures.boardBlockWidth, Constants.Measures.boardBlockHeight));
             tetriminoFactory = TetriminoFactory.Instance;
             currTetrimino = tetriminoFactory.getTetrimino();
             cur = TimeSpan.Zero;
@@ -150,7 +150,7 @@ namespace TetriClimber
             List<Block> shapes = currTetrimino.getBlocks();
             foreach (Block b in shapes)
             {
-                if (currTetrimino.PosRel.Y + b.PosRel.Y > Constants.Measures.boardBlockHeight - 2)
+                if (currTetrimino.PosRel.Y + b.PosRel.Y > Constants.Measures.boardBlockHeight -2)
                     return false;
                 if (board.isBusyCase(new Vector2(currTetrimino.PosRel.X + b.PosRel.X, currTetrimino.PosRel.Y + b.PosRel.Y + 1)))
                     return false;

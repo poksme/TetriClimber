@@ -8,14 +8,12 @@ namespace TetriClimber
 {
     public class Board : DrawableGameComponent
     {
-        Vector2 pos;
         Vector2 size;
         Block[][] grid;
         HashSet<int> updatedLine;
 
         public Board(Vector2 size) : base(App.Game)
         {
-            pos = Vector2.Zero;
             this.size = size;
             grid = new Block[(int)size.Y][];
             for (int i = 0; i < grid.Length; i++)
