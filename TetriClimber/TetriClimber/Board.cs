@@ -34,7 +34,7 @@ namespace TetriClimber
  	        base.Draw(gameTime);
             //SpriteManager.Instance.drawRectangleAbsPos(new Rectangle(20, 20, (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), 
             //                                            Color.White * 0.5f);
-            SpriteManager.Instance.drawBoardedRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin), (int)(Constants.Measures.upBoardMargin), (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), Color.White * 0.5f,
+            SpriteManager.Instance.drawBoardedRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin), (int)(Constants.Measures.upBoardMargin), (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), Color.White * 0.8f,
                                                               Constants.Measures.borderSize, Constants.Color.border);
             for (int y = 0; y < Constants.Measures.boardBlockHeight; y++)
                 for (int x = 0; x < Constants.Measures.boardBlockWidth; x++)
