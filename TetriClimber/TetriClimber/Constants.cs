@@ -56,6 +56,7 @@ namespace TetriClimber
             public const float buttonSize = 50f;
             public const float portraitHeight = 889f;
             public const float portraitWidth = 500f;
+            public const float BgShapesSize = 800f;
         }
     }
 }

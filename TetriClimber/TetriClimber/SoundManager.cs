@@ -18,6 +18,7 @@ namespace TetriClimber
 
         private SoundManager()
         {
+            return;
             sounds = new Dictionary<ESound, SoundEffect>();
             sounds.Add(ESound.CLEARLINE, App.ContentManager.Load<SoundEffect>("ClearLineSFX"));
             sounds.Add(ESound.DROP, App.ContentManager.Load<SoundEffect>("DropSFX"));
@@ -44,6 +45,7 @@ namespace TetriClimber
 
         internal void play(ESound eSound, float pitch = 0, float volume = 0.5f)
         {
+            return;
             cur = eSound;
             if (!playing.IsDisposed)
             {
@@ -71,6 +73,7 @@ namespace TetriClimber
 
         internal void bgmPlay()
         {
+            return;
             bgm_.Play();
         }
 
@@ -81,6 +84,7 @@ namespace TetriClimber
 
         internal ESound getPlayingSound()
         {
+            return ESound.BGM;
             if (playing.State == SoundState.Playing)
                 return cur;
             return ESound.NONE;

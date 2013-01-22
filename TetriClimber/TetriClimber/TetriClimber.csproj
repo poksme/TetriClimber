@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AScene.cs" />
+    <Compile Include="Background.cs" />
     <Compile Include="Block.cs" />
     <Compile Include="ATetrimino.cs" />
     <Compile Include="Board.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="App.cs" />
     <Compile Include="SceneManager.cs" />
+    <Compile Include="ShapeData.cs" />
     <Compile Include="SoundManager.cs" />
     <Compile Include="SpriteManager.cs" />
     <Compile Include="Tetrimini\TetriL.cs" />

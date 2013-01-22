@@ -87,7 +87,7 @@ namespace TetriClimber
 
         internal void drawShapeAtPos(Vector2 pos, TextureManager.ETexture shape, float ort, float sprtSize)
         {
-            App.SpriteBatch.Draw(textureManager.getTexture(shape), new Vector2(pos.X + sprtSize / 2, pos.Y + sprtSize / 2), new Rectangle(0, 0, 800, 800), Color.White, ort, new Vector2(Constants.Measures.spriteSquareSize / 2f), sprtSize / Constants.Measures.spriteSquareSize, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+            App.SpriteBatch.Draw(textureManager.getTexture(shape), new Vector2(pos.X + sprtSize / 2, pos.Y + sprtSize / 2), new Rectangle(0, 0, 800, 800), Color.White, ort, new Vector2(800 / 2f), sprtSize / 800, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
         }
     }
 }
