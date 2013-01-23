@@ -73,7 +73,7 @@
       <Name>StageMusic</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
-	</Compile>
+    </Compile>
     <Compile Include="blue_square.png">
       <Name>blue_square</Name>
       <Importer>TextureImporter</Importer>
@@ -99,13 +99,15 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="violet_hexagone.png">
-      <Name>violet_hexagone</Name>
+    <Compile Include="yellow_lines.png">
+      <Name>yellow_lines</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="yellow_lines.png">
-      <Name>yellow_lines</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="violet_hexagone.png">
+      <Name>violet_hexagone</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
