@@ -24,7 +24,7 @@ namespace TetriClimber
             tetriminoFactory = TetriminoFactory.Instance;
             currTetrimino = tetriminoFactory.getTetrimino();
             cur = TimeSpan.Zero;
-            lat = new TimeSpan(10000000/6); // 3
+            lat = new TimeSpan(10000000/3); // 3
             score = 0;
             state = new Dictionary<Climby.EState, Action>();
             #region Climby State
@@ -172,7 +172,7 @@ namespace TetriClimber
             return true;
         }
         #endregion
-
+        #region Climby Action
         private void climbyFall()
         {
         }
@@ -183,10 +183,55 @@ namespace TetriClimber
 
         private void climbyMove()
         {
+            if (climby.Direction == Climby.EDirection.RIGHT)
+            {
+                if (climby.Pos.X + Constants.Measures.blockSize >= Constants.Measures.leftBoardMargin + Constants.Measures.boardWidth)
+                    climby.Direction = Climby.EDirection.LEFT;
+                else if (board.isBusyCase(new Vector2((climby.Pos.X + climby.Speed +Constants.Measures.blockSize - Constants.Measures.leftBoardMargin) / Constants.Measures.blockSize,
+                    (climby.Pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize)))
+                {
+                    #region testClimb
+
+                    #endregion
+                    #region testGauche
+                        if (board.isBusyCase(new Vector2((climby.Pos.X - climby.Speed - Constants.Measures.leftBoardMargin) / Constants.Measures.blockSize,
+                        (climby.Pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize)))
+                            climby.State = Climby.EState.STOP;
+                        else
+                        {
+                            climby.Direction = Climby.EDirection.LEFT;
+                            climby.State = Climby.EState.MOVE;
+                        }
+                    #endregion
+                }
+                else
+                    climby.State = Climby.EState.MOVE;
+            }
+            else
+            {
+                if (climby.Pos.X <= Constants.Measures.leftBoardMargin)
+                    climby.Direction = Climby.EDirection.RIGHT;
+                else if (board.isBusyCase(new Vector2((climby.Pos.X - climby.Speed - Constants.Measures.leftBoardMargin) / Constants.Measures.blockSize,
+                    (climby.Pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize)))
+                {
+                    if (board.isBusyCase(new Vector2((climby.Pos.X + climby.Speed + Constants.Measures.blockSize - Constants.Measures.leftBoardMargin) / Constants.Measures.blockSize,
+                    (climby.Pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize)))
+                        climby.State = Climby.EState.STOP;
+                    else
+                    {
+                        climby.Direction = Climby.EDirection.RIGHT;
+                        climby.State = Climby.EState.MOVE;
+                    }
+                }
+                else
+                    climby.State = Climby.EState.MOVE;
+            }
         }
 
         private void climbyStop()
         {
+            climbyMove();
         }
+        #endregion
     }
 }

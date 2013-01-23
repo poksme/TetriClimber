@@ -119,6 +119,7 @@
     <Compile Include="Button.cs" />
     <Compile Include="Climby.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="CoordHelper.cs" />
     <Compile Include="GameSession.cs" />
     <Compile Include="AUserInput.cs" />
     <Compile Include="KeyboardInput.cs" />

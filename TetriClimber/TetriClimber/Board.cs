@@ -78,9 +78,11 @@ namespace TetriClimber
 
         public bool isBusyCase(Vector2 coord)
         {
-            if ((int)coord.Y >= 0)
+            if ((int)coord.Y < 0)
+                return false;
+            if ((int)coord.X >= 0 && (int)coord.X < Constants.Measures.boardBlockWidth)
                 return (grid[(int)coord.Y][(int)coord.X] != null);
-            return false;
+            return true;
         }
 
         public bool isOutOfBond(Vector2 coord)
