@@ -32,7 +32,9 @@ namespace TetriClimber
 
         private static AUserInput ti;
 
-        // FOR SINGLETON PURPOSE 
+        /// <summary>
+        /// For singleton purpose. 
+        /// </summary>
         private static SpriteBatch spriteBatch;
         private static ContentManager content;
         private static Game game;
