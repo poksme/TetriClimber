@@ -93,18 +93,29 @@ namespace TetriClimber
             return false;
         }
 
-        public int checkFullLine()
+        public List<int> checkFullLine()
         {
-            int i = 0;
+            List<int> brokenLine = new List<int>();
+            
             foreach (int l in updatedLine)
                 if (isFullLine(l))
                 {
                     removeLine(l);
-                    i++;
+                    brokenLine.Add(l);
+                    Console.Out.WriteLine(l);
                 }
-            if (i != 0)
-                SoundManager.Instance.play(SoundManager.ESound.CLEARLINE, 0.25f * (float)i, 1f);
-            return i;
+            int size = brokenLine.Count;
+            if (size != 0)
+                SoundManager.Instance.play(SoundManager.ESound.CLEARLINE, 0.25f * (float)size, 1f);
+            return brokenLine;
+        }
+
+        public Block getBlock(float X, float Y)
+        {
+            if (X >= Constants.Measures.boardBlockWidth || X < 0
+                || Y >= Constants.Measures.boardBlockHeight || Y < 0)
+                return new Block(SpriteManager.ESprite.CLIMBYBLUE, null);
+            return grid[(int)Y][(int)X];
         }
     }
 }

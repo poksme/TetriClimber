@@ -16,6 +16,8 @@ namespace TetriClimber
         private int score;
         private Climby climby;
         private Dictionary<Climby.EState, Action> state;
+        private Vector2 climbyPosRel;
+        private Climby.EDirection climbyDir;
 
         public GameSession(SpriteManager.ESprite playerType):base(App.Game)
         {
@@ -26,10 +28,13 @@ namespace TetriClimber
             cur = TimeSpan.Zero;
             lat = new TimeSpan(10000000/3); // 3
             score = 0;
+            climbyPosRel = new Vector2();
             state = new Dictionary<Climby.EState, Action>();
             #region Climby State
             state.Add(Climby.EState.FALL, climbyFall);
+            state.Add(Climby.EState.FREE_FALL, climbyFreeFall);
             state.Add(Climby.EState.CLIMB, climbyClimb);
+            state.Add(Climby.EState.END_CLIMB, climbyClimb);
             state.Add(Climby.EState.MOVE, climbyMove);
             state.Add(Climby.EState.STOP, climbyStop);
             #endregion
@@ -49,13 +54,18 @@ namespace TetriClimber
                     if (SoundManager.Instance.getPlayingSound() != SoundManager.ESound.FASTDROP)
                         SoundManager.Instance.play(SoundManager.ESound.DROP);
                     board.pushBlocks(currTetrimino);
-                    int nbLines = board.checkFullLine();
-                    score += nbLines * nbLines * 100;
+                    List<int> brokenLines = board.checkFullLine();
+                    score += brokenLines.Count * brokenLines.Count * 100;
                     currTetrimino = tetriminoFactory.getTetrimino();
                 }        
             }
+            climbyDir = climby.Direction;
+            climbyPosRel.X = climby.PosRel.X;
+            climbyPosRel.Y = climby.PosRel.Y;
             state[climby.State]();
             climby.Update(gameTime);
+            if (climbyPosRel.X != climby.PosRel.X || climbyDir != climby.Direction)
+                updateAroundSquare();
         }
 
         public override void Draw(GameTime gameTime)
@@ -64,7 +74,7 @@ namespace TetriClimber
              board.Draw(gameTime);
              currTetrimino.Draw(gameTime);
              climby.Draw(gameTime);
-             Console.Out.WriteLine(score);
+            //Console.Out.WriteLine(score);
         }
 
         #region Tetrimino Action
@@ -175,63 +185,108 @@ namespace TetriClimber
         #region Climby Action
         private void climbyFall()
         {
+            if (climby.sqrExist(Climby.EAroundSquare.FRONT) ||
+                climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER) ||
+                !climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER_UNDER))
+                climby.State = Climby.EState.MOVE;
+            else if (Object.ReferenceEquals(board.getBlock(climby.PosRel.X, climby.PosRel.Y),climby.getBlock(Climby.EAroundSquare.FRONT)))
+                climby.State = Climby.EState.FREE_FALL;
+        }
+
+        private void climbyFreeFall()
+        {
+            if (board.getBlock(climby.PosRel.X, climby.PosRel.Y + 1) != null)
+                climby.State = Climby.EState.MOVE;
         }
 
         private void climbyClimb()
         {
+            if (climby.sqrExist(Climby.EAroundSquare.TOP))
+                climby.State = Climby.EState.FREE_FALL;
+            else if (climby.sqrExist(Climby.EAroundSquare.FRONT_TOP))
+                climby.State = Climby.EState.FREE_FALL;
+            else if (Object.ReferenceEquals(board.getBlock(climby.PosRel.X, climby.PosRel.Y),climby.getBlock(Climby.EAroundSquare.FRONT_TOP)))
+                climby.State = Climby.EState.MOVE;
+            else if (Object.ReferenceEquals(board.getBlock(climby.PosRel.X, climby.PosRel.Y), climby.getBlock(Climby.EAroundSquare.TOP)))
+                climby.State = Climby.EState.END_CLIMB;
         }
 
         private void climbyMove()
         {
-            if (climby.Direction == Climby.EDirection.RIGHT)
-            {
-                if (climby.Pos.X + Constants.Measures.blockSize >= Constants.Measures.leftBoardMargin + Constants.Measures.boardWidth)
-                    climby.Direction = Climby.EDirection.LEFT;
-                else if (board.isBusyCase(new Vector2((climby.Pos.X + climby.Speed +Constants.Measures.blockSize - Constants.Measures.leftBoardMargin) / Constants.Measures.blockSize,
-                    (climby.Pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize)))
-                {
-                    #region testClimb
-
-                    #endregion
-                    #region testGauche
-                        if (board.isBusyCase(new Vector2((climby.Pos.X - climby.Speed - Constants.Measures.leftBoardMargin) / Constants.Measures.blockSize,
-                        (climby.Pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize)))
-                            climby.State = Climby.EState.STOP;
-                        else
-                        {
-                            climby.Direction = Climby.EDirection.LEFT;
-                            climby.State = Climby.EState.MOVE;
-                        }
-                    #endregion
-                }
+            if (!climby.sqrExist(Climby.EAroundSquare.UNDER))
+                climby.State = Climby.EState.FREE_FALL;
+            else if (climby.sqrExist(Climby.EAroundSquare.FRONT))
+                if (climby.sqrExist(Climby.EAroundSquare.FRONT_TOP))
+                    climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT; //REVERT
                 else
-                    climby.State = Climby.EState.MOVE;
-            }
-            else
-            {
-                if (climby.Pos.X <= Constants.Measures.leftBoardMargin)
-                    climby.Direction = Climby.EDirection.RIGHT;
-                else if (board.isBusyCase(new Vector2((climby.Pos.X - climby.Speed - Constants.Measures.leftBoardMargin) / Constants.Measures.blockSize,
-                    (climby.Pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize)))
-                {
-                    if (board.isBusyCase(new Vector2((climby.Pos.X + climby.Speed + Constants.Measures.blockSize - Constants.Measures.leftBoardMargin) / Constants.Measures.blockSize,
-                    (climby.Pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize)))
-                        climby.State = Climby.EState.STOP;
+                    if (climby.sqrExist(Climby.EAroundSquare.TOP))
+                        climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT; //REVERT
                     else
-                    {
-                        climby.Direction = Climby.EDirection.RIGHT;
-                        climby.State = Climby.EState.MOVE;
-                    }
-                }
+                       climby.State = Climby.EState.CLIMB;
+            else if (!climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER))
+                if (climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER_UNDER))
+                    climby.State = Climby.EState.FALL;
                 else
-                    climby.State = Climby.EState.MOVE;
-            }
+                    climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT; //REVERT
         }
+
+        //private void climbyMove()
+        //{
+        //    if (!climby.sqrExist(Climby.EAroundSquare.UNDER))
+        //    {
+        //        climby.State = Climby.EState.FREE_FALL;
+        //        return;
+        //    }
+        //    else if (climby.sqrExist(Climby.EAroundSquare.FRONT))
+        //    {
+        //        if (climby.sqrExist(Climby.EAroundSquare.FRONT_TOP))
+        //        {
+        //            climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT;
+        //            return;
+        //        }
+        //        else
+        //        {
+        //            if (climby.sqrExist(Climby.EAroundSquare.TOP))
+        //            {
+        //                climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT;
+        //                return;
+        //            }
+        //            climby.State = Climby.EState.CLIMB;
+        //            return;
+        //        }
+        //    }
+        //    else if (!climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER))
+        //    {
+        //        if (climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER_UNDER))
+        //        {
+        //            climby.State = Climby.EState.FALL;
+        //            return;
+        //        }
+        //        else
+        //        {
+        //            climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT;
+        //            return;
+        //        }
+        //    }
+        //}
 
         private void climbyStop()
         {
             climbyMove();
         }
         #endregion
+        
+        private void updateAroundSquare()
+        {
+            Vector2 pRel = climby.PosRel;
+
+            climby.setAroundSquare(Climby.EAroundSquare.FRONT, board.getBlock(pRel.X + climby.getIntOrt(), pRel.Y));
+            climby.setAroundSquare(Climby.EAroundSquare.FRONT_TOP, board.getBlock(pRel.X + climby.getIntOrt(), pRel.Y - 1));
+            climby.setAroundSquare(Climby.EAroundSquare.FRONT_UNDER, board.getBlock(pRel.X + climby.getIntOrt(), pRel.Y + 1));
+            climby.setAroundSquare(Climby.EAroundSquare.FRONT_UNDER_UNDER, board.getBlock(pRel.X + climby.getIntOrt(), pRel.Y + 2));
+            climby.setAroundSquare(Climby.EAroundSquare.TOP, board.getBlock(pRel.X, pRel.Y - 1));
+            climby.setAroundSquare(Climby.EAroundSquare.UNDER, board.getBlock(pRel.X, pRel.Y + 1));
+
+        }
     }
 }
