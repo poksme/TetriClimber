@@ -67,7 +67,7 @@ namespace TetriClimber
                 grid[0][x] = null;
         }
 
-        public void pushBlocks(ATetrimino t)
+        public void pushBlocks(ATetrimino t, Rectangle climbyDeadZone)
         {
             updatedLine = new HashSet<int>();
             List<Block> blocks = t.getBlocks();
@@ -77,9 +77,10 @@ namespace TetriClimber
             {
                 b.setHitBoxValue((int)((b.PosRel.X + tx) * Constants.Measures.blockSize + Constants.Measures.leftBoardMargin),
                                  (int)((b.PosRel.Y + ty) * Constants.Measures.blockSize + Constants.Measures.upBoardMargin));
-                Vector2 pos = b.PosRel;
-                grid[(int)(pos.Y + ty)][(int)(pos.X + tx)] = b;
-                updatedLine.Add((int)(pos.Y + ty));
+                if (climbyDeadZone.Intersects(b.HitBox))
+                    while (true) ;
+                grid[(int)(b.PosRel.Y + ty)][(int)(b.PosRel.X + tx)] = b;
+                updatedLine.Add((int)(b.PosRel.Y + ty));
             }
         }
 

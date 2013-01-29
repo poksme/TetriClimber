@@ -21,6 +21,7 @@ namespace TetriClimber
         private float rotation;
         private float speed;
         private Rectangle actualPosition;
+        private Rectangle deadZone;
 
         public Climby(SpriteManager.ESprite sk):base(App.Game)
         {
@@ -28,6 +29,8 @@ namespace TetriClimber
             pos = new Vector2(Constants.Measures.leftBoardMargin + Constants.Measures.boardWidth / 2,
                                   Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.blockSize);
             actualPosition = new Rectangle((int)pos.X, (int)pos.Y, (int)Constants.Measures.blockSize, (int)Constants.Measures.blockSize);
+            deadZone = new Rectangle((int)pos.X + (int)(Constants.Measures.blockSize / 3),
+                                     (int)pos.Y , (int)Constants.Measures.blockSize / 3, (int)Constants.Measures.blockSize);
             actions = new Dictionary<EState, Action>();
             #region Actions
             actions.Add(EState.CLIMB, climb);
@@ -93,11 +96,23 @@ namespace TetriClimber
             }
         }
 
-        public int          getIntOrt()                                 { return direction == EDirection.LEFT ? -1 : 1; }
+        public Point getRelPos()
+        {
+            return new Point((int)((pos.X - Constants.Measures.leftBoardMargin) / Constants.Measures.blockSize),
+                             (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize));
+        }
+
+        public void stepDown(int step = 1)
+        {
+            pos.Y += step * Constants.Measures.blockSize;
+        }
+
+        public int          getIntOrt()     { return direction == EDirection.LEFT ? -1 : 1; }
         public Rectangle    ActualPosition  { get { return actualPosition; }    set { actualPosition = value; } }
         public Vector2      Pos             { get { return pos; }               set { pos = value; } }
         public EState       State           { get { return state; }             set { state = value; } }
         public EDirection   Direction       { get { return direction; }         set { direction = value; } }
         public float        Speed           { get { return speed; }             set { speed = value; } }
+        public Rectangle DeadZone           { get { deadZone.X = (int)pos.X + (int)(Constants.Measures.blockSize / 3); deadZone.Y = (int)pos.Y; return deadZone; } }
     }
 }

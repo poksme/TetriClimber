@@ -67,14 +67,27 @@ namespace TetriClimber
             {
                 cur = TimeSpan.Zero;
                 if (tetriminoCanGoingDown())
-                currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
+                    currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
                 else
                 {
                     if (SoundManager.Instance.getPlayingSound() != SoundManager.ESound.FASTDROP)
                         SoundManager.Instance.play(SoundManager.ESound.DROP);
-                    board.pushBlocks(currTetrimino);
+                    
+                    board.pushBlocks(currTetrimino, climby.DeadZone);
+                    #region FullLine Event
                     List<int> brokenLines = board.checkFullLine();
-                    score += brokenLines.Count * brokenLines.Count * 100;
+                    if (brokenLines.Count > 0) // Happens when lines are borken
+                    {
+                        Point climbyRelPos = climby.getRelPos();
+                        score += brokenLines.Count * brokenLines.Count * 100;
+                        int nbDown = 0;
+                        foreach (int l in brokenLines)
+                            if (climbyRelPos.Y < l)
+                                nbDown++;
+                        if (nbDown > 0)
+                            climby.stepDown(nbDown);
+                    }
+                    #endregion
                     currTetrimino = tetriminoFactory.getTetrimino();
                 }        
             }
@@ -101,6 +114,7 @@ namespace TetriClimber
              SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.TOP]), Color.Red);
              SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.UNDER]), Color.Red);
              SpriteManager.Instance.drawRectangleAbsPos(climby.ActualPosition, Color.Blue);
+             //SpriteManager.Instance.drawRectangleAbsPos(climby.DeadZone, Color.Green);
             // UNCOMMENT THIS BLOCK TO SEE ALL THE HITBOXES
             //Console.Out.WriteLine(score);
         }
