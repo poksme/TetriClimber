@@ -8,9 +8,10 @@ namespace TetriClimber
 {
     public class Board : DrawableGameComponent
     {
-        Vector2 size;
-        Block[][] grid;
-        HashSet<int> updatedLine;
+        private Vector2 size;
+        private Block[][] grid;
+        private HashSet<int> updatedLine;
+        private int camUp;
 
         public Board(Vector2 size) : base(App.Game)
         {
@@ -27,6 +28,7 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            camUp = 0;
         }
 
         public override void  Draw(GameTime gameTime)
@@ -67,7 +69,7 @@ namespace TetriClimber
                 grid[0][x] = null;
         }
 
-        public void pushBlocks(ATetrimino t, Rectangle climbyDeadZone)
+        public bool pushBlocks(ATetrimino t, Rectangle climbyDeadZone)
         {
             updatedLine = new HashSet<int>();
             List<Block> blocks = t.getBlocks();
@@ -78,10 +80,20 @@ namespace TetriClimber
                 b.setHitBoxValue((int)((b.PosRel.X + tx) * Constants.Measures.blockSize + Constants.Measures.leftBoardMargin),
                                  (int)((b.PosRel.Y + ty) * Constants.Measures.blockSize + Constants.Measures.upBoardMargin));
                 if (climbyDeadZone.Intersects(b.HitBox))
-                    while (true) ;
+                    return true ; // DEATH
                 grid[(int)(b.PosRel.Y + ty)][(int)(b.PosRel.X + tx)] = b;
                 updatedLine.Add((int)(b.PosRel.Y + ty));
             }
+
+            foreach(int l in updatedLine)
+            {
+                if (l < Constants.Measures.boardBlockHeight / 2 - 2)
+                {
+                    removeLine(19);
+                    camUp++;
+                }
+            }
+            return false;
         }
 
         public bool isBusyCase(Vector2 coord)
@@ -129,5 +141,7 @@ namespace TetriClimber
                 return grid[point.Y][point.X].HitBox;
             return Rectangle.Empty;
         }
+
+        public int CamUp { get { return camUp; } set { camUp = value; } }
     }
 }

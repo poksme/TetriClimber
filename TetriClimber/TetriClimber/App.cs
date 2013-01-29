@@ -60,8 +60,10 @@ namespace TetriClimber
             // FOR SINGLETON PURPOSE
             content = Content;
             game = this;
-            //ti = new TouchInput();
-            ti = new KeyboardInput();
+            if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+                ti = new TouchInput();
+            else
+                ti = new KeyboardInput();
             //graphics.ToggleFullScreen();
             //
         }
