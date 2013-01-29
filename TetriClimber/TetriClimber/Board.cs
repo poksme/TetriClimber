@@ -110,12 +110,16 @@ namespace TetriClimber
             return brokenLine;
         }
 
-        public Block getBlock(float X, float Y)
+        public Rectangle getRect(Point point, int padX = 0, int padY = 0)
         {
-            if (X >= Constants.Measures.boardBlockWidth || X < 0
-                || Y >= Constants.Measures.boardBlockHeight || Y < 0)
-                return new Block(SpriteManager.ESprite.CLIMBYBLUE, null);
-            return grid[(int)Y][(int)X];
+            int x = (point.X - (int)Constants.Measures.leftBoardMargin) / (int)Constants.Measures.blockSize + padX;
+            int y = (point.Y - (int)Constants.Measures.upBoardMargin) / (int)Constants.Measures.blockSize + padY;
+
+            if (x >= Constants.Measures.boardBlockWidth || x < 0
+                || y >= Constants.Measures.boardBlockHeight || y < 0 
+                || grid[y][x] != null)
+                return new Rectangle(x * (int)Constants.Measures.blockSize + (int)Constants.Measures.leftBoardMargin, y * (int)Constants.Measures.blockSize + (int)Constants.Measures.upBoardMargin, (int)Constants.Measures.blockSize, (int)Constants.Measures.blockSize);
+            return Rectangle.Empty;
         }
     }
 }

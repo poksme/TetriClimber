@@ -16,20 +16,30 @@ namespace TetriClimber
         private int score;
         private Climby climby;
         private Dictionary<Climby.EState, Action> state;
-        private Vector2 climbyPosRel;
-        private Climby.EDirection climbyDir;
+
+        //
+        private Dictionary<Climby.EAroundSquare, Rectangle> aroundRect;
+        private Climby.EDirection lastDir;
+        //
 
         public GameSession(SpriteManager.ESprite playerType):base(App.Game)
         {
             board = new Board(new Vector2(Constants.Measures.boardBlockWidth, Constants.Measures.boardBlockHeight));
             climby = new Climby(playerType);
+
+            //
+            aroundRect = new Dictionary<Climby.EAroundSquare, Rectangle>();
+            lastDir = climby.Direction;
+            //
+
             tetriminoFactory = TetriminoFactory.Instance;
             currTetrimino = tetriminoFactory.getTetrimino();
             cur = TimeSpan.Zero;
             lat = new TimeSpan(10000000/3); // 3
             score = 0;
-            climbyPosRel = new Vector2();
             state = new Dictionary<Climby.EState, Action>();
+
+
             #region Climby State
             state.Add(Climby.EState.FALL, climbyFall);
             state.Add(Climby.EState.FREE_FALL, climbyFreeFall);
@@ -38,6 +48,7 @@ namespace TetriClimber
             state.Add(Climby.EState.MOVE, climbyMove);
             state.Add(Climby.EState.STOP, climbyStop);
             #endregion
+            updateAroundRects();
         }
 
         public override void Update(GameTime gameTime)
@@ -59,13 +70,13 @@ namespace TetriClimber
                     currTetrimino = tetriminoFactory.getTetrimino();
                 }        
             }
-            climbyDir = climby.Direction;
-            climbyPosRel.X = climby.PosRel.X;
-            climbyPosRel.Y = climby.PosRel.Y;
             state[climby.State]();
             climby.Update(gameTime);
-            if (climbyPosRel.X != climby.PosRel.X || climbyDir != climby.Direction)
-                updateAroundSquare();
+            if (lastDir != climby.Direction ||
+                climby.State == Climby.EState.MOVE ||
+                climby.State == Climby.EState.FREE_FALL)
+                updateAroundRects();
+            lastDir = climby.Direction;
         }
 
         public override void Draw(GameTime gameTime)
@@ -74,6 +85,15 @@ namespace TetriClimber
              board.Draw(gameTime);
              currTetrimino.Draw(gameTime);
              climby.Draw(gameTime);
+            // // DEBUG COLORS
+             //SpriteManager.Instance.drawRectangleAbsPos(aroundRect[Climby.EAroundSquare.FRONT], Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(aroundRect[Climby.EAroundSquare.FRONT_TOP], Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(aroundRect[Climby.EAroundSquare.FRONT_UNDER], Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(aroundRect[Climby.EAroundSquare.FRONT_UNDER_UNDER], Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(aroundRect[Climby.EAroundSquare.TOP], Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(aroundRect[Climby.EAroundSquare.UNDER], Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(climby.ActualPosition, Color.Blue);
+            // // UNCOMMENT THIS BLOCK TO SEE ALL THE HITBOXES
             //Console.Out.WriteLine(score);
         }
 
@@ -185,108 +205,64 @@ namespace TetriClimber
         #region Climby Action
         private void climbyFall()
         {
-            if (climby.sqrExist(Climby.EAroundSquare.FRONT) ||
-                climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER) ||
-                !climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER_UNDER))
-                climby.State = Climby.EState.MOVE;
-            else if (Object.ReferenceEquals(board.getBlock(climby.PosRel.X, climby.PosRel.Y),climby.getBlock(Climby.EAroundSquare.FRONT)))
-                climby.State = Climby.EState.FREE_FALL;
+            if (!aroundRect[Climby.EAroundSquare.FRONT].IsEmpty ||
+                !aroundRect[Climby.EAroundSquare.FRONT_UNDER].IsEmpty ||
+                aroundRect[Climby.EAroundSquare.FRONT_UNDER_UNDER].IsEmpty) // SI UNE DES CONDITIONS DU FALL N'EST PLUS REMPLIE 
+                climby.State = Climby.EState.MOVE;                                  // ON CHANGE D'ETAT POUR MOVE
+            else if ((climby.Direction == Climby.EDirection.RIGHT && climby.ActualPosition.Left >= aroundRect[Climby.EAroundSquare.UNDER].Right) ||
+                    (climby.Direction == Climby.EDirection.LEFT && climby.ActualPosition.Right <= aroundRect[Climby.EAroundSquare.UNDER].Left)) // APRES ETRE TOTALEMENT AU DESSUS DU VIDE
+                climby.State = Climby.EState.FREE_FALL;                                                                                         // ON CHANGE D'ETAT POUR FREE FALL
         }
 
         private void climbyFreeFall()
         {
-            if (board.getBlock(climby.PosRel.X, climby.PosRel.Y + 1) != null)
+            if (climby.ActualPosition.Bottom >= aroundRect[Climby.EAroundSquare.UNDER].Top && !aroundRect[Climby.EAroundSquare.UNDER].IsEmpty)                          //ON TOMBE JUSQU'A CE QU'ON TROUVE UN BLOCK ET QUE L'ON SOIT JUSTE AU DESSUS DE CE BLOCK
                 climby.State = Climby.EState.MOVE;
         }
 
         private void climbyClimb()
         {
-            if (climby.sqrExist(Climby.EAroundSquare.TOP))
-                climby.State = Climby.EState.FREE_FALL;
-            else if (climby.sqrExist(Climby.EAroundSquare.FRONT_TOP))
-                climby.State = Climby.EState.FREE_FALL;
-            else if (Object.ReferenceEquals(board.getBlock(climby.PosRel.X, climby.PosRel.Y),climby.getBlock(Climby.EAroundSquare.FRONT_TOP)))
-                climby.State = Climby.EState.MOVE;
-            else if (Object.ReferenceEquals(board.getBlock(climby.PosRel.X, climby.PosRel.Y), climby.getBlock(Climby.EAroundSquare.TOP)))
-                climby.State = Climby.EState.END_CLIMB;
+            if (aroundRect[Climby.EAroundSquare.FRONT].IsEmpty || !aroundRect[Climby.EAroundSquare.TOP].IsEmpty || !aroundRect[Climby.EAroundSquare.FRONT_TOP].IsEmpty)  // SI LES CONDITIONS DE MONTEES NE SONT PLUS REMPLIES
+                climby.State = Climby.EState.FREE_FALL;                                                                                                                  // ON TOMBE
+            else if ((climby.Direction == Climby.EDirection.RIGHT   && climby.ActualPosition.Left >= aroundRect[Climby.EAroundSquare.FRONT].Left) ||                     // SI ON EST ARRIVE AU DESSUS ET AU MILIEU DU BLOCK FRONT
+                     (climby.Direction == Climby.EDirection.LEFT    && climby.ActualPosition.Right <= aroundRect[Climby.EAroundSquare.FRONT].Right))
+                climby.State = Climby.EState.MOVE;                                                                                                                       // ON CHANGE D'ETAT POUR MOVE
+            else if (climby.ActualPosition.Bottom <= aroundRect[Climby.EAroundSquare.FRONT].Top)                                                                         // SI ON EST ARRIVE AU DESSUS ET A GAUCHE DU BLOCK FRONT
+                climby.State = Climby.EState.END_CLIMB;                                                                                                                  // ON CHANGE D'ETAT POUR END_CLIMB (POUR ALLER AU MILIEU DU BLOCK FRONT)
         }
 
         private void climbyMove()
         {
-            if (!climby.sqrExist(Climby.EAroundSquare.UNDER))
-                climby.State = Climby.EState.FREE_FALL;
-            else if (climby.sqrExist(Climby.EAroundSquare.FRONT))
-                if (climby.sqrExist(Climby.EAroundSquare.FRONT_TOP))
-                    climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT; //REVERT
-                else
-                    if (climby.sqrExist(Climby.EAroundSquare.TOP))
-                        climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT; //REVERT
-                    else
-                       climby.State = Climby.EState.CLIMB;
-            else if (!climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER))
-                if (climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER_UNDER))
-                    climby.State = Climby.EState.FALL;
-                else
-                    climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT; //REVERT
+            if (climby.ActualPosition.Bottom < aroundRect[Climby.EAroundSquare.UNDER].Top)                                                              // LE BLOCK DU DESSOUS EST VIDE 
+                climby.State = Climby.EState.FREE_FALL;                                                                                                 // DONC TOMBE
+            else if ((climby.Direction == Climby.EDirection.RIGHT   && climby.ActualPosition.Right >= aroundRect[Climby.EAroundSquare.UNDER].Right) ||  // SINON
+                     (climby.Direction == Climby.EDirection.LEFT    && climby.ActualPosition.Left <= aroundRect[Climby.EAroundSquare.UNDER].Left))      // ON VERIFIE LES CHOSES SUIVANTES QUE SI ON EST A L EXTREMITE DE NOTRE CHEMIN
+                if (climby.ActualPosition.Intersects(aroundRect[Climby.EAroundSquare.FRONT]))                                               // TOUCHE UN MUR
+                    if (aroundRect[Climby.EAroundSquare.FRONT_TOP].IsEmpty && aroundRect[Climby.EAroundSquare.TOP].IsEmpty)                 // SI LA VOIX EST LIBRE EN HAUT
+                        climby.State = Climby.EState.CLIMB;                                                                                 // ON MONTE
+                    else                                                                                                                    // SINON
+                        climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT;   // ON SE RETOURNE 
+                else if (aroundRect[Climby.EAroundSquare.FRONT_UNDER].IsEmpty)                                                              // FACE A UN FOSSE
+                    if (!aroundRect[Climby.EAroundSquare.FRONT_UNDER_UNDER].IsEmpty)                                                        // SI PROFOND QUE DE UNE CASE
+                        climby.State = Climby.EState.FALL;                                                                                  // ON DESCEND
+                    else                                                                                                                    // SINON
+                        climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT;   // ON SE RETOURNE
         }
-
-        //private void climbyMove()
-        //{
-        //    if (!climby.sqrExist(Climby.EAroundSquare.UNDER))
-        //    {
-        //        climby.State = Climby.EState.FREE_FALL;
-        //        return;
-        //    }
-        //    else if (climby.sqrExist(Climby.EAroundSquare.FRONT))
-        //    {
-        //        if (climby.sqrExist(Climby.EAroundSquare.FRONT_TOP))
-        //        {
-        //            climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT;
-        //            return;
-        //        }
-        //        else
-        //        {
-        //            if (climby.sqrExist(Climby.EAroundSquare.TOP))
-        //            {
-        //                climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT;
-        //                return;
-        //            }
-        //            climby.State = Climby.EState.CLIMB;
-        //            return;
-        //        }
-        //    }
-        //    else if (!climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER))
-        //    {
-        //        if (climby.sqrExist(Climby.EAroundSquare.FRONT_UNDER_UNDER))
-        //        {
-        //            climby.State = Climby.EState.FALL;
-        //            return;
-        //        }
-        //        else
-        //        {
-        //            climby.Direction = Climby.EDirection.LEFT == climby.Direction ? Climby.EDirection.RIGHT : Climby.EDirection.LEFT;
-        //            return;
-        //        }
-        //    }
-        //}
 
         private void climbyStop()
         {
-            climbyMove();
+            //climbyMove();
         }
         #endregion
-        
-        private void updateAroundSquare()
+
+        private void updateAroundRects()
         {
-            Vector2 pRel = climby.PosRel;
-
-            climby.setAroundSquare(Climby.EAroundSquare.FRONT, board.getBlock(pRel.X + climby.getIntOrt(), pRel.Y));
-            climby.setAroundSquare(Climby.EAroundSquare.FRONT_TOP, board.getBlock(pRel.X + climby.getIntOrt(), pRel.Y - 1));
-            climby.setAroundSquare(Climby.EAroundSquare.FRONT_UNDER, board.getBlock(pRel.X + climby.getIntOrt(), pRel.Y + 1));
-            climby.setAroundSquare(Climby.EAroundSquare.FRONT_UNDER_UNDER, board.getBlock(pRel.X + climby.getIntOrt(), pRel.Y + 2));
-            climby.setAroundSquare(Climby.EAroundSquare.TOP, board.getBlock(pRel.X, pRel.Y - 1));
-            climby.setAroundSquare(Climby.EAroundSquare.UNDER, board.getBlock(pRel.X, pRel.Y + 1));
-
+            aroundRect[Climby.EAroundSquare.FRONT] = board.getRect(climby.ActualPosition.Center, climby.getIntOrt(), 0);
+            aroundRect[Climby.EAroundSquare.FRONT_TOP] = board.getRect(climby.ActualPosition.Center, climby.getIntOrt(), -1);
+            aroundRect[Climby.EAroundSquare.FRONT_UNDER] = board.getRect(climby.ActualPosition.Center, climby.getIntOrt(), 1);
+            aroundRect[Climby.EAroundSquare.FRONT_UNDER_UNDER] = board.getRect(climby.ActualPosition.Center, climby.getIntOrt(), 2);
+            aroundRect[Climby.EAroundSquare.TOP] = board.getRect(climby.ActualPosition.Center, 0, -1);
+            aroundRect[Climby.EAroundSquare.UNDER] = board.getRect(climby.ActualPosition.Center, 0, 1);
         }
     }
 }
