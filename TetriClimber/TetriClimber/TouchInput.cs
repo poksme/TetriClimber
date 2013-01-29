@@ -12,6 +12,7 @@ namespace TetriClimber
         Vector2 newPos;
         Vector2 oldPos;
         bool move = false;
+        bool tap = false;
 
         public TouchInput():base()
         {
@@ -23,13 +24,25 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-             foreach (EInput e in Enum.GetValues(typeof(EInput)))
-                state[e] = TimeSpan.Zero;
-             if (move && newPos.X > oldPos.X && newPos.X - oldPos.X > newPos.Y - oldPos.Y)
+             if (move && newPos.X > oldPos.X + 10 && newPos.X - oldPos.X > newPos.Y - oldPos.Y)
+                 state[EInput.RIGHT] += gameTime.ElapsedGameTime;
+             else
                  state[EInput.RIGHT] = TimeSpan.Zero;
-             else if (move && newPos.X < oldPos.X && oldPos.X - newPos.X > oldPos.Y - newPos.Y)
+             if (move && newPos.X < oldPos.X - 10 && oldPos.X - newPos.X > oldPos.Y - newPos.Y)
+                 state[EInput.LEFT] += gameTime.ElapsedGameTime;
+             else
                  state[EInput.LEFT] = TimeSpan.Zero;
-             else if (move && newPos.Y > oldPos.Y)
+             if (move && newPos.Y > oldPos.Y + 10)
+                 state[EInput.TAP] += gameTime.ElapsedGameTime;
+             else
+                 state[EInput.TAP] = TimeSpan.Zero;
+
+            if (!move && tap)
+             {
+                 state[EInput.DOWN] += gameTime.ElapsedGameTime;
+                 tap = false;
+             }
+             else
                  state[EInput.DOWN] = TimeSpan.Zero;
         }
 
@@ -49,7 +62,11 @@ namespace TetriClimber
         public void Up(Object sender, TouchEventArgs e)
         {
             move = false;
+        }
 
+        public void Tap(Object sender, TouchEventArgs e)
+        {
+            tap = true;
         }
     }
 }

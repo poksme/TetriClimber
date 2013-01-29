@@ -114,6 +114,7 @@ namespace TetriClimber
                 touchTarget.EnableInput();
                 touchTarget.TouchMove += new EventHandler<TouchEventArgs>((ti as TouchInput).Move);
                 touchTarget.TouchUp += new EventHandler<TouchEventArgs>((ti as TouchInput).Up);
+                touchTarget.TouchTapGesture += new EventHandler<TouchEventArgs>((ti as TouchInput).Tap);
             }
         }
 
