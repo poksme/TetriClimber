@@ -14,6 +14,7 @@ namespace TetriClimber
         public Vector2 PosAbs { get { return posAbs; } }
         private ATetrimino container;
         private SpriteManager.ESprite color;
+        private Rectangle hitBox;
 
         public SpriteManager.ESprite Color
         {
@@ -30,6 +31,7 @@ namespace TetriClimber
         {
             this.color = color;
             container = cont;
+            hitBox = Rectangle.Empty;
         }
 
         public void setPosition(Vector2 coord)
@@ -59,5 +61,15 @@ namespace TetriClimber
         {
             this.orientation = MathHelper.ToRadians(orientation * 90);
         }
+
+        public void setHitBoxValue(int x, int y, int w = (int)(Constants.Measures.blockSize), int h = (int)(Constants.Measures.blockSize))
+        {
+            hitBox.X = x;
+            hitBox.Y = y;
+            hitBox.Width = w;
+            hitBox.Height = h;
+        }
+
+        public Rectangle HitBox {get { return hitBox; } set { hitBox = value; }}
     }
 }

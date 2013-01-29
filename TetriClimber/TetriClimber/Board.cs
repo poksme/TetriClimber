@@ -56,8 +56,13 @@ namespace TetriClimber
             for (int i = 0; i < (int)size.X; i++)
                 grid[Y][i] = null;
             for (; Y > 0; Y--)
-                for (int i = 0; i <(int)size.X; i++)
+                for (int i = 0; i < (int)size.X; i++)
+                {
                     grid[Y][i] = grid[Y - 1][i];
+                    if (grid[Y][i] != null)
+                        grid[Y][i].setHitBoxValue((int)(i * Constants.Measures.blockSize + Constants.Measures.leftBoardMargin),
+                                    (int)(Y * Constants.Measures.blockSize + Constants.Measures.upBoardMargin));
+                }
             for (int x = 0; x < (int)size.X; x++)
                 grid[0][x] = null;
         }
@@ -70,6 +75,8 @@ namespace TetriClimber
             int ty = (int)t.PosRel.Y;
             foreach (Block b in blocks)
             {
+                b.setHitBoxValue((int)((b.PosRel.X + tx) * Constants.Measures.blockSize + Constants.Measures.leftBoardMargin),
+                                 (int)((b.PosRel.Y + ty) * Constants.Measures.blockSize + Constants.Measures.upBoardMargin));
                 Vector2 pos = b.PosRel;
                 grid[(int)(pos.Y + ty)][(int)(pos.X + tx)] = b;
                 updatedLine.Add((int)(pos.Y + ty));
@@ -112,13 +119,13 @@ namespace TetriClimber
 
         public Rectangle getRect(Point point, int padX = 0, int padY = 0)
         {
-            int x = (point.X - (int)Constants.Measures.leftBoardMargin) / (int)Constants.Measures.blockSize + padX;
-            int y = (point.Y - (int)Constants.Measures.upBoardMargin) / (int)Constants.Measures.blockSize + padY;
-
-            if (x >= Constants.Measures.boardBlockWidth || x < 0
-                || y >= Constants.Measures.boardBlockHeight || y < 0 
-                || grid[y][x] != null)
-                return new Rectangle(x * (int)Constants.Measures.blockSize + (int)Constants.Measures.leftBoardMargin, y * (int)Constants.Measures.blockSize + (int)Constants.Measures.upBoardMargin, (int)Constants.Measures.blockSize, (int)Constants.Measures.blockSize);
+            if (point.X >= Constants.Measures.boardBlockWidth || point.X < 0
+                || point.Y >= Constants.Measures.boardBlockHeight || point.Y < 0)
+                return new Rectangle(point.X * (int)(Constants.Measures.blockSize) + (int)(Constants.Measures.leftBoardMargin),
+                                     point.Y * (int)(Constants.Measures.blockSize) + (int)(Constants.Measures.upBoardMargin),
+                                     (int)(Constants.Measures.blockSize), (int)(Constants.Measures.blockSize));
+            if (grid[point.Y][point.X] != null)
+                return grid[point.Y][point.X].HitBox;
             return Rectangle.Empty;
         }
     }
