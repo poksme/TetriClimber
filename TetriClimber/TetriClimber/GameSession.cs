@@ -13,7 +13,7 @@ namespace TetriClimber
         private ATetrimino currTetrimino;
         private TimeSpan cur;
         private TimeSpan lat;
-        private GameString score;
+        private Score score;
         private Climby climby;
         private Dictionary<Climby.EState, Action> state;
         private Dictionary<Climby.EAroundSquare, Point> aroundRect;
@@ -41,7 +41,7 @@ namespace TetriClimber
             currTetrimino = tetriminoFactory.getTetrimino();
             cur = TimeSpan.Zero;
             lat = new TimeSpan(10000000/3); // 3
-            score = new GameString("0", TextManager.EFont.AHARONI, Constants.Color.qLight, 0.5f);
+            score = new Score("0", TextManager.EFont.AHARONI, Constants.Color.qLight, 0.5f);
             state = new Dictionary<Climby.EState, Action>();
 
 
@@ -72,14 +72,12 @@ namespace TetriClimber
                         SoundManager.Instance.play(SoundManager.ESound.DROP);
                     
                     board.pushBlocks(currTetrimino, climby.DeadZone);
-                    //climby.stepDown(aroundRect, board.CamUp);
                     #region FullLine Event
                     List<int> brokenLines = board.checkFullLine();
                     if (brokenLines.Count > 0) // Happens when lines are borken
                     {
                         Point climbyRelPos = climby.getRelPos();
-                        score.Value = (brokenLines.Count * brokenLines.Count * 100).ToString();
-                        //score += (brokenLines.Count * brokenLines.Count * 100).ToString();
+                        score.addLineScore(brokenLines.Count * brokenLines.Count * 100);
                         int nbDown = 0;
                         foreach (int l in brokenLines)
                             if (climbyRelPos.Y < l)
@@ -99,6 +97,8 @@ namespace TetriClimber
                 climby.State == Climby.EState.FREE_FALL)
                 updateAroundRects();
             lastDir = climby.Direction;
+            if (climby.OldMinHeight - climby.MinHeight > 0)
+                score.addLineScore(climby.OldMinHeight - climby.MinHeight);
         }
 
         public override void Draw(GameTime gameTime)
@@ -118,7 +118,6 @@ namespace TetriClimber
              //SpriteManager.Instance.drawRectangleAbsPos(climby.ActualPosition, Color.Blue);
              //SpriteManager.Instance.drawRectangleAbsPos(climby.DeadZone, Color.Green);
              //UNCOMMENT THIS BLOCK TO SEE ALL THE HITBOXES
-            //Console.Out.WriteLine(score);
         }
 
         #region Tetrimino Action

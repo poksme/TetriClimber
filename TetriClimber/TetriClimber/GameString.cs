@@ -8,12 +8,12 @@ namespace TetriClimber
 {
     public class GameString
     {
-        private String value;
-        private TextManager.EFont font;
-        private Color color;
-        private Vector2 pos;
-        private Vector2 origin;
-        private float scale;
+        protected String value;
+        protected TextManager.EFont font;
+        protected Color color;
+        protected Vector2 pos;
+        protected Vector2 origin;
+        protected float scale;
 
         public GameString(String val, TextManager.EFont f, Color c, float s = 1f, Vector2 p = new Vector2(), Vector2 o = new Vector2())
         {

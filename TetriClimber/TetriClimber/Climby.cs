@@ -11,10 +11,11 @@ namespace TetriClimber
         public enum EDirection { LEFT, RIGHT }
         public enum EState { FALL, CLIMB, END_CLIMB, STOP, MOVE, FREE_FALL }
         public enum EAroundSquare { TOP, FRONT_TOP, FRONT, FRONT_UNDER, FRONT_UNDER_UNDER, UNDER }
-
         
         private SpriteManager.ESprite skin;
         private Vector2 pos;
+        private int minHeight;
+        private int oldMinHeight;
         private EState state;
         private EDirection direction;
         private Dictionary<Climby.EState, Action<GameTime>> actions;
@@ -44,11 +45,14 @@ namespace TetriClimber
             direction = EDirection.RIGHT;
             rotation = 0f;
             speed = 0.00001f;
+            minHeight = (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize) - 1;
+            oldMinHeight = minHeight;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            oldMinHeight = minHeight;
             actions[state](gameTime);
             actualPosition.X = (int)pos.X;// (int)pos.Y, (int)Constants.Measures.blockSize, (int)Constants.Measures.blockSize);
             actualPosition.Y = (int)pos.Y;// (int)Constants.Measures.blockSize, (int)Constants.Measures.blockSize);
@@ -76,7 +80,9 @@ namespace TetriClimber
             else
                 rotation += 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
             pos.Y -= speed * gameTime.ElapsedGameTime.Ticks;
-        }
+            if (minHeight > (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize))
+                minHeight = (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize);
+        }   
 
         private void stop(GameTime gameTime)
         {
@@ -105,6 +111,8 @@ namespace TetriClimber
         public void stepDown(Dictionary<EAroundSquare,Point> asqr , int step = 1)
         {
             pos.Y += step * Constants.Measures.blockSize;
+            minHeight += step;
+            oldMinHeight += step;
             if (this.state == EState.CLIMB || this.state == EState.FALL || this.state == EState.END_CLIMB)
                 foreach (EAroundSquare e in Enum.GetValues(typeof(EAroundSquare)))
                 {
@@ -121,5 +129,7 @@ namespace TetriClimber
         public EDirection   Direction       { get { return direction; }         set { direction = value; } }
         public float        Speed           { get { return speed; }             set { speed = value; } }
         public Rectangle DeadZone           { get { deadZone.X = (int)pos.X + (int)(Constants.Measures.blockSize / 3); deadZone.Y = (int)pos.Y; return deadZone; } }
+        public int MinHeight                { get { return minHeight; } }
+        public int OldMinHeight             { get { return oldMinHeight; } }
     }
 }
