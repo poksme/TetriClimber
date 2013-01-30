@@ -20,7 +20,7 @@ namespace TetriClimber
                 //Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);
                 App.screenTransform = Matrix.CreateRotationZ(MathHelper.ToRadians(90)) *
                                     //Matrix.CreateTranslation(App.Game.GraphicsDevice.Viewport.Width, 0, 0);
-                                    Matrix.CreateTranslation(Constants.Measures.portraitWidth, 0, 0);
+                                    Matrix.CreateTranslation(Constants.Measures.portraitWidth - 950, 0, 0) * Matrix.CreateScale(new Vector3(1.75f, 1.75f, 1)); // -500 -250, 1.75 1.75
             }
         }
 

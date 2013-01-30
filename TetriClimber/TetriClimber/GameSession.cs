@@ -41,7 +41,7 @@ namespace TetriClimber
             currTetrimino = tetriminoFactory.getTetrimino();
             cur = TimeSpan.Zero;
             lat = new TimeSpan(10000000/3); // 3
-            score = new Score("0", TextManager.EFont.AHARONI, Constants.Color.qLight, 0.5f);
+            score = new Score("0", TextManager.EFont.AHARONI, Constants.Color.qLight, 1f, new Vector2(150, 20));
             state = new Dictionary<Climby.EState, Action>();
 
 

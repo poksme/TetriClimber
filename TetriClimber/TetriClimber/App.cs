@@ -65,16 +65,16 @@ namespace TetriClimber
                 ti = new TouchInput();
                 Constants.Measures.portraitHeight = 1080;
                 Constants.Measures.portraitWidth = 1920;
-                Constants.Measures.leftBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockWidth * Constants.Measures.blockSize) / 2f);
-                Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitWidth - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);
+                //Constants.Measures.leftBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockWidth * Constants.Measures.blockSize) / 2f);
+                //Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitWidth - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);
             }
             else
             {
                 ti = new KeyboardInput();
-                Constants.Measures.portraitHeight = 1050;//889
-                Constants.Measures.portraitWidth = 1680;//500
-                Constants.Measures.leftBoardMargin = (float)Math.Round((Constants.Measures.portraitWidth - Constants.Measures.boardBlockWidth * Constants.Measures.blockSize) / 2f);
-                Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);
+                Constants.Measures.portraitHeight = 889;
+                Constants.Measures.portraitWidth = 500;
+                //Constants.Measures.leftBoardMargin = (float)Math.Round((Constants.Measures.portraitWidth - Constants.Measures.boardBlockWidth * Constants.Measures.blockSize) / 2f);
+                //Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);
             }
 
             //graphics.ToggleFullScreen();

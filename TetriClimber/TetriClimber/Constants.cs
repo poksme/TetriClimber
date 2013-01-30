@@ -41,15 +41,15 @@ namespace TetriClimber
             public static Microsoft.Xna.Framework.Color border = HexToColor("#cecece");
             public static Microsoft.Xna.Framework.Color background = HexToColor("#ffffff");
         }
-        public static class Measures
+        public class Measures
         {
             public const int spriteSquareSize = 115;
             public const float blockSize = 35f; // 40f
             public const int borderSize = 5;
             public const float boardBlockWidth = 10f;
             public const float boardBlockHeight = 20f;
-            public static float leftBoardMargin = 20;
-            public static float upBoardMargin = 20;
+            public static float leftBoardMargin = 100f;
+            public static float upBoardMargin = 150f;
             
             public const float boardWidth = boardBlockWidth * blockSize;
             public const float boardHeight = boardBlockHeight * blockSize;
