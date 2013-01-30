@@ -13,7 +13,7 @@ namespace TetriClimber
         private ATetrimino currTetrimino;
         private TimeSpan cur;
         private TimeSpan lat;
-        private int score;
+        private GameString score;
         private Climby climby;
         private Dictionary<Climby.EState, Action> state;
         private Dictionary<Climby.EAroundSquare, Point> aroundRect;
@@ -41,7 +41,7 @@ namespace TetriClimber
             currTetrimino = tetriminoFactory.getTetrimino();
             cur = TimeSpan.Zero;
             lat = new TimeSpan(10000000/3); // 3
-            score = 0;
+            score = new GameString("0", TextManager.EFont.AHARONI, Constants.Color.qLight, 0.5f);
             state = new Dictionary<Climby.EState, Action>();
 
 
@@ -78,7 +78,8 @@ namespace TetriClimber
                     if (brokenLines.Count > 0) // Happens when lines are borken
                     {
                         Point climbyRelPos = climby.getRelPos();
-                        score += brokenLines.Count * brokenLines.Count * 100;
+                        score.Value = (brokenLines.Count * brokenLines.Count * 100).ToString();
+                        //score += (brokenLines.Count * brokenLines.Count * 100).ToString();
                         int nbDown = 0;
                         foreach (int l in brokenLines)
                             if (climbyRelPos.Y < l)
@@ -105,6 +106,7 @@ namespace TetriClimber
              board.Draw(gameTime);
              currTetrimino.Draw(gameTime);
              climby.Draw(gameTime);
+             TextManager.Instance.Draw(score);
              // DEBUG COLORS
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT]), Color.Red);
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_TOP]), Color.Red);
@@ -274,7 +276,6 @@ namespace TetriClimber
         {
             //climbyMove();
         }
-        #endregion
 
         private void updateAroundRects()
         {
@@ -294,5 +295,6 @@ namespace TetriClimber
             p.Y = (point.Y - (int)Constants.Measures.upBoardMargin) / (int)Constants.Measures.blockSize + padY;
             aroundRect[e] = p;
         }
+        #endregion
     }
 }

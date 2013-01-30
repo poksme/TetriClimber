@@ -117,6 +117,7 @@
     <Compile Include="ATetrimino.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Button.cs" />
+    <Compile Include="GameString.cs" />
     <Compile Include="Climby.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CoordHelper.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Tetrimini\TetriO.cs" />
     <Compile Include="Tetrimini\TetriP.cs" />
     <Compile Include="Tetrimini\TetriQ.cs" />
+    <Compile Include="TextManager.cs" />
     <Compile Include="TextureManager.cs" />
     <Compile Include="TouchInput.cs" />
   </ItemGroup>
