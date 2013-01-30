@@ -17,7 +17,7 @@ namespace TetriClimber
         private Vector2 pos;
         private EState state;
         private EDirection direction;
-        private Dictionary<Climby.EState, Action> actions;
+        private Dictionary<Climby.EState, Action<GameTime>> actions;
         private float rotation;
         private float speed;
         private Rectangle actualPosition;
@@ -31,7 +31,7 @@ namespace TetriClimber
             actualPosition = new Rectangle((int)pos.X, (int)pos.Y, (int)Constants.Measures.blockSize, (int)Constants.Measures.blockSize);
             deadZone = new Rectangle((int)pos.X + (int)(Constants.Measures.blockSize / 3),
                                      (int)pos.Y , (int)Constants.Measures.blockSize / 3, (int)Constants.Measures.blockSize);
-            actions = new Dictionary<EState, Action>();
+            actions = new Dictionary<EState, Action<GameTime>>();
             #region Actions
             actions.Add(EState.CLIMB, climb);
             actions.Add(EState.END_CLIMB, move);
@@ -43,13 +43,13 @@ namespace TetriClimber
             state = EState.MOVE;
             direction = EDirection.RIGHT;
             rotation = 0f;
-            speed = 3f;
+            speed = 0.00001f;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            actions[state]();
+            actions[state](gameTime);
             actualPosition.X = (int)pos.X;// (int)pos.Y, (int)Constants.Measures.blockSize, (int)Constants.Measures.blockSize);
             actualPosition.Y = (int)pos.Y;// (int)Constants.Measures.blockSize, (int)Constants.Measures.blockSize);
         }
@@ -60,39 +60,39 @@ namespace TetriClimber
             SpriteManager.Instance.drawRotatedAtPos(skin, pos, rotation, Constants.Measures.blockSize);
         }
 
-        private void fall()
+        private void fall(GameTime gameTime)
         {
             if (direction == EDirection.LEFT)
-                rotation -= 0.09f * speed;
+                rotation -= 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
             else
-                rotation += 0.09f * speed;
-            pos.Y += speed;
+                rotation += 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
+            pos.Y += speed * gameTime.ElapsedGameTime.Ticks;
         }
 
-        private void climb()
+        private void climb(GameTime gameTime)
         {
             if (direction == EDirection.LEFT)
-                rotation -= 0.09f * speed;
+                rotation -= 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
             else
-                rotation += 0.09f * speed;
-            pos.Y -= speed;
+                rotation += 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
+            pos.Y -= speed * gameTime.ElapsedGameTime.Ticks;
         }
 
-        private void stop()
+        private void stop(GameTime gameTime)
         {
         }
 
-        private void move()
+        private void move(GameTime gameTime)
         {
             if (direction == EDirection.LEFT)
             {
-                pos.X -= speed;
-                rotation -= 0.09f * speed;
+                pos.X -= speed * gameTime.ElapsedGameTime.Ticks;
+                rotation -= 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
             }
             else
             {
-                rotation += 0.09f * speed;
-                pos.X += speed;
+                rotation += 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
+                pos.X += speed * gameTime.ElapsedGameTime.Ticks;
             }
         }
 
