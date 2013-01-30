@@ -102,9 +102,15 @@ namespace TetriClimber
                              (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize));
         }
 
-        public void stepDown(int step = 1)
+        public void stepDown(Dictionary<EAroundSquare,Point> asqr , int step = 1)
         {
             pos.Y += step * Constants.Measures.blockSize;
+            foreach (EAroundSquare e in Enum.GetValues(typeof(EAroundSquare)))
+            {
+                Point p = asqr[e];
+                p.Y += step;
+                asqr[e] = p;
+            }
         }
 
         public int          getIntOrt()     { return direction == EDirection.LEFT ? -1 : 1; }
