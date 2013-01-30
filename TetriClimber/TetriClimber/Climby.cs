@@ -105,12 +105,13 @@ namespace TetriClimber
         public void stepDown(Dictionary<EAroundSquare,Point> asqr , int step = 1)
         {
             pos.Y += step * Constants.Measures.blockSize;
-            foreach (EAroundSquare e in Enum.GetValues(typeof(EAroundSquare)))
-            {
-                Point p = asqr[e];
-                p.Y += step;
-                asqr[e] = p;
-            }
+            if (this.state == EState.CLIMB || this.state == EState.FALL || this.state == EState.END_CLIMB)
+                foreach (EAroundSquare e in Enum.GetValues(typeof(EAroundSquare)))
+                {
+                    Point p = asqr[e];
+                    p.Y += step;
+                    asqr[e] = p;
+                }
         }
 
         public int          getIntOrt()     { return direction == EDirection.LEFT ? -1 : 1; }

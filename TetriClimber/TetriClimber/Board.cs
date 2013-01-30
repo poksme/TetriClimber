@@ -28,7 +28,6 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            camUp = 0;
         }
 
         public override void  Draw(GameTime gameTime)
@@ -75,6 +74,8 @@ namespace TetriClimber
             List<Block> blocks = t.getBlocks();
             int tx = (int)t.PosRel.X;
             int ty = (int)t.PosRel.Y;
+            float min = blocks[0].PosRel.Y + ty;
+            camUp = 0;
             foreach (Block b in blocks)
             {
                 b.setHitBoxValue((int)((b.PosRel.X + tx) * Constants.Measures.blockSize + Constants.Measures.leftBoardMargin),
@@ -83,16 +84,10 @@ namespace TetriClimber
                     return true ; // DEATH
                 grid[(int)(b.PosRel.Y + ty)][(int)(b.PosRel.X + tx)] = b;
                 updatedLine.Add((int)(b.PosRel.Y + ty));
+                if (min > b.PosRel.Y + ty)
+                    min = b.PosRel.Y + ty;
             }
-
-            foreach(int l in updatedLine)
-            {
-                if (l < Constants.Measures.boardBlockHeight / 2 - 2)
-                {
-                    removeLine(19);
-                    camUp++;
-                }
-            }
+            camUp = (int)((Constants.Measures.boardBlockHeight / 2 - 2) - min);
             return false;
         }
 
@@ -127,6 +122,10 @@ namespace TetriClimber
             int size = brokenLine.Count;
             if (size != 0)
                 SoundManager.Instance.play(SoundManager.ESound.CLEARLINE, 0.25f * (float)size, 1f);
+            camUp -= brokenLine.Count;
+            camUp = camUp > 0 ? camUp : 0;
+            for(int i = 0; i < camUp; i++)
+                    removeLine(19);
             return brokenLine;
         }
 

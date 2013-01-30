@@ -72,7 +72,7 @@ namespace TetriClimber
                         SoundManager.Instance.play(SoundManager.ESound.DROP);
                     
                     board.pushBlocks(currTetrimino, climby.DeadZone);
-                    climby.stepDown(aroundRect, board.CamUp);
+                    //climby.stepDown(aroundRect, board.CamUp);
                     #region FullLine Event
                     List<int> brokenLines = board.checkFullLine();
                     if (brokenLines.Count > 0) // Happens when lines are borken
@@ -88,6 +88,7 @@ namespace TetriClimber
                             climby.stepDown(aroundRect, nbDown);
                     }
                     #endregion
+                    climby.stepDown(aroundRect, board.CamUp);
                     currTetrimino = tetriminoFactory.getTetrimino();
                 }        
             }
