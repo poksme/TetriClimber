@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Surface.Core;
 using Microsoft.Xna.Framework;
+using Microsoft.Surface;
 
 namespace TetriClimber
 {
@@ -49,13 +50,24 @@ namespace TetriClimber
        
         public void Move(Object sender, TouchEventArgs e)
         {
+            Vector2 tp  = new Vector2(e.TouchPoint.X, e.TouchPoint.Y);
             if (move == false)
             {
-                oldPos.X = e.TouchPoint.X;
-                oldPos.Y = e.TouchPoint.Y;
+                if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+                   oldPos = Vector2.Transform(tp, Matrix.CreateRotationZ(MathHelper.ToRadians(-90)));
+                else
+                {
+                    oldPos.X = e.TouchPoint.X;
+                    oldPos.Y = e.TouchPoint.Y;
+                }
             }
-            newPos.X = e.TouchPoint.X;
-            newPos.Y = e.TouchPoint.Y;
+            if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+                newPos = Vector2.Transform(tp, Matrix.CreateRotationZ(MathHelper.ToRadians(-90)));
+            else
+            {
+                newPos.X = e.TouchPoint.X;
+                newPos.Y = e.TouchPoint.Y;
+            }
             move = true;
         }
 
