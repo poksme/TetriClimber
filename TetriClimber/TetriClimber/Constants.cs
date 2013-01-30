@@ -48,8 +48,8 @@ namespace TetriClimber
             public const int borderSize = 5;
             public const float boardBlockWidth = 10f;
             public const float boardBlockHeight = 20f;
-            public static float leftBoardMargin;
-            public static float upBoardMargin;
+            public static float leftBoardMargin = 20;
+            public static float upBoardMargin = 20;
             
             public const float boardWidth = boardBlockWidth * blockSize;
             public const float boardHeight = boardBlockHeight * blockSize;
