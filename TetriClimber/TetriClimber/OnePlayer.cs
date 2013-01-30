@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Surface;
 
 namespace TetriClimber
 {
@@ -13,6 +14,14 @@ namespace TetriClimber
         public OnePlayer():base()
         {
             player1 = new GameSession(SpriteManager.ESprite.CLIMBYBLUE);
+            if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+            {
+                App.screenTransform = Matrix.CreateRotationZ(MathHelper.ToRadians(90)) *
+                                    //Matrix.CreateTranslation(App.Game.GraphicsDevice.Viewport.Width, 0, 0);
+                                    Matrix.CreateTranslation(Constants.Measures.portraitWidth, 0, 0);
+                Constants.Measures.leftBoardMargin = (float)Math.Round((Constants.Measures.portraitWidth - Constants.Measures.boardBlockWidth * Constants.Measures.blockSize) / 2f);
+                Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);
+            }
         }
 
         public override void Update(GameTime gameTime)

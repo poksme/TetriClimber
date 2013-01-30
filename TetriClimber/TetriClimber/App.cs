@@ -28,7 +28,7 @@ namespace TetriClimber
 
         private UserOrientation currentOrientation = UserOrientation.Bottom;
 
-        private Matrix screenTransform = Matrix.Identity;
+        public static Matrix screenTransform = Matrix.Identity;
 
         private static AUserInput ti;
 
@@ -61,9 +61,20 @@ namespace TetriClimber
             content = Content;
             game = this;
             if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+            {
                 ti = new TouchInput();
+                Constants.Measures.portraitHeight = 1080;
+                Constants.Measures.portraitWidth = 1920;
+            }
             else
+            {
                 ti = new KeyboardInput();
+                Constants.Measures.portraitHeight = 1050;//889
+                Constants.Measures.portraitWidth = 1680;//500
+                Constants.Measures.leftBoardMargin = (float)Math.Round((Constants.Measures.portraitWidth - Constants.Measures.boardBlockWidth * Constants.Measures.blockSize) / 2f);
+                Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);
+            }
+
             //graphics.ToggleFullScreen();
             //
         }
@@ -147,10 +158,10 @@ namespace TetriClimber
             // Setup the UI to transform if the UI is rotated.
             // Create a rotation matrix to orient the screen so it is viewed correctly
             // when the user orientation is 180 degress different.
-            Matrix inverted = Matrix.CreateRotationZ(MathHelper.ToRadians(90)) *
-                       Matrix.CreateTranslation(graphics.GraphicsDevice.Viewport.Width,
-                                                 0,
-                                                 0);
+            //Matrix inverted = Matrix.CreateRotationZ(MathHelper.ToRadians(90)) *
+            //           Matrix.CreateTranslation(graphics.GraphicsDevice.Viewport.Width,
+            //                                     0,
+            //                                     0);
 
             //if (currentOrientation == UserOrientation.Top)
             //{
