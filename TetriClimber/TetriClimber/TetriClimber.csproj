@@ -124,6 +124,7 @@
     <Compile Include="GameSession.cs" />
     <Compile Include="AUserInput.cs" />
     <Compile Include="KeyboardInput.cs" />
+    <Compile Include="Level.cs" />
     <Compile Include="MenuManager.cs" />
     <Compile Include="OnePlayer.cs" />
     <Compile Include="APlay.cs" />

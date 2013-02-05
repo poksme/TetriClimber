@@ -15,6 +15,7 @@ namespace TetriClimber
         private TimeSpan cur;
         private TimeSpan lat;
         private Score score;
+        private Level level;
         private Climby climby;
         private Dictionary<Climby.EState, Action> state;
         private Dictionary<Climby.EAroundSquare, Point> aroundRect;
@@ -45,6 +46,7 @@ namespace TetriClimber
             cur = TimeSpan.Zero;
             lat = new TimeSpan(10000000/3); // 3
             score = new Score("0", TextManager.EFont.AHARONI, Constants.Color.qLight, 1f, new Vector2(150, 20));
+            level = new Level("0", TextManager.EFont.AHARONI, Constants.Color.p2Light, 1f, new Vector2(150, 40));
             state = new Dictionary<Climby.EState, Action>();
 
 
@@ -80,7 +82,7 @@ namespace TetriClimber
                     if (brokenLines.Count > 0) // Happens when lines are borken
                     {
                         Point climbyRelPos = climby.getRelPos();
-                        score.addLineScore(brokenLines.Count * brokenLines.Count * 100);
+                        score.addLineScore(brokenLines.Count * brokenLines.Count);
                         int nbDown = 0;
                         foreach (int l in brokenLines)
                             if (climbyRelPos.Y < l)
@@ -103,7 +105,8 @@ namespace TetriClimber
                 updateAroundRects();
             lastDir = climby.Direction;
             if (climby.OldMinHeight - climby.MinHeight > 0)
-                score.addLineScore(climby.OldMinHeight - climby.MinHeight);
+                score.addClimbyScore(climby.OldMinHeight - climby.MinHeight);
+            level.updateLevel(score.TotalScore);
             projectShadow();
         }
 
@@ -123,6 +126,7 @@ namespace TetriClimber
              shadowTetrimino.Draw(gameTime);
              climby.Draw(gameTime);
              TextManager.Instance.Draw(score);
+             TextManager.Instance.Draw(level);
              // DEBUG COLORS
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT]), Color.Red);
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_TOP]), Color.Red);

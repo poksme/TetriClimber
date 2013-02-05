@@ -10,14 +10,16 @@ namespace TetriClimber
     {
         private int lineScore;
         private int climbyScore;
-        private int totalScore;
+        public int TotalScore { get; private set; }
+        public int Level { private get; set; }
 
         public Score(String val, TextManager.EFont f, Color c, float s = 1f, Vector2 p = new Vector2(), Vector2 o = new Vector2())
             : base(val, f, c, s, p, o)
         {
             lineScore = 0;
             climbyScore = 0;
-            totalScore = 0;
+            TotalScore = 0;
+            Level = 0;
         }
         
         public Score(Score s):
@@ -29,21 +31,37 @@ namespace TetriClimber
         
         public void addLineScore(int ls)
         {
-            lineScore += ls;
+            switch (ls)
+            {
+                case 1:
+                    lineScore += 40 * (Level + 1);
+                    break;
+                case 2:
+                    lineScore += 100 * (Level + 1);
+                    break;
+                case 3:
+                    lineScore += 300 * (Level + 1);
+                    break;
+                case 4:
+                    lineScore += 1200 * (Level + 1);
+                    break;
+                default:
+                    break;
+            }
             majTotalScore();
         }
 
         public void addClimbyScore(int cs)
         {
-            climbyScore += cs;
+            climbyScore +=  cs * ((1200 / 4) * (Level + 1));
             majTotalScore();
 
         }
 
         public void majTotalScore()
         {
-            totalScore = climbyScore + lineScore;
-            value = (totalScore).ToString();
+            TotalScore = climbyScore + lineScore;
+            value = (TotalScore).ToString();
         }
     }
 }
