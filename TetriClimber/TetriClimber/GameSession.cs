@@ -14,6 +14,8 @@ namespace TetriClimber
         private ATetrimino shadowTetrimino;
         private TimeSpan cur;
         private TimeSpan lat;
+        private TimeSpan tSpinLimit;
+        private TimeSpan tSpinCur;
         private Score score;
         private Level level;
         private Climby climby;
@@ -44,9 +46,12 @@ namespace TetriClimber
             currTetrimino = tmp.Item1;
             shadowTetrimino = tmp.Item2;
             cur = TimeSpan.Zero;
-            lat = new TimeSpan(10000000/3); // 3
-            score = new Score("0", TextManager.EFont.AHARONI, Constants.Color.qLight, 1f, new Vector2(150, 20));
-            level = new Level("0", TextManager.EFont.AHARONI, Constants.Color.p2Light, 1f, new Vector2(150, 40));
+            //lat = new TimeSpan(10000000/3); // 3
+            score = new Score("0", TextManager.EFont.AHARONI, Constants.Color.p1Dark, 1f, new Vector2(150, 20));
+            level = new Level(0, TextManager.EFont.AHARONI, Constants.Color.p2Dark, 1f, new Vector2(150, 40));
+            lat = new TimeSpan(10000000 / (level.level + 1));
+            tSpinLimit = new TimeSpan(1000000 * 3); // TSPIN TIME
+            tSpinCur = TimeSpan.Zero;
             state = new Dictionary<Climby.EState, Action>();
 
 
@@ -71,11 +76,18 @@ namespace TetriClimber
                 cur = TimeSpan.Zero;
                 if (tetriminoCanGoingDown())
                     currTetrimino.PosRel = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y + 1f);
+            }
+            if (!tetriminoCanGoingDown())
+            {
+                if (tSpinCur == TimeSpan.Zero)
+                    tSpinCur = TimeSpan.Zero + gameTime.ElapsedGameTime;
                 else
+                    tSpinCur += gameTime.ElapsedGameTime;
+                if (tSpinCur > tSpinLimit)
                 {
                     if (SoundManager.Instance.getPlayingSound() != SoundManager.ESound.FASTDROP)
                         SoundManager.Instance.play(SoundManager.ESound.DROP);
-                    
+
                     board.pushBlocks(currTetrimino, climby.DeadZone);
                     #region FullLine Event
                     List<int> brokenLines = board.checkFullLine();
@@ -95,8 +107,9 @@ namespace TetriClimber
                     var tmp = tetriminoFactory.getTetrimino();
                     currTetrimino = tmp.Item1;
                     shadowTetrimino = tmp.Item2;
-                }        
-            }
+                    tSpinCur = TimeSpan.Zero;
+                }
+            }        
             state[climby.State]();
             climby.Update(gameTime);
             if (lastDir != climby.Direction ||
@@ -106,7 +119,11 @@ namespace TetriClimber
             lastDir = climby.Direction;
             if (climby.OldMinHeight - climby.MinHeight > 0)
                 score.addClimbyScore(climby.OldMinHeight - climby.MinHeight);
-            level.updateLevel(score.TotalScore);
+            if (level.updateLevel(score.TotalScore))
+            {
+                lat = new TimeSpan(10000000 / (level.level + 1));
+                climby.setSpeedFromLevel(level.level);
+            }
             projectShadow();
         }
 

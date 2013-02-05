@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework;
 
 namespace TetriClimber
 {
-    class Level : GameString
+    public class Level : GameString
     {
-        private int level;
+        public int level { get; private set; }
 
-        public Level(String val, TextManager.EFont f, Color c, float s = 1f, Vector2 p = new Vector2(), Vector2 o = new Vector2())
-            : base(val, f, c, s, p, o)
+        public Level(int val, TextManager.EFont f, Color c, float s = 1f, Vector2 p = new Vector2(), Vector2 o = new Vector2())
+            : base(val.ToString(), f, c, s, p, o)
         {
             level = 0;
         }
@@ -21,11 +21,18 @@ namespace TetriClimber
         {
             level = s.level;
         }
-        
+
+        private int calcLevel(int score, int lvl = 0)
+        {
+            if (score > ((1200 / 4) * (lvl + 1) * 10))
+                return calcLevel(score, lvl + 1);
+            else
+                return lvl;
+        }
+
         public bool updateLevel(int score)
         {
-            var tmp = score / ((1200 / 4) * (level + 1) * 10); // SCORE EQUIVALENT A 10 LIGNE MONTEES
-
+            var tmp = calcLevel(score);
             if (tmp > level)
             {
                 level = tmp;
