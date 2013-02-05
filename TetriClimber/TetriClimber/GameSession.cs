@@ -192,6 +192,8 @@ namespace TetriClimber
             currTetrimino.leftShift();
             if (kickIt(1) == false)
                 currTetrimino.rightShift();
+            else
+                SoundManager.Instance.play(SoundManager.ESound.SHIFT);
         }
 
         public void dropDownTarget(ATetrimino target)

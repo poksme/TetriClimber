@@ -102,7 +102,8 @@ namespace TetriClimber
 
         public bool isOutOfBond(Vector2 coord)
         {
-            if ((int)coord.Y < 0 || (int)coord.Y >= Constants.Measures.boardBlockHeight ||
+            if (//(int)coord.Y < 0 || //REMOVED BECAUSE SHIFT OK EVEN IF AT TOP
+                (int)coord.Y >= Constants.Measures.boardBlockHeight ||
                 (int)coord.X < 0 || (int)coord.X >= Constants.Measures.boardBlockWidth)
                 return true;
             return false;
