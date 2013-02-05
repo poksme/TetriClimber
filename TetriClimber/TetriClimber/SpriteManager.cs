@@ -8,7 +8,7 @@ namespace TetriClimber
 {
     public class SpriteManager
     {
-        public enum ESprite { Z, T, Q, S, L, P, O, PAUSE, LEFT, RIGHT, CLIMBYRED, CLIMBYBLUE };
+        public enum ESprite { Z, T, Q, S, L, P, O, PAUSE, LEFT, RIGHT, CLIMBYRED, CLIMBYBLUE, LEFT_TEXT_BUTTON, MIDDLE_TEXT_BUTTON, RIGHT_TEXT_BUTTON };
         private Dictionary<ESprite, KeyValuePair<Rectangle, TextureManager.ETexture>> sprites = null;
         private TextureManager textureManager = null;
         private static SpriteManager instance = null;
@@ -30,6 +30,9 @@ namespace TetriClimber
             sprites.Add(ESprite.RIGHT, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(115, 2 * 115, 115, 115), TextureManager.ETexture.TETRIMINO));
             sprites.Add(ESprite.CLIMBYBLUE, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(3 * 115, 115, 115, 115), TextureManager.ETexture.TETRIMINO));
             sprites.Add(ESprite.CLIMBYRED, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(4 * 115, 115, 115, 115), TextureManager.ETexture.TETRIMINO));
+            sprites.Add(ESprite.LEFT_TEXT_BUTTON, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(5 * 115, 115, 35, 115), TextureManager.ETexture.TETRIMINO));
+            sprites.Add(ESprite.MIDDLE_TEXT_BUTTON, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(6 * 115, 2* 115, 53, 115), TextureManager.ETexture.TETRIMINO));
+            sprites.Add(ESprite.RIGHT_TEXT_BUTTON, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(6 * 115, 115, 35, 115), TextureManager.ETexture.TETRIMINO));
             #endregion
         }
 
@@ -68,6 +71,7 @@ namespace TetriClimber
             // WHY DO WE NEED TO ADD PADDING ?
             App.SpriteBatch.Draw(textureManager.getTexture(sprites[es].Value), new Vector2(pos.X + sprtSize / 2, pos.Y + sprtSize / 2), sprites[es].Key, Color.White * transparency, ort, new Vector2(Constants.Measures.spriteSquareSize / 2f), sprtSize / Constants.Measures.spriteSquareSize, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
         }
+
         public void drawRectangleAbsPos(Rectangle rec, Color col)
         {
             App.SpriteBatch.Draw(textureManager.getTexture(TextureManager.ETexture.RECTANGLE), rec, col);
@@ -90,6 +94,11 @@ namespace TetriClimber
         internal void drawShapeAtPos(Vector2 pos, TextureManager.ETexture shape, float ort, float sprtSize, float transparency = 1f)
         {
             App.SpriteBatch.Draw(textureManager.getTexture(shape), new Vector2(pos.X + sprtSize / 2, pos.Y + sprtSize / 2), new Rectangle(0, 0, 800, 800), Color.White * transparency, ort, new Vector2(800 / 2f), sprtSize / 800, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+        }
+
+        internal void drawZoom(ESprite sprite, Vector2 pos, float sprtSize, float ort = 0f)
+        {
+            App.SpriteBatch.Draw(TextureManager.Instance.getTexture(sprites[sprite].Value), new Vector2(pos.X + (sprites[sprite].Key.Width * sprtSize) / 2, pos.Y + (sprites[sprite].Key.Height * sprtSize) / 2), sprites[sprite].Key, Color.White, ort, new Vector2(sprites[sprite].Key.Width / 2f, sprites[sprite].Key.Height /2f), sprtSize, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
         }
     }
 }

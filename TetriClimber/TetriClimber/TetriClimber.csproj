@@ -111,6 +111,8 @@
     <Reference Include="Microsoft.Surface.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AButton.cs" />
+    <Compile Include="AMenu.cs" />
     <Compile Include="AScene.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="Block.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="AUserInput.cs" />
     <Compile Include="KeyboardInput.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="MenuManager.cs" />
     <Compile Include="OnePlayer.cs" />
     <Compile Include="APlay.cs" />
@@ -145,6 +148,7 @@
     <Compile Include="Tetrimini\TetriO.cs" />
     <Compile Include="Tetrimini\TetriP.cs" />
     <Compile Include="Tetrimini\TetriQ.cs" />
+    <Compile Include="TextButton.cs" />
     <Compile Include="TextManager.cs" />
     <Compile Include="TextureManager.cs" />
     <Compile Include="TouchInput.cs" />

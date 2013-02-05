@@ -170,7 +170,7 @@ namespace TetriClimber
               //  Console.Out.WriteLine("Vertical Orientataion");
             //screenTransform = inverted;
             //}
-
+            MenuManager.Instance.Initialize();
             base.Initialize();
         }
 
@@ -213,6 +213,7 @@ namespace TetriClimber
                 }
 
                 SceneManager.Instance.Update(gameTime);
+                MenuManager.Instance.Update(gameTime);
                 // TODO: Add your update logic here
             }
 
@@ -241,6 +242,7 @@ namespace TetriClimber
             //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, screenTransform);
             SceneManager.Instance.Draw(gameTime);
+            MenuManager.Instance.Draw(gameTime);
             //SpriteManager.Instance.drawAtPos(SpriteManager.ESprite.L, Vector2.Zero);
             SpriteManager.Instance.end();
 

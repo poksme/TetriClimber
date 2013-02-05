@@ -8,13 +8,12 @@ namespace TetriClimber
 {
     public class SceneManager : DrawableGameComponent
     {
-        public enum EScene {ATRACT_MODE, MAIN_MENU, PLAY, PAUSE_MENU}
-        Dictionary<EScene, AScene> scenes = new Dictionary<EScene, AScene>();
+        public enum EScene { ATRACT_MODE, PLAY }
+        private Dictionary<EScene, AScene> scenes = new Dictionary<EScene, AScene>();
         private static SceneManager instance = null;
 
         private SceneManager():base(App.Game)
         {
-            scenes.Add(EScene.PLAY, new OnePlayer());
         }
 
         public static SceneManager Instance
@@ -30,13 +29,44 @@ namespace TetriClimber
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            scenes[EScene.PLAY].Draw(gameTime);
+            foreach (KeyValuePair<EScene, AScene> pair in scenes)
+                pair.Value.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            scenes[EScene.PLAY].Update(gameTime);
+            foreach (KeyValuePair<EScene, AScene> pair in scenes)
+            {
+                if (!pair.Value.IsPause)
+                    pair.Value.Update(gameTime);
+            }
+        }
+
+        public void addScene(EScene e)
+        {
+            switch (e)
+            {
+                case EScene.PLAY:
+                    scenes.Add(e, new OnePlayer());
+                    MenuManager.Instance.Flush();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void removeScene(EScene eScene)
+        {
+            scenes.Remove(eScene);
+        }
+
+        public  void TogglePause(EScene eScene)
+        {
+            if (scenes[eScene].IsPause)
+                scenes[eScene].Resume();
+            else
+                scenes[eScene].Pause();
         }
     }
 }

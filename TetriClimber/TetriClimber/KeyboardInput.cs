@@ -19,6 +19,7 @@ namespace TetriClimber
             inputs.Add(EInput.LEFT, Keys.Left);
             inputs.Add(EInput.RIGHT, Keys.Right);
             inputs.Add(EInput.TAP, Keys.Space);
+            inputs.Add(EInput.ENTER, Keys.Enter);
         }
 
         public override void Update(GameTime gameTime)

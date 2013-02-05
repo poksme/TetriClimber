@@ -27,8 +27,8 @@ namespace TetriClimber
 
         public String Value { get { return this.value; } set { this.value = value; } }
         public TextManager.EFont Font { get { return this.font; }}
-        public Color Color { get { return this.color; } }
-        public Vector2 Pos { get { return this.pos; } }
+        public Color Color { get { return this.color; } set { this.color = value; } }
+        public Vector2 Pos { get; set; }
         public Vector2 Origin { get { return this.origin; } }
         public float Scale { get { return this.scale; } }
     }

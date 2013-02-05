@@ -6,33 +6,26 @@ using Microsoft.Xna.Framework;
 
 namespace TetriClimber
 {
-    public abstract class AScene : DrawableGameComponent
+    public class Menu : AMenu
     {
-        public bool IsPause { get; protected set; }
-
-        public AScene() : base(App.Game)
+        public Menu(List<AButton> btns)
+            : base()
         {
-            IsPause = false;
+            buttons = btns;
+            buttons[cursor].Select();
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+            foreach (TextButton btn in buttons)
+                btn.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-        }
-
-        public void Pause()
-        {
-            IsPause = true;
-        }
-
-        public void Resume()
-        {
-            IsPause = false;
+      
         }
     }
 }

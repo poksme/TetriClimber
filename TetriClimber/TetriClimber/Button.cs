@@ -7,14 +7,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetriClimber
 {
-    public delegate void HandlerAction(ButtonState btn);
-
     public class Button : DrawableGameComponent
     {
         private SpriteManager.ESprite type;
         private Rectangle coord;
         private ButtonState btnState;
-        HandlerAction handler;
+        PlayerControl.HandlerAction handler;
 
         public Rectangle Coord
         {
@@ -22,7 +20,7 @@ namespace TetriClimber
             set { coord = value; }
         }
 
-        public Button(SpriteManager.ESprite s, Vector2 pos, HandlerAction act)
+        public Button(SpriteManager.ESprite s, Vector2 pos, PlayerControl.HandlerAction act)
             : base(App.Game)
         {
             btnState = ButtonState.Released;

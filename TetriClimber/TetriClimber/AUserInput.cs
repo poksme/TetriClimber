@@ -10,7 +10,7 @@ namespace TetriClimber
 {
     public abstract class AUserInput : GameComponent
     {
-        public enum EInput {UP, DOWN, LEFT, RIGHT, TAP}
+        public enum EInput {UP, DOWN, LEFT, RIGHT, TAP, ENTER}
         public enum EType {KEYBOARD, TOUCH}
         protected Dictionary<EInput, TimeSpan> state;
 
@@ -21,7 +21,8 @@ namespace TetriClimber
             state.Add(EInput.DOWN,  TimeSpan.Zero);
             state.Add(EInput.LEFT,  TimeSpan.Zero);
             state.Add(EInput.RIGHT, TimeSpan.Zero);
-            state.Add(EInput.TAP,   TimeSpan.Zero);
+            state.Add(EInput.TAP, TimeSpan.Zero);
+            state.Add(EInput.ENTER, TimeSpan.Zero);
         }
 
         public TimeSpan getDownTime(EInput e)

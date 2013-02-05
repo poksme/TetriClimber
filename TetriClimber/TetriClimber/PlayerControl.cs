@@ -9,6 +9,7 @@ namespace TetriClimber
 {
     public class PlayerControl : DrawableGameComponent
     {
+        public delegate void HandlerAction(ButtonState btn);
         private Button pause;
         private Button left;
         private Button right;
@@ -37,7 +38,10 @@ namespace TetriClimber
         public void pauseGame(ButtonState state)
         {
             if (state == ButtonState.Released)
-                Console.Out.WriteLine("Pause click");
+            {
+                MenuManager.Instance.CreatePauseMenu();
+                SceneManager.Instance.TogglePause(SceneManager.EScene.PLAY);
+            }
         }
 
         public void rightArrow(ButtonState state)
