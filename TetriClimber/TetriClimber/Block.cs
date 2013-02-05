@@ -15,6 +15,7 @@ namespace TetriClimber
         private ATetrimino container;
         private SpriteManager.ESprite color;
         private Rectangle hitBox;
+        private float transparency;
 
         public SpriteManager.ESprite Color
         {
@@ -27,11 +28,12 @@ namespace TetriClimber
             get { return orientation; }
         }
 
-        public Block(SpriteManager.ESprite color, ATetrimino cont) : base(App.Game)
+        public Block(SpriteManager.ESprite color, ATetrimino cont, float transpar = 1f) : base(App.Game)
         {
             this.color = color;
             container = cont;
             hitBox = Rectangle.Empty;
+            this.transparency = transpar;
         }
 
         public void setPosition(Vector2 coord)
@@ -49,7 +51,7 @@ namespace TetriClimber
             base.Draw(gameTime);
             if (posRel.X + container.PosRel.X < Constants.Measures.boardBlockWidth && posRel.X + container.PosRel.X >= 0f &&
                 posRel.Y + container.PosRel.Y < Constants.Measures.boardBlockHeight && posRel.Y + container.PosRel.Y >= 0f)
-                SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(Constants.Measures.leftBoardMargin + (posRel.X + container.PosRel.X) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (posRel.Y + container.PosRel.Y) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize);
+                SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(Constants.Measures.leftBoardMargin + (posRel.X + container.PosRel.X) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (posRel.Y + container.PosRel.Y) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize, transparency); // HERE TRANSPARENCY
         }
 
         public override void Update(GameTime gameTime)

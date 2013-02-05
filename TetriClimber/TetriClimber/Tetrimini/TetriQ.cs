@@ -7,7 +7,8 @@ namespace TetriClimber
 {
     class TetriQ : ATetrimino
     {
-        public TetriQ():base(SpriteManager.ESprite.Q)
+        public TetriQ(float transparency = 1f)
+            : base(SpriteManager.ESprite.Q, transparency)
         {
             orientations.Add(pos2);
             orientations.Add(pos3);

@@ -11,6 +11,7 @@ namespace TetriClimber
         private Board board;
         private TetriminoFactory tetriminoFactory;
         private ATetrimino currTetrimino;
+        private ATetrimino shadowTetrimino;
         private TimeSpan cur;
         private TimeSpan lat;
         private Score score;
@@ -38,7 +39,9 @@ namespace TetriClimber
             //
 
             tetriminoFactory = TetriminoFactory.Instance;
-            currTetrimino = tetriminoFactory.getTetrimino();
+            var tmp = tetriminoFactory.getTetrimino();
+            currTetrimino = tmp.Item1;
+            shadowTetrimino = tmp.Item2;
             cur = TimeSpan.Zero;
             lat = new TimeSpan(10000000/3); // 3
             score = new Score("0", TextManager.EFont.AHARONI, Constants.Color.qLight, 1f, new Vector2(150, 20));
@@ -87,7 +90,9 @@ namespace TetriClimber
                     }
                     #endregion
                     climby.stepDown(aroundRect, board.CamUp);
-                    currTetrimino = tetriminoFactory.getTetrimino();
+                    var tmp = tetriminoFactory.getTetrimino();
+                    currTetrimino = tmp.Item1;
+                    shadowTetrimino = tmp.Item2;
                 }        
             }
             state[climby.State]();
@@ -99,6 +104,15 @@ namespace TetriClimber
             lastDir = climby.Direction;
             if (climby.OldMinHeight - climby.MinHeight > 0)
                 score.addLineScore(climby.OldMinHeight - climby.MinHeight);
+            projectShadow();
+        }
+
+        private void projectShadow()
+        {
+            var tmp = new Vector2(currTetrimino.PosRel.X, currTetrimino.PosRel.Y);
+            shadowTetrimino.PosRel = tmp;
+            shadowTetrimino.copyOrientation(currTetrimino);
+            dropDownTarget(shadowTetrimino);
         }
 
         public override void Draw(GameTime gameTime)
@@ -106,6 +120,7 @@ namespace TetriClimber
  	         base.Draw(gameTime);
              board.Draw(gameTime);
              currTetrimino.Draw(gameTime);
+             shadowTetrimino.Draw(gameTime);
              climby.Draw(gameTime);
              TextManager.Instance.Draw(score);
              // DEBUG COLORS
@@ -179,10 +194,15 @@ namespace TetriClimber
                 currTetrimino.rightShift();
         }
 
+        public void dropDownTarget(ATetrimino target)
+        {
+            while (targetCanGoingDown(target))
+                target.downMove();
+        }
+
         public void dropDown()
         {
-            while (tetriminoCanGoingDown())
-                currTetrimino.downMove();
+            dropDownTarget(currTetrimino);
             SoundManager.Instance.play(SoundManager.ESound.FASTDROP);
         }
 
@@ -212,17 +232,31 @@ namespace TetriClimber
             currTetrimino.leftMove();
         }
 
-        public bool tetriminoCanGoingDown()
+        public bool targetCanGoingDown(ATetrimino target)
         {
-            List<Block> shapes = currTetrimino.getBlocks();
+            List<Block> shapes = target.getBlocks();
             foreach (Block b in shapes)
             {
-                if (currTetrimino.PosRel.Y + b.PosRel.Y > Constants.Measures.boardBlockHeight -2)
+                if (target.PosRel.Y + b.PosRel.Y > Constants.Measures.boardBlockHeight - 2)
                     return false;
-                if (board.isBusyCase(new Vector2(currTetrimino.PosRel.X + b.PosRel.X, currTetrimino.PosRel.Y + b.PosRel.Y + 1)))
+                if (board.isBusyCase(new Vector2(target.PosRel.X + b.PosRel.X, target.PosRel.Y + b.PosRel.Y + 1)))
                     return false;
             }
             return true;
+        }
+
+        public bool tetriminoCanGoingDown()
+        {
+            return targetCanGoingDown(currTetrimino);
+            //List<Block> shapes = currTetrimino.getBlocks();
+            //foreach (Block b in shapes)
+            //{
+            //    if (currTetrimino.PosRel.Y + b.PosRel.Y > Constants.Measures.boardBlockHeight -2)
+            //        return false;
+            //    if (board.isBusyCase(new Vector2(currTetrimino.PosRel.X + b.PosRel.X, currTetrimino.PosRel.Y + b.PosRel.Y + 1)))
+            //        return false;
+            //}
+            //return true;
         }
         #endregion
         #region Climby Action

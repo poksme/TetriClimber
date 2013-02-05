@@ -19,17 +19,25 @@ namespace TetriClimber
             set { posRel = value; }
         }
 
-        public ATetrimino(SpriteManager.ESprite color) : base(App.Game)
+        public void copyOrientation(ATetrimino o)
+        {
+            orientation = o.orientation;
+            orientations[orientation].Invoke();
+            foreach (Block b in shape)
+                b.setOrientation(orientation);
+        }
+
+        public ATetrimino(SpriteManager.ESprite color, float transparency = 1f) : base(App.Game)
         {
             orientation = 0;
             posRel = new Vector2(3, -3);
             orientations = new List<Action>();
             orientations.Add(pos1);
             shape = new List<Block>();
-            shape.Add(new Block(color, this));
-            shape.Add(new Block(color, this));
-            shape.Add(new Block(color, this));
-            shape.Add(new Block(color, this));
+            shape.Add(new Block(color, this, transparency));
+            shape.Add(new Block(color, this, transparency));
+            shape.Add(new Block(color, this, transparency));
+            shape.Add(new Block(color, this, transparency));
             orientations[orientation].Invoke();
         }
 

@@ -7,7 +7,8 @@ namespace TetriClimber
 {
     public class TetriO : ATetrimino
     {
-        public TetriO():base(SpriteManager.ESprite.O)
+        public TetriO(float transparency = 1f)
+            : base(SpriteManager.ESprite.O, transparency)
         {
         }
 

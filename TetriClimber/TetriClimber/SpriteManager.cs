@@ -48,14 +48,14 @@ namespace TetriClimber
             App.SpriteBatch.Begin();
         }
 
-        public void drawAtRecPos(ESprite es, Rectangle rec)
+        public void drawAtRecPos(ESprite es, Rectangle rec, float transparency = 1f)
         {
-            App.SpriteBatch.Draw(textureManager.getTexture(sprites[es].Value), rec, sprites[es].Key, Color.White);
+            App.SpriteBatch.Draw(textureManager.getTexture(sprites[es].Value), rec, sprites[es].Key, Color.White * transparency);
         }
 
-        public void drawAtPos(ESprite es, Vector2 pos)
+        public void drawAtPos(ESprite es, Vector2 pos, float transparency = 1f)
         {
-            App.SpriteBatch.Draw(textureManager.getTexture(sprites[es].Value), pos, sprites[es].Key, Color.White);
+            App.SpriteBatch.Draw(textureManager.getTexture(sprites[es].Value), pos, sprites[es].Key, Color.White * transparency);
         }
 
         public void end()
@@ -63,10 +63,10 @@ namespace TetriClimber
             App.SpriteBatch.End();
         }
 
-        public void drawRotatedAtPos(ESprite es, Vector2 pos, float ort, float sprtSize)
+        public void drawRotatedAtPos(ESprite es, Vector2 pos, float ort, float sprtSize, float transparency = 1f)
         {
             // WHY DO WE NEED TO ADD PADDING ?
-            App.SpriteBatch.Draw(textureManager.getTexture(sprites[es].Value), new Vector2(pos.X + sprtSize / 2, pos.Y + sprtSize / 2), sprites[es].Key, Color.White, ort, new Vector2(Constants.Measures.spriteSquareSize / 2f), sprtSize / Constants.Measures.spriteSquareSize, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+            App.SpriteBatch.Draw(textureManager.getTexture(sprites[es].Value), new Vector2(pos.X + sprtSize / 2, pos.Y + sprtSize / 2), sprites[es].Key, Color.White * transparency, ort, new Vector2(Constants.Measures.spriteSquareSize / 2f), sprtSize / Constants.Measures.spriteSquareSize, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
         }
         public void drawRectangleAbsPos(Rectangle rec, Color col)
         {
@@ -87,9 +87,9 @@ namespace TetriClimber
             App.SpriteBatch.Draw(textureManager.getTexture(TextureManager.ETexture.RECTANGLE), rec, col);
         }
 
-        internal void drawShapeAtPos(Vector2 pos, TextureManager.ETexture shape, float ort, float sprtSize)
+        internal void drawShapeAtPos(Vector2 pos, TextureManager.ETexture shape, float ort, float sprtSize, float transparency = 1f)
         {
-            App.SpriteBatch.Draw(textureManager.getTexture(shape), new Vector2(pos.X + sprtSize / 2, pos.Y + sprtSize / 2), new Rectangle(0, 0, 800, 800), Color.White, ort, new Vector2(800 / 2f), sprtSize / 800, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+            App.SpriteBatch.Draw(textureManager.getTexture(shape), new Vector2(pos.X + sprtSize / 2, pos.Y + sprtSize / 2), new Rectangle(0, 0, 800, 800), Color.White * transparency, ort, new Vector2(800 / 2f), sprtSize / 800, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
         }
     }
 }
