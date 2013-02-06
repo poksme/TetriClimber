@@ -118,9 +118,10 @@ namespace TetriClimber
                 climby.State == Climby.EState.FREE_FALL)
                 updateAroundRects();
             lastDir = climby.Direction;
-            if (climby.OldMinHeight - climby.MinHeight > 0)
-                score.addClimbyScore(climby.OldMinHeight - climby.MinHeight);
-            if (level.updateLevel(score.TotalScore))
+            var tmpClimbyStepHeight =  climby.OldMinHeight - climby.MinHeight;
+            if ( tmpClimbyStepHeight > 0)
+                score.addClimbyScore(tmpClimbyStepHeight);
+            if (level.updateLevel(tmpClimbyStepHeight))
             {
                 lat = new TimeSpan(10000000 / (level.level + 1));
                 climby.setSpeedFromLevel(level.level);

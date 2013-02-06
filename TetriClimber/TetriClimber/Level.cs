@@ -9,11 +9,13 @@ namespace TetriClimber
     public class Level : GameString
     {
         public int level { get; private set; }
+        private int step;
 
         public Level(int val, TextManager.EFont f, Color c, float s = 1f, Vector2 p = new Vector2(), Vector2 o = new Vector2())
             : base(val.ToString(), f, c, s, p, o)
         {
             level = 0;
+            step = 0;
         }
         
         public Level(Level s):
@@ -30,9 +32,21 @@ namespace TetriClimber
                 return lvl;
         }
 
-        public bool updateLevel(int score)
+        //public bool updateLevel(int score)
+        //{
+        //    var tmp = calcLevel(score);
+        //    if (tmp > level)
+        //    {
+        //        level = tmp;
+        //        value = (level).ToString();
+        //        return true;
+        //    }
+        //    return false;
+        //}
+        public bool updateLevel(int stepToAdd)
         {
-            var tmp = calcLevel(score);
+            step +=stepToAdd;
+            int tmp = step / 10;
             if (tmp > level)
             {
                 level = tmp;
