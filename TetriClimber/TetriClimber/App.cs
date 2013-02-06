@@ -171,6 +171,7 @@ namespace TetriClimber
             //screenTransform = inverted;
             //}
             MenuManager.Instance.Initialize();
+           
             base.Initialize();
         }
 
