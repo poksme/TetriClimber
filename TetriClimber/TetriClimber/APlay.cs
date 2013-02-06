@@ -13,7 +13,6 @@ namespace TetriClimber
         protected TimeSpan lat = new TimeSpan(10000000 / 2);
         protected TimeSpan cur = new TimeSpan(0);
         protected TimeSpan turnLat = new TimeSpan(10000000 / 10);
-        private Background bg;
 
         //private Vector2 tmpOrtSize = new Vector2(0.2f, 50f);
         //private Vector2 tmpPos = new Vector2();
@@ -22,13 +21,13 @@ namespace TetriClimber
         {
             control = new PlayerControl();
             SoundManager.Instance.bgmPlay();
-            bg = new Background();
+           // bg = new Background();
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            bg.Draw(gameTime);
+           // bg.Draw(gameTime);
             //SpriteManager.Instance.drawShapeAtPos(tmpPos, TextureManager.ETexture.GREEN_CROSS, tmpOrtSize.X, tmpOrtSize.Y);
             //SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X, tmpPos.Y + 100f), TextureManager.ETexture.BLUE_SQUARE, tmpOrtSize.X, tmpOrtSize.Y);
             //SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X - 500f, tmpPos.Y - 100f), TextureManager.ETexture.GREEN_SQUARE, tmpOrtSize.X, tmpOrtSize.Y);
@@ -43,7 +42,7 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            bg.Update(gameTime);
+            //bg.Update(gameTime);
             //tmpPos.X += 0.5f;
             //tmpPos.Y += 0.5f;
             //tmpOrtSize.X += 0.001f;

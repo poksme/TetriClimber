@@ -137,6 +137,7 @@
     <Compile Include="App.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="Score.cs" />
+    <Compile Include="SettingsManager.cs" />
     <Compile Include="ShapeData.cs" />
     <Compile Include="SoundManager.cs" />
     <Compile Include="SpriteManager.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="TextButton.cs" />
     <Compile Include="TextManager.cs" />
     <Compile Include="TextureManager.cs" />
+    <Compile Include="ToggleButton.cs" />
     <Compile Include="TouchInput.cs" />
   </ItemGroup>
   <ItemGroup>

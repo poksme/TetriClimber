@@ -6,14 +6,14 @@ using Microsoft.Xna.Framework;
 
 namespace TetriClimber
 {
-    public class Background : DrawableGameComponent
+    public class Background : AScene
     {
         //public enum ShapesId { BLUE_SQUARE, GREEN_CROSS, GREEN_SQUARE, ORANGE_TRIANGLE, PINK_CROSS, VIOLET_HEXAGONE, YELLOW_LINES };
         //private Dictionary<ShapesId, KeyValuePair<TextureManager.ETexture, BackgroundShapeData>> shapes;
         private List<KeyValuePair<TextureManager.ETexture, BackgroundShapeData>> shapes;
 
         public Background()
-            : base(App.Game)
+            : base()
         {
             shapes = new List<KeyValuePair<TextureManager.ETexture, BackgroundShapeData>>();
             shapes.Add(new KeyValuePair<TextureManager.ETexture, BackgroundShapeData>(

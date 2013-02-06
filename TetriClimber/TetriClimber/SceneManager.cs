@@ -8,12 +8,13 @@ namespace TetriClimber
 {
     public class SceneManager : DrawableGameComponent
     {
-        public enum EScene { ATRACT_MODE, PLAY }
+        public enum EScene { ATRACT_MODE, PLAY, BACKGROUND }
         private Dictionary<EScene, AScene> scenes = new Dictionary<EScene, AScene>();
         private static SceneManager instance = null;
 
         private SceneManager():base(App.Game)
         {
+            scenes.Add(EScene.BACKGROUND, new Background());
         }
 
         public static SceneManager Instance

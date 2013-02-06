@@ -12,13 +12,14 @@ namespace TetriClimber
             : base()
         {
             buttons = btns;
-            buttons[cursor].Select();
+            if (buttons.Count > 0)
+                buttons[cursor].Select();
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            foreach (TextButton btn in buttons)
+            foreach (AButton btn in buttons)
                 btn.Draw(gameTime);
         }
 
