@@ -109,11 +109,13 @@ namespace TetriClimber
                     shadowTetrimino = tmp.Item2;
                     tSpinCur = TimeSpan.Zero;
                 }
-            }        
-            state[climby.State]();
+            }
+            //state[climby.State]();
             climby.Update(gameTime);
+            //
+            state[climby.State]();
+            // INVERTED UPDATE AND STATECHANGE
             if (lastDir != climby.Direction ||
-                //climby.State == Climby.EState.END_CLIMB || // NEWLY ADDED
                 climby.State == Climby.EState.MOVE ||
                 climby.State == Climby.EState.FREE_FALL)
                 updateAroundRects();
