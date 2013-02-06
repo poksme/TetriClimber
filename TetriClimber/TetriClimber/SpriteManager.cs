@@ -8,7 +8,7 @@ namespace TetriClimber
 {
     public class SpriteManager
     {
-        public enum ESprite { Z, T, Q, S, L, P, O, PAUSE, LEFT, RIGHT, CLIMBYRED, CLIMBYBLUE, LEFT_TEXT_BUTTON, MIDDLE_TEXT_BUTTON, RIGHT_TEXT_BUTTON };
+        public enum ESprite { Z, T, Q, S, L, P, O, PAUSE, LEFT, RIGHT, CLIMBYRED, CLIMBYBLUE, LEFT_TEXT_BUTTON, MIDDLE_TEXT_BUTTON, RIGHT_TEXT_BUTTON, NONE };
         private Dictionary<ESprite, KeyValuePair<Rectangle, TextureManager.ETexture>> sprites = null;
         private TextureManager textureManager = null;
         private static SpriteManager instance = null;
@@ -33,6 +33,7 @@ namespace TetriClimber
             sprites.Add(ESprite.LEFT_TEXT_BUTTON, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(5 * 115, 115, 35, 115), TextureManager.ETexture.TETRIMINO));
             sprites.Add(ESprite.MIDDLE_TEXT_BUTTON, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(6 * 115, 2* 115, 53, 115), TextureManager.ETexture.TETRIMINO));
             sprites.Add(ESprite.RIGHT_TEXT_BUTTON, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(6 * 115, 115, 35, 115), TextureManager.ETexture.TETRIMINO));
+            sprites.Add(ESprite.NONE, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(690, 0, 115, 115), TextureManager.ETexture.TETRIMINO));
             #endregion
         }
 

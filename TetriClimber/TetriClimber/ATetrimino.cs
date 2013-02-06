@@ -27,17 +27,17 @@ namespace TetriClimber
                 b.setOrientation(orientation);
         }
 
-        public ATetrimino(SpriteManager.ESprite color, float transparency = 1f) : base(App.Game)
+        public ATetrimino(SpriteManager.ESprite color, float transparency = 1f, bool shadow = false) : base(App.Game)
         {
             orientation = 0;
             posRel = new Vector2(3, -3);
             orientations = new List<Action>();
             orientations.Add(pos1);
             shape = new List<Block>();
-            shape.Add(new Block(color, this, transparency));
-            shape.Add(new Block(color, this, transparency));
-            shape.Add(new Block(color, this, transparency));
-            shape.Add(new Block(color, this, transparency));
+            shape.Add(new Block((shadow ? SpriteManager.ESprite.NONE : color), this, transparency));
+            shape.Add(new Block((shadow ? SpriteManager.ESprite.NONE : color), this, transparency));
+            shape.Add(new Block((shadow ? SpriteManager.ESprite.NONE : color), this, transparency));
+            shape.Add(new Block((shadow ? SpriteManager.ESprite.NONE : color), this, transparency));
             orientations[orientation].Invoke();
         }
 

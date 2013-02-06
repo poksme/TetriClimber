@@ -7,8 +7,8 @@ namespace TetriClimber
 {
     public class TetriS : ATetrimino
     {
-        public TetriS(float transparency = 1f)
-            : base(SpriteManager.ESprite.S, transparency)
+        public TetriS(float transparency = 1f, bool shadow = false)
+            : base(SpriteManager.ESprite.S, transparency, shadow)
         {
             orientations.Add(pos2);
         }

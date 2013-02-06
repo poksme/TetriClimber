@@ -17,7 +17,7 @@ namespace TetriClimber
             rand = new Random();
             tetriminiConstructors = new List<Tuple<ConstructorInfo, bool>>();
 
-            Type[] tetriminoParametersType = new Type[] { typeof(float) }; // TAKES TRANSPARENCY
+            Type[] tetriminoParametersType = new Type[] { typeof(float), typeof(Boolean) }; // TAKES TRANSPARENCY AND SHADOW
             tetriminiConstructors.Add(new Tuple<ConstructorInfo, bool>(typeof(TetriL).GetConstructor(tetriminoParametersType), false));
             tetriminiConstructors.Add(new Tuple<ConstructorInfo, bool>(typeof(TetriO).GetConstructor(tetriminoParametersType), false));
             tetriminiConstructors.Add(new Tuple<ConstructorInfo, bool>(typeof(TetriP).GetConstructor(tetriminoParametersType), false));
@@ -52,7 +52,7 @@ namespace TetriClimber
                 }
             }
             tetriminiConstructors[it] = new Tuple<ConstructorInfo, bool>(tetriminiConstructors[it].Item1, true);
-            return new Tuple<ATetrimino,ATetrimino>((ATetrimino)tetriminiConstructors[it].Item1.Invoke(new object[] {1f}), (ATetrimino)tetriminiConstructors[it].Item1.Invoke(new object[] {0.3f}));
+            return new Tuple<ATetrimino,ATetrimino>((ATetrimino)tetriminiConstructors[it].Item1.Invoke(new object[] {0.7f, false}), (ATetrimino)tetriminiConstructors[it].Item1.Invoke(new object[] {0.3f, false}));
         }
 
         private void resetTetriminiConstructors()

@@ -140,20 +140,20 @@ namespace TetriClimber
         {
  	         base.Draw(gameTime);
              board.Draw(gameTime);
-             currTetrimino.Draw(gameTime);
              shadowTetrimino.Draw(gameTime);
+             currTetrimino.Draw(gameTime);
              climby.Draw(gameTime);
              TextManager.Instance.Draw(score);
              TextManager.Instance.Draw(level);
              // DEBUG COLORS
-             SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT]), Color.Red);
-             SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_TOP]), Color.Red);
-             SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_UNDER]), Color.Red);
-             SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_UNDER_UNDER]), Color.Red);
-             SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.TOP]), Color.Red);
-             SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.UNDER]), Color.Red);
-             SpriteManager.Instance.drawRectangleAbsPos(climby.ActualPosition, Color.Blue);
-             SpriteManager.Instance.drawRectangleAbsPos(climby.DeadZone, Color.Green);
+             //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT]), Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_TOP]), Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_UNDER]), Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_UNDER_UNDER]), Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.TOP]), Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.UNDER]), Color.Red);
+             //SpriteManager.Instance.drawRectangleAbsPos(climby.ActualPosition, Color.Blue);
+             //SpriteManager.Instance.drawRectangleAbsPos(climby.DeadZone, Color.Green);
              //UNCOMMENT THIS BLOCK TO SEE ALL THE HITBOXES
         }
 
