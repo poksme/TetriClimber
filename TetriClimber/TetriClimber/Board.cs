@@ -12,11 +12,13 @@ namespace TetriClimber
         private Block[][] grid;
         private HashSet<int> updatedLine;
         private int camUp;
+        private int limitLineHeight;
 
         public Board(Vector2 size) : base(App.Game)
         {
             this.size = size;
             grid = new Block[(int)size.Y][];
+            limitLineHeight = 4;
             for (int i = 0; i < grid.Length; i++)
             {
                 grid[i] = new Block[(int)size.X];
@@ -33,10 +35,14 @@ namespace TetriClimber
         public override void  Draw(GameTime gameTime)
         {
  	        base.Draw(gameTime);
-            //SpriteManager.Instance.drawRectangleAbsPos(new Rectangle(20, 20, (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), 
-            //                                            Color.White * 0.5f);
             SpriteManager.Instance.drawBoardedRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin), (int)(Constants.Measures.upBoardMargin), (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), Color.White * 0.8f,
                                                               Constants.Measures.borderSize, Constants.Color.border);
+            //if (draeLimit)
+            SpriteManager.Instance.drawRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin), 
+                                                                     (int)(Constants.Measures.upBoardMargin + (Constants.Measures.boardBlockHeight / 2 - 2) * Constants.Measures.blockSize) - (limitLineHeight / 2), 
+                                                                     (int)(size.X * Constants.Measures.blockSize), 
+                                                                     limitLineHeight), 
+                                                       Constants.Color.p1Light * 0.4f);
             for (int y = 0; y < Constants.Measures.boardBlockHeight; y++)
                 for (int x = 0; x < Constants.Measures.boardBlockWidth; x++)
                     if (grid[y][x] != null)
