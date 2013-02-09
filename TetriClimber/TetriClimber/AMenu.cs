@@ -13,10 +13,36 @@ namespace TetriClimber
         protected TimeSpan turnLat = new TimeSpan(10000000 / 10);
         protected List<AButton> buttons;
         protected int cursor = 0;
+        protected Vector2 pos;
+        public float Width { get; protected set; }
+        public Vector2 Pos { get { return pos; }}
 
         public AMenu():base(App.Game)
         {
+            pos = Vector2.Zero;
+        }
 
+        public void setButtons(List<AButton> btns)
+        {
+            buttons = btns;
+            if (buttons.Count > 0)
+                buttons[cursor].Select();
+        }
+
+        public void Center()
+        {
+            float w = 0;
+            float h = 0;
+
+            foreach (AButton button in buttons)
+                if (w < button.TotalSize.X)
+                    w = button.TotalSize.X;
+            h = buttons.Last().TotalSize.Y + buttons.Last().LeftPos.Y;
+            pos.X = (Constants.Measures.portraitWidth - w) /2 ;
+            pos.Y = (Constants.Measures.portraitHeight - h) / 2;
+            Width = w;
+            foreach (AButton button in buttons)
+                button.UpdatePosition();
         }
 
         public override void Update(GameTime gameTime)

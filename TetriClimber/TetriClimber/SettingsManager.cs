@@ -32,16 +32,15 @@ namespace TetriClimber
 
         private SettingsManager()
         {
-            filename = "settings";
-            Music = true;
-            Sfx = true;
+            filename = "setting.sav";
+
             modes = new Dictionary<EMode,Action>();
             modes.Add(EMode.EASY, setEasyMode);
             modes.Add(EMode.MEDIUM, setMediumMode);
             modes.Add(EMode.HARD, setHardMode);
             modes.Add(EMode.PRO, setProMode);
-            
-            setEasyMode();
+
+            loadSetting();
         }
 
         public static SettingsManager Instance
@@ -99,55 +98,38 @@ namespace TetriClimber
             NextTetrimino = false;
         }
 
-        //public void saveSetting()
-        //{
-        //    StorageContainer container;
-        //    IAsyncResult result;
-        //    StorageDevice device;
+        public void saveSetting()
+        {
+            data.mode = Mode;
+            data.music = Music;
+            data.sfx = Sfx;
+            FileStream stream = File.Open(filename, FileMode.Create, FileAccess.Write);
+            XmlSerializer serializer = new XmlSerializer(typeof(SettingData));
+            serializer.Serialize(stream, data);
+            stream.Close();            
+        }
 
-        //    data.mode = Mode;
-        //    data.music = Music;
-        //    data.sfx = Sfx;
-        //    result = device.BeginOpenContainer("SettingContainer", null, null);
-        //    result.AsyncWaitHandle.WaitOne();
-        //    container = device.EndOpenContainer(result);
-        //    result.AsyncWaitHandle.Close();
-
-        //    if (container.FileExists(filename))
-        //        container.DeleteFile(filename);
-
-        //    Stream stream = container.CreateFile(filename);
-        //    XmlSerializer serializer = new XmlSerializer(typeof(SettingData));
-        //    serializer.Serialize(stream, data);
-        //    stream.Close();
-        //    container.Dispose();
-        //}
-
-        //public void readSetting()
-        //{
-        //    StorageDevice device = new StorageDevice();
-        //    StorageContainer container;
-        //    IAsyncResult result;
-
-        //    result = device.BeginOpenContainer("SettingContainer", null, null);
-        //    result.AsyncWaitHandle.WaitOne();
-        //    container = device.EndOpenContainer(result);
-        //    result.AsyncWaitHandle.Close();
-
-        //    if (!container.FileExists(filename))
-        //    {
-        //        container.Dispose();
-        //        setEasyMode();
-        //        saveSetting();
-        //        return;
-        //    }
-
-        //    Stream stream = container.OpenFile(filename, FileMode.Open);
-        //    XmlSerializer serializer = new XmlSerializer(typeof(SettingData));
-        //    data = (SettingData)serializer.Deserialize(stream);
-        //    stream.Close();
-        //    container.Dispose();
-        //    modes[data.mode]();
-        //}
+        public void loadSetting()
+        {
+            try
+            {
+                FileStream stream;
+                stream = File.Open(filename, FileMode.Open, FileAccess.Read);
+                XmlSerializer serializer = new XmlSerializer(typeof(SettingData));
+                data = (SettingData)serializer.Deserialize(stream);
+                stream.Close();
+                Music = data.music;
+                Sfx = data.sfx;
+                Mode = data.mode;
+                modes[Mode]();
+            }
+            catch (FileNotFoundException e)
+            {
+                Music = true;
+                Sfx = true;
+                setEasyMode();
+                saveSetting();
+            }
+        }
     }
 }

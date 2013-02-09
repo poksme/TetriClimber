@@ -11,8 +11,8 @@ namespace TetriClimber
     {
 
 
-        public TextButton(String text, Vector2 p, MenuManager.HandlerAction h, Object data = null, float s = 0.6f)
-            : base(text, p, h, data, s)
+        public TextButton(AMenu cnt, String text, Vector2 p, MenuManager.HandlerAction h, Object data = null, float s = 0.6f)
+            : base(cnt, text, p, h, data, s)
         {
         }
 

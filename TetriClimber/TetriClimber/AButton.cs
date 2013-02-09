@@ -13,14 +13,22 @@ namespace TetriClimber
         public Color DefaultColor { get; set; }
         protected MenuManager.HandlerAction execute;
         protected Object arg;
-        protected float scale;
-        protected Vector2 leftPos;
-        protected Vector2 rightPos;
-        protected Vector2 size;
 
-        public AButton(String text, Vector2 p, MenuManager.HandlerAction h, Object data = null, float s = 0.6f)
+        protected float scale;
+        protected Vector2 size;
+        public Vector2 TotalSize { get; protected set; }
+
+        protected AMenu Container;
+        public Vector2 LeftPos{get; protected set;}
+        protected Vector2 rightPos;
+
+        protected Vector2 AbsLPos = Vector2.Zero;
+        protected Vector2 AbsRPos = Vector2.Zero;
+
+        public AButton(AMenu cnt, String text, Vector2 p, MenuManager.HandlerAction h, Object data = null, float s = 0.6f)
             : base(App.Game)
         {
+            Container = cnt;
             scale = s;
             arg = data;
             execute = h;
@@ -28,10 +36,12 @@ namespace TetriClimber
             OverColor = Constants.Color.p1Light;
             Content = new GameString(text, TextManager.EFont.AHARONI, Constants.Color.border, scale);
             size = TextManager.Instance.getSizeString(Content.Font, Content.Value);
-            Content.Pos = new Vector2(p.X + (35 * 2 + 53 * (float)Math.Floor(size.X / 53) - size.X) / 2 * scale,
-                                      p.Y + (115 - size.Y + size.Y * 0.3f) / 2 * scale);
-            leftPos = p;
-            rightPos = new Vector2(p.X + 35 * scale + ((int)(size.X / 53) * 53 * scale), p.Y);
+            int middle = (int)Math.Floor(size.X / 53);
+            TotalSize = new Vector2((35 + (53 * middle) + 35) * scale, 115 * scale);
+            LeftPos = p;
+            rightPos = new Vector2(p.X + (35 + middle * 53) * scale, p.Y);
+            Content.Pos = new Vector2(LeftPos.X + (35 * 2 + 53 * (float)Math.Floor(size.X / 53) - size.X) / 2 * scale,
+                          LeftPos.Y + (115 - size.Y + size.Y * 0.3f) / 2 * scale);
         }
 
         public override void Update(GameTime gameTime)
@@ -39,14 +49,23 @@ namespace TetriClimber
             base.Update(gameTime);
         }
 
+        public void UpdatePosition()
+        {
+            AbsLPos.X = LeftPos.X + Container.Pos.X;
+            AbsLPos.Y = LeftPos.Y + Container.Pos.Y;
+            AbsRPos.X = rightPos.X + Container.Pos.X;
+            AbsRPos.Y = rightPos.Y + Container.Pos.Y;
+            Content.Pos = new Vector2(LeftPos.X + Container.Pos.X + (35 * 2 + 53 * (float)Math.Floor(size.X / 53) - size.X) / 2 * scale,
+                          LeftPos.Y + Container.Pos.Y + (115 - size.Y + size.Y * 0.3f) / 2 * scale);
+        }
+
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-
-            SpriteManager.Instance.drawZoom(SpriteManager.ESprite.LEFT_TEXT_BUTTON, leftPos, scale);
+            SpriteManager.Instance.drawZoom(SpriteManager.ESprite.LEFT_TEXT_BUTTON, AbsLPos, scale);
             for (int i = 0; i < (int)size.X / 53; i++)
-                SpriteManager.Instance.drawZoom(SpriteManager.ESprite.MIDDLE_TEXT_BUTTON, new Vector2(leftPos.X + (35 + i * 53) * scale, leftPos.Y), scale);
-            SpriteManager.Instance.drawZoom(SpriteManager.ESprite.RIGHT_TEXT_BUTTON, rightPos, scale);
+                SpriteManager.Instance.drawZoom(SpriteManager.ESprite.MIDDLE_TEXT_BUTTON, new Vector2((float)Math.Floor(AbsLPos.X + (35 + i * 53) * scale), AbsLPos.Y), scale);
+            SpriteManager.Instance.drawZoom(SpriteManager.ESprite.RIGHT_TEXT_BUTTON, new Vector2(AbsRPos.X, AbsRPos.Y), scale);
             TextManager.Instance.Draw(Content);
         }
 

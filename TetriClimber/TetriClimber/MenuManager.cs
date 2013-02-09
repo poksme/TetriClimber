@@ -34,50 +34,6 @@ namespace TetriClimber
             CreateMainMenu();
         }
 
-        public void CreateMainMenu()
-        {
-            menus.Push(new Menu(new List<AButton>()
-                {
-                    new TextButton("Play", new Vector2(100, 1 * 100), MenuManager.Instance.runScene, SceneManager.EScene.PLAY),
-                    new TextButton("Options", new Vector2(100, 2 * 100), MenuManager.Instance.launchMenu, EMenu.OPTIONS),
-                    new TextButton("Quit", new Vector2(100, 3 *100), MenuManager.Instance.Quit)
-                }));
-        }
-
-        public void CreatePauseMenu()
-        {
-            menus.Push(new Menu(new List<AButton>()
-                {
-                    new TextButton("Resume", new Vector2(100, 1 * 100), MenuManager.Instance.ResumeGame, SceneManager.EScene.PLAY),
-                    new TextButton("Options", new Vector2(100, 2 * 100), MenuManager.Instance.launchMenu, EMenu.OPTIONS),
-                    new TextButton("Give Up", new Vector2(100, 3 *100), MenuManager.Instance.launchMenu, EMenu.MAIN)
-                }));
-        }
-
-        public void CreateOptionMenu()
-        {
-            menus.Push(new Menu(new List<AButton>()
-                {
-                    new TextButton("Sound", new Vector2(100, 1 * 100), MenuManager.Instance.CreateSoundMenu),
-                    new TextButton("Difficulty", new Vector2(100, 2 * 100), MenuManager.Instance.CreateDifficultyMenu),
-                    new TextButton("Back", new Vector2(100, 3 * 100), MenuManager.Instance.BackMenu),
-                }));
-        }
-
-        public void CreateDifficultyMenu(Object data = null)
-        {
-        }
-
-        public void CreateSoundMenu(Object data = null)
-        {
-            menus.Push(new Menu(new List<AButton>()
-                {
-                    new ToggleButton("Music", new Vector2(100, 1 * 100), SettingsManager.Instance.setMusic,  SettingsManager.Instance.Music),
-                    new ToggleButton("Sound Effects", new Vector2(100, 2 * 100), SettingsManager.Instance.setSfx, SettingsManager.Instance.Sfx),
-                    new TextButton("Back", new Vector2(100, 3 * 100), MenuManager.Instance.BackMenu)
-                }));
-        }
-
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
@@ -96,6 +52,64 @@ namespace TetriClimber
         {
             menus.Clear();
         }
+
+        #region CreateMenu
+        public void CreateMainMenu()
+        {
+            Menu main = new Menu();
+            main.setButtons(new List<AButton>()
+                {
+                    new TextButton(main, "Play", new Vector2(0, 0), MenuManager.Instance.runScene, SceneManager.EScene.PLAY),
+                    new TextButton(main, "Options", new Vector2(0,1 * 100), MenuManager.Instance.launchMenu, EMenu.OPTIONS),
+                    new TextButton(main, "Quit", new Vector2(0, 2 *100), MenuManager.Instance.Quit)
+                });
+            main.Center();
+            menus.Push(main);
+        }
+
+        public void CreatePauseMenu()
+        {
+            Menu pause = new Menu();
+            pause.setButtons(new List<AButton>()
+                {
+                    new TextButton(pause, "Resume", new Vector2(0, 0), MenuManager.Instance.ResumeGame, SceneManager.EScene.PLAY),
+                    new TextButton(pause, "Options", new Vector2(0, 1 * 100), MenuManager.Instance.launchMenu, EMenu.OPTIONS),
+                    new TextButton(pause, "Give Up", new Vector2(0, 2 *100), MenuManager.Instance.launchMenu, EMenu.MAIN)
+                });
+            pause.Center();
+            menus.Push(pause);
+        }
+
+        public void CreateOptionMenu()
+        {
+            Menu option = new Menu();
+            option.setButtons(new List<AButton>()
+                {
+                    new TextButton(option, "Sound", new Vector2(0, 0), MenuManager.Instance.CreateSoundMenu),
+                    new TextButton(option, "Difficulty", new Vector2(0, 1 * 100), MenuManager.Instance.CreateDifficultyMenu),
+                    new TextButton(option, "Back", new Vector2(0, 2 * 100), MenuManager.Instance.BackMenu),
+                });
+            option.Center();
+            menus.Push(option);
+        }
+
+        public void CreateDifficultyMenu(Object data = null)
+        {
+        }
+
+        public void CreateSoundMenu(Object data = null)
+        {
+            Menu sound = new Menu();
+            sound.setButtons(new List<AButton>()
+                {
+                    new ToggleButton(sound, "Music", new Vector2(0,0), SettingsManager.Instance.setMusic,  SettingsManager.Instance.Music),
+                    new ToggleButton(sound, "Sound Fx", new Vector2(0, 1 * 100), SettingsManager.Instance.setSfx, SettingsManager.Instance.Sfx),
+                    new TextButton(sound, "Back", new Vector2(0, 2 * 100), MenuManager.Instance.SaveSetting)
+                });
+            sound.Center();
+            menus.Push(sound);
+        }
+        #endregion
 
         #region ActionMenu
 
@@ -116,6 +130,12 @@ namespace TetriClimber
                 default:
                     break;
             }
+        }
+
+        public void SaveSetting(Object data = null)
+        {
+            SettingsManager.Instance.saveSetting();
+            BackMenu();
         }
 
         public void BackMenu(Object data = null)

@@ -8,12 +8,9 @@ namespace TetriClimber
 {
     public class Menu : AMenu
     {
-        public Menu(List<AButton> btns)
+        public Menu()
             : base()
         {
-            buttons = btns;
-            if (buttons.Count > 0)
-                buttons[cursor].Select();
         }
 
         public override void Draw(GameTime gameTime)

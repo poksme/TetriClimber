@@ -11,8 +11,8 @@ namespace TetriClimber
         private Color applyColor = Constants.Color.border;
         private float alpha;
 
-        public ToggleButton(String text, Vector2 p, MenuManager.HandlerAction h, Object data = null, float s = 0.6f)
-            : base(text, p, h, data, s)
+        public ToggleButton(AMenu cnt, String text, Vector2 p, MenuManager.HandlerAction h, Object data = null, float s = 0.6f)
+            : base(cnt, text, p, h, data, s)
         {
                 alpha = 0.5f;
                 if (!(bool)arg)

@@ -20,7 +20,6 @@ namespace TetriClimber
         public APlay() : base()
         {
             control = new PlayerControl();
-            SoundManager.Instance.bgmPlay();
            // bg = new Background();
         }
 

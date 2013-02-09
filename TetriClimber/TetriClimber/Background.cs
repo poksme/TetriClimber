@@ -30,6 +30,7 @@ namespace TetriClimber
                 TextureManager.ETexture.VIOLET_HEXAGONE, new BackgroundShapeData(new Vector2(800, 200), 0.018f, 360 / 7 * 5, 700)));
             shapes.Add(new KeyValuePair<TextureManager.ETexture, BackgroundShapeData>(
                 TextureManager.ETexture.YELLOW_LINES, new BackgroundShapeData(new Vector2(50, 50), 0.02f, 360 / 7 * 6, 600)));
+            SoundManager.Instance.bgmPlay();
         }
 
         public override void Update(GameTime gameTime)
