@@ -47,7 +47,7 @@ namespace TetriClimber
             shadowTetrimino = tmp.Item2;
             cur = TimeSpan.Zero;
             //lat = new TimeSpan(10000000/3); // 3
-            score = new Score("0", TextManager.EFont.AHARONI, Constants.Color.p1Dark, 1f, new Vector2(150, 20));
+            score = new Score("0", TextManager.EFont.AHARONI, Constants.Color.p1Dark, 1f, new Vector2(600, 200));
             level = new Level(0, TextManager.EFont.AHARONI, Constants.Color.p2Dark, 1f, new Vector2(150, 40));
             lat = new TimeSpan(10000000 / (level.level + 1));
             tSpinLimit = new TimeSpan(1000000 * 3); // TSPIN TIME
@@ -121,7 +121,7 @@ namespace TetriClimber
                 updateAroundRects();
             lastDir = climby.Direction;
             var tmpClimbyStepHeight =  climby.OldMinHeight - climby.MinHeight;
-            if ( tmpClimbyStepHeight > 0)
+            if (tmpClimbyStepHeight > 0)
                 score.addClimbyScore(tmpClimbyStepHeight);
             if (level.updateLevel(tmpClimbyStepHeight))
             {
@@ -143,7 +143,8 @@ namespace TetriClimber
         {
  	         base.Draw(gameTime);
              board.Draw(gameTime);
-             shadowTetrimino.Draw(gameTime);
+             if (SettingsManager.Instance.Shadow)
+                shadowTetrimino.Draw(gameTime);
              currTetrimino.Draw(gameTime);
              climby.Draw(gameTime);
              TextManager.Instance.Draw(score);

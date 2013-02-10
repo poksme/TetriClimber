@@ -87,7 +87,7 @@ namespace TetriClimber
                 {
                     new TextButton(option, "Sound", new Vector2(0, 0), MenuManager.Instance.CreateSoundMenu),
                     new TextButton(option, "Difficulty", new Vector2(0, 1 * 100), MenuManager.Instance.CreateDifficultyMenu),
-                    new TextButton(option, "Back", new Vector2(0, 2 * 100), MenuManager.Instance.BackMenu),
+                    new TextButton(option, "Back", new Vector2(0, 2 * 100), MenuManager.Instance.SaveSetting),
                 });
             option.Center();
             menus.Push(option);
@@ -103,6 +103,7 @@ namespace TetriClimber
                     new TextButton(dm, "Hard", new Vector2(0, 2 * 100), MenuManager.Instance.setMode, SettingsManager.EMode.HARD),
                     new TextButton(dm, "Pro", new Vector2(0, 3 * 100), MenuManager.Instance.setMode, SettingsManager.EMode.PRO)
                 });
+            dm.Select((int)SettingsManager.Instance.Mode);
             dm.Center();
             menus.Push(dm);
         }
@@ -114,7 +115,7 @@ namespace TetriClimber
                 {
                     new ToggleButton(sound, "Music", new Vector2(0,0), SettingsManager.Instance.setMusic,  SettingsManager.Instance.Music),
                     new ToggleButton(sound, "Sound Fx", new Vector2(0, 1 * 100), SettingsManager.Instance.setSfx, SettingsManager.Instance.Sfx),
-                    new TextButton(sound, "Back", new Vector2(0, 2 * 100), MenuManager.Instance.SaveSetting)
+                    new TextButton(sound, "Back", new Vector2(0, 2 * 100), MenuManager.Instance.BackMenu)
                 });
             sound.Center();
             menus.Push(sound);

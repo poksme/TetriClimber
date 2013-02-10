@@ -45,7 +45,7 @@ namespace TetriClimber
             direction = EDirection.RIGHT;
             rotation = 0f;
             speed = 0.00002f / 6;
-            minHeight = (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize) - 1;
+            minHeight = (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize);
             oldMinHeight = minHeight;
         }
 

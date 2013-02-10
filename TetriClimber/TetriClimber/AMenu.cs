@@ -29,6 +29,16 @@ namespace TetriClimber
                 buttons[cursor].Select();
         }
 
+        public void Select(int cur)
+        {
+            if (buttons.Count > cur)
+            {
+                buttons[cursor].Unselect();
+                cursor = cur;
+                buttons[cursor].Select();
+            }
+        }
+
         public void Center()
         {
             float w = 0;

@@ -44,6 +44,9 @@ namespace TetriClimber
 
         internal void play(ESound eSound, float pitch = 0, float volume = 0.5f)
         {
+            if ((eSound > ESound.SHIFT && !SettingsManager.Instance.Music) ||
+                (eSound <= ESound.SHIFT && !SettingsManager.Instance.Sfx))
+                return;
             cur = eSound;
             if (!playing.IsDisposed)
             {
@@ -55,6 +58,7 @@ namespace TetriClimber
             playing.Volume = volume;
             playing.Play();
         }
+
         internal void bgmPause()
         {
             bgm_.Pause();
