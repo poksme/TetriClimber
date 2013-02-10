@@ -45,6 +45,7 @@ namespace TetriClimber
 
         public override void Execute()
         {
+            SoundManager.Instance.play(SoundManager.ESound.SHIFT);
             arg = !(bool)arg;
             base.Execute();
             Select();

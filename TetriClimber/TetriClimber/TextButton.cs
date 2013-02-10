@@ -26,5 +26,11 @@ namespace TetriClimber
         {
             base.Update(gameTime);
         }
+
+        public override void Execute()
+        {
+            SoundManager.Instance.play(SoundManager.ESound.CLEARLINE);
+            base.Execute();
+        }
     }
 }

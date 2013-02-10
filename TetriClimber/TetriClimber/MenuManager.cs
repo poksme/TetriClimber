@@ -95,6 +95,16 @@ namespace TetriClimber
 
         public void CreateDifficultyMenu(Object data = null)
         {
+            Menu dm = new Menu();
+            dm.setButtons(new List<AButton>()
+                {
+                    new TextButton(dm, "Easy", new Vector2(0,0), MenuManager.Instance.setMode, SettingsManager.EMode.EASY),
+                    new TextButton(dm, "Narmol", new Vector2(0, 1 * 100), MenuManager.Instance.setMode, SettingsManager.EMode.MEDIUM),
+                    new TextButton(dm, "Hard", new Vector2(0, 2 * 100), MenuManager.Instance.setMode, SettingsManager.EMode.HARD),
+                    new TextButton(dm, "Pro", new Vector2(0, 3 * 100), MenuManager.Instance.setMode, SettingsManager.EMode.PRO)
+                });
+            dm.Center();
+            menus.Push(dm);
         }
 
         public void CreateSoundMenu(Object data = null)
@@ -130,6 +140,12 @@ namespace TetriClimber
                 default:
                     break;
             }
+        }
+
+        public void setMode(Object data)
+        {
+            SettingsManager.Instance.setMode((SettingsManager.EMode)data);
+            BackMenu();
         }
 
         public void SaveSetting(Object data = null)

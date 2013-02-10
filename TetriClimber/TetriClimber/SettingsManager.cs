@@ -32,7 +32,7 @@ namespace TetriClimber
 
         private SettingsManager()
         {
-            filename = "setting.sav";
+            filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"/TetriClimber/setting.sav";
 
             modes = new Dictionary<EMode,Action>();
             modes.Add(EMode.EASY, setEasyMode);
@@ -62,6 +62,12 @@ namespace TetriClimber
         {
             Sfx = (bool)b;
         }
+
+        public void setMode(EMode m)
+        {
+            modes[m]();
+        }
+
         public void setEasyMode()
         {
             Mode = EMode.EASY;
@@ -103,10 +109,22 @@ namespace TetriClimber
             data.mode = Mode;
             data.music = Music;
             data.sfx = Sfx;
-            FileStream stream = File.Open(filename, FileMode.Create, FileAccess.Write);
-            XmlSerializer serializer = new XmlSerializer(typeof(SettingData));
-            serializer.Serialize(stream, data);
-            stream.Close();            
+            try
+            {
+                FileStream stream = File.Open(filename, FileMode.Create, FileAccess.Write);
+                XmlSerializer serializer = new XmlSerializer(typeof(SettingData));
+                serializer.Serialize(stream, data);
+                stream.Close();
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"/TetriClimber");
+                saveSetting();
+            }
+            catch(Exception)
+            {
+                Console.Error.WriteLine("Impossible d'acceder aux options.");
+            }
         }
 
         public void loadSetting()
@@ -123,7 +141,7 @@ namespace TetriClimber
                 Mode = data.mode;
                 modes[Mode]();
             }
-            catch (FileNotFoundException e)
+            catch (Exception)
             {
                 Music = true;
                 Sfx = true;

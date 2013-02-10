@@ -53,6 +53,7 @@ namespace TetriClimber
             if (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime ||
                 (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) > lat && cur == TimeSpan.Zero))
             {
+                SoundManager.Instance.play(SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
                 if (cursor < buttons.Count - 1)
                     cursor++;
@@ -63,6 +64,7 @@ namespace TetriClimber
             else if (App.ToucheInput.getDownTime(AUserInput.EInput.UP) == gameTime.ElapsedGameTime ||
                 (App.ToucheInput.getDownTime(AUserInput.EInput.UP) > lat && cur == TimeSpan.Zero))
             {
+                SoundManager.Instance.play(SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
                 if (cursor == 0)
                     cursor = buttons.Count - 1;
