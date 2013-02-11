@@ -129,6 +129,7 @@
     <Compile Include="Level.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuManager.cs" />
+    <Compile Include="NotificationManager.cs" />
     <Compile Include="OnePlayer.cs" />
     <Compile Include="APlay.cs" />
     <Compile Include="PlayerControl.cs" />

@@ -71,7 +71,7 @@ namespace TetriClimber
             else
             {
                 ti = new KeyboardInput();
-                Constants.Measures.portraitHeight = 889;
+                Constants.Measures.portraitHeight = 980;
                 Constants.Measures.portraitWidth = 500;
                 //Constants.Measures.leftBoardMargin = (float)Math.Round((Constants.Measures.portraitWidth - Constants.Measures.boardBlockWidth * Constants.Measures.blockSize) / 2f);
                 //Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);

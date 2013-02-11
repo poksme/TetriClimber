@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Surface;
 
 namespace TetriClimber
 {
@@ -25,6 +26,10 @@ namespace TetriClimber
                 for (int j = 0; j < (int)size.X; j++)
                     grid[i][j] = null;
             }
+            if (!SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+            {
+                Constants.Measures.leftBoardMargin = (Constants.Measures.portraitWidth - Constants.Measures.boardWidth) /2; 
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -37,8 +42,7 @@ namespace TetriClimber
  	        base.Draw(gameTime);
             SpriteManager.Instance.drawBoardedRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin), (int)(Constants.Measures.upBoardMargin), (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), Color.White * 0.8f,
                                                               Constants.Measures.borderSize, Constants.Color.border);
-            //if (draeLimit)
-            if (SettingsManager.Instance.LimitLine)
+            if (SettingsManager.Instance.LimitLine) //LimitLine
                 SpriteManager.Instance.drawRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin), 
                                                                          (int)(Constants.Measures.upBoardMargin + (Constants.Measures.boardBlockHeight / 2 - 2) * Constants.Measures.blockSize) - (limitLineHeight / 2), 
                                                                          (int)(size.X * Constants.Measures.blockSize), 
