@@ -13,7 +13,17 @@ namespace TetriClimber
         //public Vector2 NewPos { get { return this.newPos; } }
         //Vector2 newPos;
         //Vector2 oldPos;
-        Vector2 startingPos;
+        private Vector2 startingPos;
+        public Vector2 StartingPos 
+        {
+            get { 
+                return Vector2.Transform(
+                    // REVERT THE MOVE ROTATION
+                    Vector2.Transform(startingPos, Matrix.Invert(Matrix.CreateRotationZ(MathHelper.ToRadians(-90)))), 
+                    // REVERT THE DRAWING ROTATION
+                    Matrix.Invert(Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateTranslation(Constants.Measures.portraitWidth - 950, 0, 0) * Matrix.CreateScale(new Vector3(Constants.Measures.Scale, Constants.Measures.Scale, 1))));
+            }
+        }
         Vector2 actualPos;
         Point tapedPoint;
         bool dropedDown;
@@ -40,7 +50,12 @@ namespace TetriClimber
 
         public Point getPointTaped()
         {
-                return tapedPoint;
+            return tapedPoint;
+        }
+
+        public float getDropDownDistance()
+        {
+            return (actualPos.Y - startingPos.Y);
         }
 
         public override void Update(GameTime gameTime)
@@ -123,7 +138,7 @@ namespace TetriClimber
         public void Up(Object sender, TouchEventArgs e)
         {
             //Console.Out.WriteLine("UP FUNC");
-            if (actualPos.Y - Constants.Measures.blockSize * 2 >= startingPos.Y)
+            if (actualPos.Y - Constants.Measures.blockSize * Constants.Measures.Scale * 2 >= startingPos.Y)
                 dropedDown = true;
             taped = Vector2.Distance(actualPos, startingPos) < Constants.Measures.blockSize * Constants.Measures.Scale;
             if (taped)
