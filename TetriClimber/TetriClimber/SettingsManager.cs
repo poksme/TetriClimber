@@ -43,11 +43,11 @@ namespace TetriClimber
             modes.Add(EMode.HARD, setHardMode);
             modes.Add(EMode.PRO, setProMode);
 
-            if (!SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+            if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
                 Device = EDevice.SURFACE;
             else
                 Device = EDevice.PC;
-            Device = EDevice.SURFACE;
+            //Device = EDevice.SURFACE;
             loadSetting();
         }
 

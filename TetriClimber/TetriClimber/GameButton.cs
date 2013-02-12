@@ -26,6 +26,7 @@ namespace TetriClimber
             btnState = ButtonState.Released;
             handler = act;
             type = s;
+          //  pos = Vector2.Transform(pos, Matrix.CreateRotationZ((float)MathHelper.ToRadians(90)));          
             coord = new Rectangle((int)pos.X, (int)pos.Y, (int)Constants.Measures.buttonSize, (int)Constants.Measures.buttonSize);
         }
 
@@ -39,9 +40,9 @@ namespace TetriClimber
 
         private void SurfaceUpdate(GameTime gameTime)
         {
-            if (App.UserInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime)
+            if (App.UserInput.isPressed(AUserInput.EInput.TAP))
             {
-                Point touch = new Point((int)(App.UserInput as TouchInput).NewPos.X, (int)(App.UserInput as TouchInput).NewPos.Y);
+                Point touch = (App.UserInput as TouchInput).getPointTaped();
                 if (coord.Contains(touch))
                     handler(btnState);
                 btnState = ButtonState.Pressed;
@@ -52,8 +53,6 @@ namespace TetriClimber
 
         private void KeyboardUpdate(GameTime gameTime)
         {
-            if (App.UserInput.getDownTime(AUserInput.EInput.ESCAPE))
-
             MouseState mouseState = Mouse.GetState();
             if (mouseState.LeftButton == ButtonState.Released)
                 btnState = ButtonState.Released;

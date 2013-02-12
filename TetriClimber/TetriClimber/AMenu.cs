@@ -69,10 +69,8 @@ namespace TetriClimber
 
         private void UpdateSurface(GameTime gameTime)
         {
-           //if (App.UserInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime)
             if (App.UserInput.isPressed(AUserInput.EInput.DOWN))
             {
-                //Point touch = new Point((int)(App.UserInput as TouchInput).NewPos.X, (int)(App.UserInput as TouchInput).NewPos.Y);
                 Point touch = (App.UserInput as TouchInput).getPointTaped();
                 Console.WriteLine("tap");
                 foreach (AButton btn in buttons)
@@ -91,8 +89,6 @@ namespace TetriClimber
             if (cur >= turnLat)
                 cur = new TimeSpan(0);
             if (App.UserInput.isPressed(AUserInput.EInput.DOWN))
-            //if (App.UserInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime ||
-            //    (App.UserInput.getDownTime(AUserInput.EInput.DOWN) > lat && cur == TimeSpan.Zero))
             {
                 SoundManager.Instance.play(SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
@@ -103,8 +99,6 @@ namespace TetriClimber
                 buttons[cursor].Select();
             }
             else if (App.UserInput.isPressed(AUserInput.EInput.UP))
-            //else if (App.UserInput.getDownTime(AUserInput.EInput.UP) == gameTime.ElapsedGameTime ||
-            //    (App.UserInput.getDownTime(AUserInput.EInput.UP) > lat && cur == TimeSpan.Zero))
             {
                 SoundManager.Instance.play(SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
@@ -115,8 +109,6 @@ namespace TetriClimber
                 buttons[cursor].Select();
             }
             else if (App.UserInput.isPressed(AUserInput.EInput.ENTER))
-            //else if (App.UserInput.getDownTime(AUserInput.EInput.ENTER) == gameTime.ElapsedGameTime ||
-            //    (App.UserInput.getDownTime(AUserInput.EInput.ENTER) > lat && cur == TimeSpan.Zero))
             {
                 buttons[cursor].Execute();
             }
