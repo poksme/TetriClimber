@@ -118,7 +118,7 @@
     <Compile Include="Block.cs" />
     <Compile Include="ATetrimino.cs" />
     <Compile Include="Board.cs" />
-    <Compile Include="Button.cs" />
+    <Compile Include="GameButton.cs" />
     <Compile Include="GameString.cs" />
     <Compile Include="Climby.cs" />
     <Compile Include="Constants.cs" />

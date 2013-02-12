@@ -10,15 +10,15 @@ namespace TetriClimber
     public class PlayerControl : DrawableGameComponent
     {
         public delegate void HandlerAction(ButtonState btn);
-        private Button pause;
-        private Button left;
-        private Button right;
+        private GameButton pause;
+        private GameButton left;
+        private GameButton right;
 
         public PlayerControl():base(App.Game)
         {
-            pause = new Button(SpriteManager.ESprite.PAUSE, new Vector2(45, 20), pauseGame);
-            left = new Button(SpriteManager.ESprite.LEFT, new Vector2(45, 900), leftArrow);
-            right = new Button(SpriteManager.ESprite.RIGHT, new Vector2(120, 900), rightArrow);
+            pause = new GameButton(SpriteManager.ESprite.PAUSE, new Vector2(45, 20), pauseGame);
+            left = new GameButton(SpriteManager.ESprite.LEFT, new Vector2(45, 900), leftArrow);
+            right = new GameButton(SpriteManager.ESprite.RIGHT, new Vector2(120, 900), rightArrow);
         }
 
         public override void Update(GameTime gameTime)

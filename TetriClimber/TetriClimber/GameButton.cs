@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetriClimber
 {
-    public class Button : DrawableGameComponent
+    public class GameButton : DrawableGameComponent
     {
         private SpriteManager.ESprite type;
         private Rectangle coord;
@@ -20,7 +20,7 @@ namespace TetriClimber
             set { coord = value; }
         }
 
-        public Button(SpriteManager.ESprite s, Vector2 pos, PlayerControl.HandlerAction act)
+        public GameButton(SpriteManager.ESprite s, Vector2 pos, PlayerControl.HandlerAction act)
             : base(App.Game)
         {
             btnState = ButtonState.Released;
@@ -31,6 +31,28 @@ namespace TetriClimber
 
         public override void Update(GameTime gameTime)
         {
+            if (SettingsManager.Instance.Device == SettingsManager.EDevice.PC)
+                KeyboardUpdate(gameTime);
+            else
+                SurfaceUpdate(gameTime);
+        }
+
+        private void SurfaceUpdate(GameTime gameTime)
+        {
+            if (App.UserInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime)
+            {
+                Point touch = new Point((int)(App.UserInput as TouchInput).NewPos.X, (int)(App.UserInput as TouchInput).NewPos.Y);
+                if (coord.Contains(touch))
+                    handler(btnState);
+                btnState = ButtonState.Pressed;
+            }
+            else
+                btnState = ButtonState.Released;
+        }
+
+        private void KeyboardUpdate(GameTime gameTime)
+        {
+            if (App.UserInput.getDownTime(AUserInput.EInput.ESCAPE))
 
             MouseState mouseState = Mouse.GetState();
             if (mouseState.LeftButton == ButtonState.Released)
