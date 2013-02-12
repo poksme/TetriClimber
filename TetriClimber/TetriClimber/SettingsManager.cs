@@ -5,12 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework.Storage;
 using System.IO;
 using System.Xml.Serialization;
+using Microsoft.Surface;
 
 namespace TetriClimber
 {
     public class SettingsManager
     {
         public enum EMode { EASY, MEDIUM, HARD, PRO }
+        public enum EDevice { PC, SURFACE }
         private static SettingsManager instance;
 
         public struct SettingData
@@ -22,6 +24,7 @@ namespace TetriClimber
         SettingData data;
         String filename;
         public EMode Mode { get; private set; }
+        public EDevice Device { get; private set; }
         public bool Music { get; private set; }
         public bool Sfx { get; private set; }
         public bool Shadow { get; private set; }
@@ -40,6 +43,11 @@ namespace TetriClimber
             modes.Add(EMode.HARD, setHardMode);
             modes.Add(EMode.PRO, setProMode);
 
+            if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+                Device = EDevice.SURFACE;
+            else
+                Device = EDevice.PC;
+            //Device = EDevice.SURFACE;
             loadSetting();
         }
 

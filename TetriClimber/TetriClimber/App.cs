@@ -60,7 +60,7 @@ namespace TetriClimber
             // FOR SINGLETON PURPOSE
             content = Content;
             game = this;
-            if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+            if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
             {
                 ti = new TouchInput();
                 Constants.Measures.portraitHeight = 1080;
@@ -328,7 +328,7 @@ namespace TetriClimber
         {
             get { return content; }
         }
-        public static AUserInput ToucheInput
+        public static AUserInput UserInput
         {
             get { return ti; }
         }

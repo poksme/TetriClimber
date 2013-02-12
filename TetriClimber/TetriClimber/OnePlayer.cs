@@ -14,7 +14,7 @@ namespace TetriClimber
         public OnePlayer():base()
         {
             player1 = new GameSession(SpriteManager.ESprite.CLIMBYBLUE);
-            if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+            if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
             {
                 //Constants.Measures.leftBoardMargin = (float)Math.Round((Constants.Measures.portraitWidth - Constants.Measures.boardBlockWidth * Constants.Measures.blockSize) / 2f);
                 //Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);
@@ -31,20 +31,20 @@ namespace TetriClimber
             {
                 if (cur >= turnLat)
                     cur = new TimeSpan(0);
-                if (App.ToucheInput.getDownTime(AUserInput.EInput.RIGHT) == gameTime.ElapsedGameTime ||
-                    (App.ToucheInput.getDownTime(AUserInput.EInput.RIGHT) > lat && cur == TimeSpan.Zero))
+                if (App.UserInput.getDownTime(AUserInput.EInput.RIGHT) == gameTime.ElapsedGameTime ||
+                    (App.UserInput.getDownTime(AUserInput.EInput.RIGHT) > lat && cur == TimeSpan.Zero))
                     player1.rightMove();
-                if (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime ||
-                    (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) > lat && cur == TimeSpan.Zero))
+                if (App.UserInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime ||
+                    (App.UserInput.getDownTime(AUserInput.EInput.DOWN) > lat && cur == TimeSpan.Zero))
                     player1.rightShift();
-                if (App.ToucheInput.getDownTime(AUserInput.EInput.UP) == gameTime.ElapsedGameTime ||
-                     (App.ToucheInput.getDownTime(AUserInput.EInput.UP) > lat && cur == TimeSpan.Zero))
+                if (App.UserInput.getDownTime(AUserInput.EInput.UP) == gameTime.ElapsedGameTime ||
+                     (App.UserInput.getDownTime(AUserInput.EInput.UP) > lat && cur == TimeSpan.Zero))
                     player1.leftShift();
-                if (App.ToucheInput.getDownTime(AUserInput.EInput.LEFT) == gameTime.ElapsedGameTime ||
-                    (App.ToucheInput.getDownTime(AUserInput.EInput.LEFT) > lat && cur == TimeSpan.Zero))
+                if (App.UserInput.getDownTime(AUserInput.EInput.LEFT) == gameTime.ElapsedGameTime ||
+                    (App.UserInput.getDownTime(AUserInput.EInput.LEFT) > lat && cur == TimeSpan.Zero))
                     player1.leftMove();
-                if (App.ToucheInput.getDownTime(AUserInput.EInput.TAP) == gameTime.ElapsedGameTime ||
-                    (App.ToucheInput.getDownTime(AUserInput.EInput.TAP) > lat && cur == TimeSpan.Zero))
+                if (App.UserInput.getDownTime(AUserInput.EInput.TAP) == gameTime.ElapsedGameTime ||
+                    (App.UserInput.getDownTime(AUserInput.EInput.TAP) > lat && cur == TimeSpan.Zero))
                     player1.dropDown();
             }
             player1.Update(gameTime);

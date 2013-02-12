@@ -68,7 +68,7 @@ namespace TetriClimber
         /// </summary>
         private static void OnFormLocationChanged(object sender, EventArgs e)
         {
-            if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+            if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
             {
                 Form form = (Form)Form.FromHandle(Window.Handle);
                 form.LocationChanged -= OnFormLocationChanged;
@@ -103,7 +103,7 @@ namespace TetriClimber
         {
             Window.AllowUserResizing = true;
             Form form = (Form)Form.FromHandle(Window.Handle);
-            form.FormBorderStyle = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+            form.FormBorderStyle = (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
                                     ? FormBorderStyle.None
                                     : FormBorderStyle.Sizable;
         }

@@ -10,6 +10,7 @@ namespace TetriClimber
 {
     public class TouchInput : AUserInput
     {
+        public Vector2 NewPos { get { return this.newPos; } }
         Vector2 newPos;
         Vector2 oldPos;
         bool move = false;
@@ -20,7 +21,6 @@ namespace TetriClimber
             newPos = Vector2.Zero;
             oldPos = Vector2.Zero;
         }
-
 
         public override void Update(GameTime gameTime)
         {
@@ -53,7 +53,7 @@ namespace TetriClimber
             Vector2 tp  = new Vector2(e.TouchPoint.X, e.TouchPoint.Y);
             if (move == false)
             {
-                if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+                if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
                    oldPos = Vector2.Transform(tp, Matrix.CreateRotationZ(MathHelper.ToRadians(-90)));
                 else
                 {
@@ -61,7 +61,7 @@ namespace TetriClimber
                     oldPos.Y = e.TouchPoint.Y;
                 }
             }
-            if (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+            if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
                 newPos = Vector2.Transform(tp, Matrix.CreateRotationZ(MathHelper.ToRadians(-90)));
             else
             {
@@ -78,6 +78,8 @@ namespace TetriClimber
 
         public void Tap(Object sender, TouchEventArgs e)
         {
+            newPos.X =  e.TouchPoint.X;
+            newPos.Y =  e.TouchPoint.Y;
             tap = true;
         }
     }

@@ -26,7 +26,7 @@ namespace TetriClimber
                 for (int j = 0; j < (int)size.X; j++)
                     grid[i][j] = null;
             }
-            if (!SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
+            if (SettingsManager.Instance.Device != SettingsManager.EDevice.SURFACE)
             {
                 Constants.Measures.leftBoardMargin = (Constants.Measures.portraitWidth - Constants.Measures.boardWidth) /2; 
             }

@@ -58,10 +58,38 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
+                UpdateSurface(gameTime);
+            else
+                UpdateKeyboard(gameTime);
+
+            cur += gameTime.ElapsedGameTime;
+        }
+
+        private void UpdateSurface(GameTime gameTime)
+        {
+           if (App.UserInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime)
+            {
+                Point touch = new Point((int)(App.UserInput as TouchInput).NewPos.X, (int)(App.UserInput as TouchInput).NewPos.Y);
+                Console.WriteLine("tap");
+                foreach (AButton btn in buttons)
+                {
+                    if (btn.hitTest.Contains(touch))
+                    {
+                        btn.Execute();
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void UpdateKeyboard(GameTime gameTime)
+        {
             if (cur >= turnLat)
                 cur = new TimeSpan(0);
-            if (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime ||
-                (App.ToucheInput.getDownTime(AUserInput.EInput.DOWN) > lat && cur == TimeSpan.Zero))
+            if (App.UserInput.getDownTime(AUserInput.EInput.DOWN) == gameTime.ElapsedGameTime ||
+                (App.UserInput.getDownTime(AUserInput.EInput.DOWN) > lat && cur == TimeSpan.Zero))
             {
                 SoundManager.Instance.play(SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
@@ -71,8 +99,8 @@ namespace TetriClimber
                     cursor = 0;
                 buttons[cursor].Select();
             }
-            else if (App.ToucheInput.getDownTime(AUserInput.EInput.UP) == gameTime.ElapsedGameTime ||
-                (App.ToucheInput.getDownTime(AUserInput.EInput.UP) > lat && cur == TimeSpan.Zero))
+            else if (App.UserInput.getDownTime(AUserInput.EInput.UP) == gameTime.ElapsedGameTime ||
+                (App.UserInput.getDownTime(AUserInput.EInput.UP) > lat && cur == TimeSpan.Zero))
             {
                 SoundManager.Instance.play(SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
@@ -82,12 +110,11 @@ namespace TetriClimber
                     cursor--;
                 buttons[cursor].Select();
             }
-            else if (App.ToucheInput.getDownTime(AUserInput.EInput.ENTER) == gameTime.ElapsedGameTime ||
-                (App.ToucheInput.getDownTime(AUserInput.EInput.ENTER) > lat && cur == TimeSpan.Zero))
+            else if (App.UserInput.getDownTime(AUserInput.EInput.ENTER) == gameTime.ElapsedGameTime ||
+                (App.UserInput.getDownTime(AUserInput.EInput.ENTER) > lat && cur == TimeSpan.Zero))
             {
                 buttons[cursor].Execute();
             }
-            cur += gameTime.ElapsedGameTime;
         }
 
         public override void Draw(GameTime gameTime)
