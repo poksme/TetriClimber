@@ -78,6 +78,7 @@ namespace TetriClimber
                 });
             pause.Center();
             menus.Push(pause);
+            SoundManager.Instance.play(SoundManager.EChannel.BGM, SoundManager.ESound.OPTBGM, 0, 0.5f, true);
         }
 
         public void CreateOptionMenu()
@@ -131,12 +132,18 @@ namespace TetriClimber
                 case EMenu.MAIN:
                     CreateMainMenu();
                     SceneManager.Instance.removeScene(SceneManager.EScene.PLAY);
+                    SoundManager.Instance.stop(SoundManager.EChannel.BGM);
+                    //SoundManager.Instance.bgmPause();
                     break;
                 case EMenu.PAUSE:
                     CreatePauseMenu();
+                    SoundManager.Instance.play(SoundManager.EChannel.BGM, SoundManager.ESound.OPTBGM, 0, 0.5f, true);
+                    //SoundManager.Instance.bgmPlay(SoundManager.ESound.OPTBGM);
                     break;
                 case EMenu.OPTIONS:
                     CreateOptionMenu();
+                    SoundManager.Instance.play(SoundManager.EChannel.BGM, SoundManager.ESound.OPTBGM, 0, 0.5f, false);
+                    //SoundManager.Instance.bgmPlay(SoundManager.ESound.OPTBGM);
                     break;
                 default:
                     break;
@@ -164,11 +171,14 @@ namespace TetriClimber
         {
             BackMenu();
             SceneManager.Instance.TogglePause((SceneManager.EScene)data);
+            SoundManager.Instance.play(SoundManager.EChannel.BGM, SoundManager.ESound.BGM);
         }
 
         public void runScene(Object data = null)
         {
             SceneManager.Instance.addScene((SceneManager.EScene)data);
+            // if one player
+            SoundManager.Instance.play(SoundManager.EChannel.BGM, SoundManager.ESound.BGM);
         }
 
         public void Quit(Object data = null)

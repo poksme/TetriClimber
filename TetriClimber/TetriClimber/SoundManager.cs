@@ -9,12 +9,11 @@ namespace TetriClimber
 {
     public class SoundManager
     {
-        public enum ESound { CLEARLINE, DROP, FASTDROP, SHIFT, BGM, NONE }
-        private Dictionary<ESound, SoundEffect> sounds;
-        private SoundEffectInstance playing;
-        private SoundEffectInstance bgm_;
         private static SoundManager instance = null;
-        private ESound cur;
+        public enum ESound { CLEARLINE, DROP, FASTDROP, SHIFT, BGM, OPTBGM, NONE }
+        public enum EChannel { BGM, SFX }
+        private Dictionary<ESound, SoundEffect> sounds;
+        private Dictionary<EChannel, SoundEffectInstance> channels;
 
         private SoundManager()
         {
@@ -24,11 +23,11 @@ namespace TetriClimber
             sounds.Add(ESound.FASTDROP, App.ContentManager.Load<SoundEffect>("FastDropSFX"));
             sounds.Add(ESound.SHIFT, App.ContentManager.Load<SoundEffect>("ShiftSFX"));
             sounds.Add(ESound.BGM, App.ContentManager.Load<SoundEffect>("StageMusic"));
-            playing = sounds[ESound.SHIFT].CreateInstance();
-            cur = ESound.SHIFT;
-            bgm_ = sounds[ESound.BGM].CreateInstance();
-            bgm_.IsLooped = true;
-            bgm_.Volume = 0.7f;
+            sounds.Add(ESound.OPTBGM, App.ContentManager.Load<SoundEffect>("OptionMusic"));
+
+            channels = new Dictionary<EChannel, SoundEffectInstance>();
+            channels.Add(EChannel.SFX, sounds[ESound.SHIFT].CreateInstance());
+            channels.Add(EChannel.BGM, sounds[ESound.BGM].CreateInstance());
         }
 
         public static SoundManager Instance
@@ -42,52 +41,37 @@ namespace TetriClimber
         }
 
 
-        internal void play(ESound eSound, float pitch = 0, float volume = 0.5f)
+        internal void play(EChannel eChannel, ESound eSound, float pitch = 0, float volume = 0.5f, bool muteOther = true)
         {
-            if ((eSound > ESound.SHIFT && !SettingsManager.Instance.Music) ||
-                (eSound <= ESound.SHIFT && !SettingsManager.Instance.Sfx))
+            if ((eChannel == EChannel.BGM && !SettingsManager.Instance.Music)
+                || (eChannel == EChannel.SFX && !SettingsManager.Instance.Sfx)
+                || (muteOther == false && !channels[eChannel].IsDisposed && channels[eChannel].State == SoundState.Playing))// && channels[eChannel].Equals(tmp)))
                 return;
-            cur = eSound;
-            if (!playing.IsDisposed)
+            if (!channels[eChannel].IsDisposed)
             {
-                playing.Stop();
-                playing.Dispose();
+                channels[eChannel].Stop();
+                channels[eChannel].Dispose();
             }
-            playing = sounds[eSound].CreateInstance();
-            playing.Pitch = pitch;
-            playing.Volume = volume;
-            playing.Play();
+            channels[eChannel] = sounds[eSound].CreateInstance();
+            channels[eChannel].Pitch = pitch;
+            channels[eChannel].Volume = volume;
+            channels[eChannel].IsLooped = (eChannel == EChannel.BGM);
+            //channels[eChannel].IsLooped = loop;
+            channels[eChannel].Play();
         }
 
-        internal void bgmPause()
+        internal void pause(EChannel eChannel)
         {
-            bgm_.Pause();
+            channels[eChannel].Pause();
         }
 
-        internal void stopPlaying()
+        internal void stop(EChannel eChannel)
         {
-            if (!playing.IsDisposed)
+            if (!channels[eChannel].IsDisposed)
             {
-                playing.Stop();
-                playing.Dispose();
+                channels[eChannel].Stop();
+                channels[eChannel].Dispose();
             }
-        }
-
-        internal void bgmPlay()
-        {
-            bgm_.Play();
-        }
-
-        internal void setBgmPitch(float p)
-        {
-            bgm_.Pitch = p;
-        }
-
-        internal ESound getPlayingSound()
-        {
-            if (playing.State == SoundState.Playing)
-                return cur;
-            return ESound.NONE;
         }
     }
 }

@@ -65,9 +65,9 @@ namespace TetriClimber
         {
             Music = (bool)b;
             if (Music)
-                SoundManager.Instance.bgmPlay();
+                SoundManager.Instance.play(SoundManager.EChannel.BGM, SoundManager.ESound.OPTBGM, 0, 0.4f, false);
             else
-                SoundManager.Instance.bgmPause();
+                SoundManager.Instance.stop(SoundManager.EChannel.BGM);
         }
         
         public void setSfx(Object b)

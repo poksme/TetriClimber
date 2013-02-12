@@ -85,9 +85,7 @@ namespace TetriClimber
                     tSpinCur += gameTime.ElapsedGameTime;
                 if (tSpinCur > tSpinLimit)
                 {
-                    if (SoundManager.Instance.getPlayingSound() != SoundManager.ESound.FASTDROP)
-                        SoundManager.Instance.play(SoundManager.ESound.DROP);
-
+                    SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.DROP, 0, 0.5f, false);
                     board.pushBlocks(currTetrimino, climby.DeadZone);
                     #region FullLine Event
                     List<int> brokenLines = board.checkFullLine();
@@ -210,7 +208,7 @@ namespace TetriClimber
             if (kickIt(1) == false)
                 currTetrimino.leftShift();
             else
-                SoundManager.Instance.play(SoundManager.ESound.SHIFT);
+                SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.SHIFT);
         }
 
         public void leftShift()
@@ -219,7 +217,7 @@ namespace TetriClimber
             if (kickIt(1) == false)
                 currTetrimino.rightShift();
             else
-                SoundManager.Instance.play(SoundManager.ESound.SHIFT);
+                SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.SHIFT);
         }
 
         public void dropDownTarget(ATetrimino target)
@@ -231,7 +229,7 @@ namespace TetriClimber
         public void dropDown()
         {
             dropDownTarget(currTetrimino);
-            SoundManager.Instance.play(SoundManager.ESound.FASTDROP);
+            SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.FASTDROP, 0, 0.5f, true);
         }
 
         public bool rightMove()

@@ -29,7 +29,7 @@ namespace TetriClimber
 
         public override void Execute()
         {
-            SoundManager.Instance.play(SoundManager.ESound.CLEARLINE);
+            SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.CLEARLINE);
             base.Execute();
         }
     }

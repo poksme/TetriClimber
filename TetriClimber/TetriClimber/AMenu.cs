@@ -90,7 +90,7 @@ namespace TetriClimber
                 cur = new TimeSpan(0);
             if (App.UserInput.isPressed(AUserInput.EInput.DOWN))
             {
-                SoundManager.Instance.play(SoundManager.ESound.SHIFT);
+                SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
                 if (cursor < buttons.Count - 1)
                     cursor++;
@@ -100,7 +100,7 @@ namespace TetriClimber
             }
             else if (App.UserInput.isPressed(AUserInput.EInput.UP))
             {
-                SoundManager.Instance.play(SoundManager.ESound.SHIFT);
+                SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
                 if (cursor == 0)
                     cursor = buttons.Count - 1;

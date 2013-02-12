@@ -133,7 +133,7 @@ namespace TetriClimber
                 }
             int size = brokenLine.Count;
             if (size != 0)
-                SoundManager.Instance.play(SoundManager.ESound.CLEARLINE, 0.25f * (float)size, 1f);
+                SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.CLEARLINE, 0.25f * (float)size, 1f);
             camUp -= brokenLine.Count;
             camUp = camUp > 0 ? camUp : 0;
             for(int i = 0; i < camUp; i++)
