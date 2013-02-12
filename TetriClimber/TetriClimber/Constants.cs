@@ -58,6 +58,7 @@ namespace TetriClimber
             public static float portraitHeight;
             public static float portraitWidth;
             public const float BgShapesSize = 800f;
+            public const float Scale = 1.75f;
         }
     }
 }

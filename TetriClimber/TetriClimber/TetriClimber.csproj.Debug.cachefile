@@ -1,3 +1,4 @@
+Content\blocks.xnb
 Content\ClearLineSFX.xnb
 Content\DropSFX.xnb
 Content\FastDropSFX.xnb
@@ -10,7 +11,6 @@ Content\orange_triangle.xnb
 Content\pink_cross.xnb
 Content\yellow_lines.xnb
 Content\violet_hexagone.xnb
-Content\blocks.xnb
 Content\Aharoni.xnb
 Resources\icon.png
 TetriClimber.xml

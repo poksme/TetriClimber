@@ -26,7 +26,8 @@ namespace TetriClimber
         //private Color backgroundColor = Color.Gray;
         private bool applicationLoadCompleteSignalled;
 
-        private UserOrientation currentOrientation = UserOrientation.Bottom;
+        // THIS IS NEVER USED
+        //private UserOrientation currentOrientation = UserOrientation.Bottom;
 
         public static Matrix screenTransform = Matrix.Identity;
 

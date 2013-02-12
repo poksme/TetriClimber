@@ -234,30 +234,30 @@ namespace TetriClimber
             SoundManager.Instance.play(SoundManager.ESound.FASTDROP);
         }
 
-        public void rightMove()
+        public bool rightMove()
         {
             List<Block> shapes = currTetrimino.getBlocks();
             foreach (Block b in shapes)
             {
-                if (currTetrimino.PosRel.X + b.PosRel.X >= Constants.Measures.boardBlockWidth - 1)
-                    return ;
-                if (board.isBusyCase(new Vector2(currTetrimino.PosRel.X + b.PosRel.X + 1, currTetrimino.PosRel.Y + b.PosRel.Y)))
-                    return ;
+                if (currTetrimino.PosRel.X + b.PosRel.X >= Constants.Measures.boardBlockWidth - 1 ||
+                    board.isBusyCase(new Vector2(currTetrimino.PosRel.X + b.PosRel.X + 1, currTetrimino.PosRel.Y + b.PosRel.Y)))
+                    return false;
             }
             currTetrimino.rightMove();
+            return true;
         }
 
-        public void leftMove()
+        public bool leftMove()
         {
             List<Block> shapes = currTetrimino.getBlocks();
             foreach (Block b in shapes)
             {
-                if (currTetrimino.PosRel.X + b.PosRel.X <= 0)
-                    return;
-                if (board.isBusyCase(new Vector2(currTetrimino.PosRel.X + b.PosRel.X - 1, currTetrimino.PosRel.Y + b.PosRel.Y)))
-                    return;
+                if (currTetrimino.PosRel.X + b.PosRel.X <= 0 ||
+                    board.isBusyCase(new Vector2(currTetrimino.PosRel.X + b.PosRel.X - 1, currTetrimino.PosRel.Y + b.PosRel.Y)))
+                    return false;
             }
             currTetrimino.leftMove();
+            return true;
         }
 
         public bool targetCanGoingDown(ATetrimino target)
