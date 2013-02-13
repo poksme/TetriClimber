@@ -124,14 +124,14 @@ namespace TetriClimber
             Form form = (Form)Form.FromHandle(Window.Handle);
             form.ClientSize = new Size(width, height);
 
-            /*
-             * La fenetre se size a en Normal quoi qu'il arrive !
-             * form.WindowState = (SurfaceEnvironment.IsSurfaceEnvironmentAvailable)
-             *              ? FormWindowState.Normal
-             *              : FormWindowState.Maximized;
-             */
+            
+             // La fenetre se size a en Normal quoi qu'il arrive !
+              form.WindowState = (SettingsManager.Instance.Device == SettingsManager.EDevice.PC)
+                           ? FormWindowState.Normal
+                           : FormWindowState.Maximized;
+             
 
-            form.WindowState = FormWindowState.Normal;
+            //form.WindowState = FormWindowState.Normal;
         }
     }
 }

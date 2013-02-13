@@ -43,6 +43,11 @@ namespace TetriClimber
             if (App.UserInput.isPressed(AUserInput.EInput.TAP))
             {
                 Point touch = (App.UserInput as TouchInput).getPointTaped();
+                var pos = new Vector2(touch.X, touch.Y);
+                pos = Vector2.Transform(pos, Matrix.CreateRotationZ(MathHelper.ToRadians(90)) *
+                                    Matrix.CreateTranslation(Constants.Measures.portraitWidth, 0, 0));
+                touch.X = (int)pos.X;
+                touch.Y = (int)pos.Y;
                 if (coord.Contains(touch))
                     handler(btnState);
                 btnState = ButtonState.Pressed;
