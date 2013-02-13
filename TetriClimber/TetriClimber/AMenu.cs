@@ -50,6 +50,7 @@ namespace TetriClimber
             h = buttons.Last().TotalSize.Y + buttons.Last().LeftPos.Y;
             pos.X = (Constants.Measures.portraitWidth - w) /2 ;
             pos.Y = (Constants.Measures.portraitHeight - h) / 2;
+            pos = CoordHelper.Instance.Replace(pos);
             Width = w;
             foreach (AButton button in buttons)
                 button.UpdatePosition();
@@ -72,7 +73,6 @@ namespace TetriClimber
             if (App.UserInput.isPressed(AUserInput.EInput.DOWN))
             {
                 Point touch = (App.UserInput as TouchInput).getPointTaped();
-                Console.WriteLine("tap");
                 foreach (AButton btn in buttons)
                 {
                     if (btn.hitTest.Contains(touch))

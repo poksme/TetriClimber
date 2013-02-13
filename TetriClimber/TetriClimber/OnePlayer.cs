@@ -17,11 +17,7 @@ namespace TetriClimber
             player1 = new GameSession(SpriteManager.ESprite.CLIMBYBLUE);
             if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
             {
-                //Constants.Measures.leftBoardMargin = (float)Math.Round((Constants.Measures.portraitWidth - Constants.Measures.boardBlockWidth * Constants.Measures.blockSize) / 2f);
-                //Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);
-                App.screenTransform = Matrix.CreateRotationZ(MathHelper.ToRadians(90)) *
-                                    //Matrix.CreateTranslation(App.Game.GraphicsDevice.Viewport.Width, 0, 0);
-                                    Matrix.CreateTranslation(Constants.Measures.portraitWidth - 950, 0, 0) * Matrix.CreateScale(new Vector3(Constants.Measures.Scale, Constants.Measures.Scale, 1)); // -500 -250, 1.75 1.75
+                CoordHelper.Instance.setProfile(CoordHelper.EProfile.ONEPLAYER);
             }
             ipt = null;
             if (App.UserInput is TouchInput)

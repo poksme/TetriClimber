@@ -16,12 +16,8 @@ namespace TetriClimber
         private Vector2 startingPos;
         public Vector2 StartingPos 
         {
-            get { 
-                return Vector2.Transform(
-                    // REVERT THE MOVE ROTATION
-                    Vector2.Transform(startingPos, Matrix.Invert(Matrix.CreateRotationZ(MathHelper.ToRadians(-90)))), 
-                    // REVERT THE DRAWING ROTATION
-                    Matrix.Invert(Matrix.CreateRotationZ(MathHelper.ToRadians(90)) * Matrix.CreateTranslation(Constants.Measures.portraitWidth - 950, 0, 0) * Matrix.CreateScale(new Vector3(Constants.Measures.Scale, Constants.Measures.Scale, 1))));
+            get {
+                return CoordHelper.Instance.Replace(Vector2.Transform(startingPos, Matrix.Invert(Matrix.CreateRotationZ(MathHelper.ToRadians(-90)))));
             }
         }
         Vector2 actualPos;
@@ -48,9 +44,9 @@ namespace TetriClimber
             startingPos.X += blocks * Constants.Measures.blockSize * Constants.Measures.Scale;
         }
 
-        public Point getPointTaped()
+        public Point getPointTaped(bool turned = false)
         {
-            return tapedPoint;
+            return CoordHelper.Instance.Replace(tapedPoint);
         }
 
         public float getDropDownDistance()
@@ -140,7 +136,7 @@ namespace TetriClimber
             //Console.Out.WriteLine("UP FUNC");
             if (actualPos.Y - Constants.Measures.blockSize * Constants.Measures.Scale * 2 >= startingPos.Y)
                 dropedDown = true;
-            taped = Vector2.Distance(actualPos, startingPos) < Constants.Measures.blockSize * Constants.Measures.Scale;
+            //taped = Vector2.Distance(actualPos, startingPos) < Constants.Measures.blockSize * Constants.Measures.Scale;
             if (taped)
             {
                 tapedPoint.X = (int)actualPos.X;
@@ -159,6 +155,7 @@ namespace TetriClimber
             actualPos.Y = e.TouchPoint.Y;
             startingPos.X = e.TouchPoint.X;
             startingPos.Y = e.TouchPoint.Y;
+            taped = true;
             //tap = true;
         }
     }

@@ -133,6 +133,7 @@ namespace TetriClimber
                     CreateMainMenu();
                     SceneManager.Instance.removeScene(SceneManager.EScene.PLAY);
                     SoundManager.Instance.stop(SoundManager.EChannel.BGM);
+                    CoordHelper.Instance.setProfile(CoordHelper.EProfile.LANDSCAPE);
                     //SoundManager.Instance.bgmPause();
                     break;
                 case EMenu.PAUSE:
