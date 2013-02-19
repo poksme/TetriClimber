@@ -17,7 +17,7 @@ namespace TetriClimber
         public Vector2 StartingPos 
         {
             get {
-                return CoordHelper.Instance.Replace(Vector2.Transform(startingPos, Matrix.Invert(Matrix.CreateRotationZ(MathHelper.ToRadians(-90)))));
+                return CoordHelper.Instance.Replace(startingPos);
             }
         }
         Vector2 actualPos;
@@ -99,7 +99,7 @@ namespace TetriClimber
             Vector2 tp  = new Vector2(e.TouchPoint.X, e.TouchPoint.Y);
 
             if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
-                actualPos = Vector2.Transform(tp, Matrix.CreateRotationZ(MathHelper.ToRadians(-90)));
+                actualPos = tp;
             else
             {
                 actualPos.X = e.TouchPoint.X;

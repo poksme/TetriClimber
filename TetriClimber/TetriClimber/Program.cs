@@ -119,19 +119,19 @@ namespace TetriClimber
             int height = (InteractiveSurface.PrimarySurfaceDevice != null)
                             ? InteractiveSurface.PrimarySurfaceDevice.WorkingAreaHeight
                             : Screen.PrimaryScreen.WorkingArea.Height;
-            height = (int)Constants.Measures.portraitHeight; //889;
-            width = (int)Constants.Measures.portraitWidth; //500;
+            //height = (int)Constants.Measures.portraitHeight; //889;
+            //width = (int)Constants.Measures.portraitWidth; //500;
+            height = 1080;
+            width = 1920;
             Form form = (Form)Form.FromHandle(Window.Handle);
             form.ClientSize = new Size(width, height);
 
             
              // La fenetre se size a en Normal quoi qu'il arrive !
               form.WindowState = (SettingsManager.Instance.Device == SettingsManager.EDevice.PC)
-                           ? FormWindowState.Normal
+                           ? FormWindowState.Maximized
                            : FormWindowState.Maximized;
-             
-
-            //form.WindowState = FormWindowState.Normal;
+            
         }
     }
 }

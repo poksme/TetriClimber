@@ -11,7 +11,6 @@ namespace TetriClimber
         protected String value;
         protected TextManager.EFont font;
         protected Color color;
-        protected Vector2 pos;
         protected Vector2 origin;
         protected float scale;
 
@@ -20,7 +19,7 @@ namespace TetriClimber
             value = val;
             color = c;
             font = f;
-            pos = p;
+            Pos = p;
             origin = o;
             scale = s;
         }

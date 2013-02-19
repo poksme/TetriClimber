@@ -15,10 +15,7 @@ namespace TetriClimber
         public OnePlayer():base()
         {
             player1 = new GameSession(SpriteManager.ESprite.CLIMBYBLUE);
-            if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
-            {
-                CoordHelper.Instance.setProfile(CoordHelper.EProfile.ONEPLAYER);
-            }
+            CoordHelper.Instance.setProfile(CoordHelper.EProfile.ONEPLAYER);
             ipt = null;
             if (App.UserInput is TouchInput)
                 ipt = App.UserInput as TouchInput;

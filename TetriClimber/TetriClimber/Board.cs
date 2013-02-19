@@ -28,7 +28,7 @@ namespace TetriClimber
             }
             if (SettingsManager.Instance.Device != SettingsManager.EDevice.SURFACE)
             {
-                Constants.Measures.leftBoardMargin = (Constants.Measures.portraitWidth - Constants.Measures.boardWidth) /2; 
+                Constants.Measures.leftBoardMargin = (Constants.Measures.portraitWidth - Constants.Measures.boardWidth) / 2;
             }
         }
 

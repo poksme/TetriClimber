@@ -22,6 +22,7 @@ namespace TetriClimber
         private Dictionary<Climby.EState, Action> state;
         private Dictionary<Climby.EAroundSquare, Point> aroundRect;
         private Climby.EDirection lastDir;
+        private Next next;
 
         public GameSession(SpriteManager.ESprite playerType):base(App.Game)
         {
@@ -47,13 +48,13 @@ namespace TetriClimber
             shadowTetrimino = tmp.Item2;
             cur = TimeSpan.Zero;
             //lat = new TimeSpan(10000000/3); // 3
-            score = new Score("0", TextManager.EFont.AHARONI, Constants.Color.p1Dark, 1f, new Vector2(600, 200));
-            level = new Level(0, TextManager.EFont.AHARONI, Constants.Color.p2Dark, 1f, new Vector2(150, 40));
+            score = new Score();
+            level = new Level();
+            next = new Next();
             lat = new TimeSpan(10000000 / (level.level + 1));
             tSpinLimit = new TimeSpan(1000000 * 3); // TSPIN TIME
             tSpinCur = TimeSpan.Zero;
             state = new Dictionary<Climby.EState, Action>();
-
 
             #region Climby State
             state.Add(Climby.EState.FALL, climbyFall);
@@ -145,9 +146,11 @@ namespace TetriClimber
                 shadowTetrimino.Draw(gameTime);
              currTetrimino.Draw(gameTime);
              climby.Draw(gameTime);
-             TextManager.Instance.Draw(score);
-             TextManager.Instance.Draw(level);
-             // DEBUG COLORS
+             score.Draw(gameTime);
+             level.Draw(gameTime);
+             next.Draw(gameTime);
+            
+            // DEBUG COLORS
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT]), Color.Red);
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_TOP]), Color.Red);
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_UNDER]), Color.Red);

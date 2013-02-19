@@ -242,7 +242,7 @@ namespace TetriClimber
 
             //SpriteManager.Instance.begin();
             //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null);
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, screenTransform);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,CoordHelper.Instance.getCurrentMatrix());
             SceneManager.Instance.Draw(gameTime);
             MenuManager.Instance.Draw(gameTime);
             //SpriteManager.Instance.drawAtPos(SpriteManager.ESprite.L, Vector2.Zero);

@@ -37,5 +37,10 @@ namespace TetriClimber
         {
             return fonts[font].MeasureString(content);
         }
+
+        public float getLineSpacing(EFont font)
+        {
+            return fonts[font].LineSpacing;
+        }
     }
 }

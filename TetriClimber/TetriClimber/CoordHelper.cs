@@ -19,9 +19,7 @@ namespace TetriClimber
         {
             Profile = EProfile.LANDSCAPE;
             matrixs = new Dictionary<EProfile, Matrix>(){
-            {EProfile.ONEPLAYER, Matrix.CreateRotationZ(MathHelper.ToRadians(90)) *
-                                 Matrix.CreateTranslation(Constants.Measures.portraitWidth - 950, 0, 0) *
-                                 Matrix.CreateScale(new Vector3(Constants.Measures.Scale, Constants.Measures.Scale, 1))},
+            {EProfile.ONEPLAYER, Matrix.CreateScale(new Vector3(Constants.Measures.Scale, Constants.Measures.Scale, 1))},
             {EProfile.LANDSCAPE, Matrix.Identity}};
         }
 
