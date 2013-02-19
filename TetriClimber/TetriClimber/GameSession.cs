@@ -106,6 +106,7 @@ namespace TetriClimber
                     var tmp = tetriminoFactory.getTetrimino();
                     currTetrimino = tmp.Item1;
                     shadowTetrimino = tmp.Item2;
+                    next.Update(gameTime);
                     tSpinCur = TimeSpan.Zero;
                 }
             }

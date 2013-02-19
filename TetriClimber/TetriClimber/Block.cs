@@ -73,5 +73,10 @@ namespace TetriClimber
         }
 
         public Rectangle HitBox {get { return hitBox; } set { hitBox = value; }}
+
+        public void DrawAsPreview(GameTime gameTime)
+        {
+            SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(Constants.Measures.leftBoardMargin + (posRel.X + 10.5f) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (posRel.Y + 1.5f) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize, transparency); // HERE TRANSPARENCY
+        }
     }
 }

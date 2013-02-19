@@ -93,6 +93,12 @@ namespace TetriClimber
                 b.Draw(gameTime);
         }
 
+        public void DrawAsPreview(GameTime gameTime)
+        {
+            foreach (Block b in shape)
+                b.DrawAsPreview(gameTime);
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -148,12 +154,5 @@ namespace TetriClimber
             }
             return max;
         }
-
-        //public void dropDown(Board b)
-        //{
-        //    while (!overlap(b))
-        //        downMove();
-        //    upMove();
-        //}
     }
 }

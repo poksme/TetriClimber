@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace TetriClimber
 {
@@ -48,14 +49,14 @@ namespace TetriClimber
             public const int borderSize = 4;
             public const float boardBlockWidth = 10f;
             public const float boardBlockHeight = 20f;
-            //public static float leftBoardMargin = 704f;
-            public static float leftBoardMargin = 200f;
+            public static float leftBoardMargin = 704f;
+            //public static float leftBoardMargin = 200f;
             public static float upBoardMargin = 34f;
             
             public const float boardWidth = boardBlockWidth * blockSize;
             public const float boardHeight = boardBlockHeight * blockSize;
             public const int kickDegree = 2;
-            public const float buttonSize = 50f;
+            public const float buttonSize = 70f;
             public static float portraitHeight;
             public static float portraitWidth;
             public const float BgShapesSize = 800f;
@@ -69,6 +70,7 @@ namespace TetriClimber
             public static float scorePosY = 354f;
             public static float levelPosY = 593f;
             public static float nextPosY = 40f;
+            public static Rectangle boxPreview = new Rectangle((int)(leftBoardMargin + boardWidth + borderSize), (int)(nextPosY + textBoxH), 243, 170);
 
         }
     }
