@@ -59,9 +59,10 @@ namespace TetriClimber
             Menu main = new Menu();
             main.setButtons(new List<AButton>()
                 {
-                    new TextButton(main, "Play", new Vector2(0, 0), MenuManager.Instance.runScene, SceneManager.EScene.PLAY),
-                    new TextButton(main, "Options", new Vector2(0,1 * 100), MenuManager.Instance.launchMenu, EMenu.OPTIONS),
-                    new TextButton(main, "Quit", new Vector2(0, 2 *100), MenuManager.Instance.Quit)
+                    new TextButton(main, "Solo", new Vector2(0, 0), MenuManager.Instance.runScene, SceneManager.EScene.SOLO),
+                    new TextButton(main, "Multi", new Vector2(0, 1 * 100), MenuManager.Instance.runScene, SceneManager.EScene.MULTI),
+                    new TextButton(main, "Options", new Vector2(0, 2 * 100), MenuManager.Instance.launchMenu, EMenu.OPTIONS),
+                    new TextButton(main, "Quit", new Vector2(0, 3 *100), MenuManager.Instance.Quit)
                 });
             main.Center();
             menus.Push(main);
@@ -72,7 +73,7 @@ namespace TetriClimber
             Menu pause = new Menu();
             pause.setButtons(new List<AButton>()
                 {
-                    new TextButton(pause, "Resume", new Vector2(0, 0), MenuManager.Instance.ResumeGame, SceneManager.EScene.PLAY),
+                    new TextButton(pause, "Resume", new Vector2(0, 0), MenuManager.Instance.ResumeGame, SceneManager.EScene.SOLO),
                     new TextButton(pause, "Options", new Vector2(0, 1 * 100), MenuManager.Instance.launchMenu, EMenu.OPTIONS),
                     new TextButton(pause, "Give Up", new Vector2(0, 2 *100), MenuManager.Instance.launchMenu, EMenu.MAIN)
                 });
@@ -131,7 +132,7 @@ namespace TetriClimber
             {
                 case EMenu.MAIN:
                     CreateMainMenu();
-                    SceneManager.Instance.removeScene(SceneManager.EScene.PLAY);
+                    SceneManager.Instance.removeScene(SceneManager.EScene.SOLO);
                     SoundManager.Instance.stop(SoundManager.EChannel.BGM);
                     //CoordHelper.Instance.setProfile(CoordHelper.EProfile.LANDSCAPE);
                     //SoundManager.Instance.bgmPause();

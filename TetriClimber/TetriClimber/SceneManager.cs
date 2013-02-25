@@ -8,7 +8,7 @@ namespace TetriClimber
 {
     public class SceneManager : DrawableGameComponent
     {
-        public enum EScene { ATRACT_MODE, PLAY, BACKGROUND }
+        public enum EScene { ATRACT_MODE, SOLO, MULTI, BACKGROUND }
         private Dictionary<EScene, AScene> scenes = new Dictionary<EScene, AScene>();
         private static SceneManager instance = null;
 
@@ -48,8 +48,12 @@ namespace TetriClimber
         {
             switch (e)
             {
-                case EScene.PLAY:
+                case EScene.SOLO:
                     scenes.Add(e, new OnePlayer());
+                    MenuManager.Instance.Flush();
+                    break;
+                case EScene.MULTI:
+                    scenes.Add(e, new TwoPlayer());
                     MenuManager.Instance.Flush();
                     break;
                 default:

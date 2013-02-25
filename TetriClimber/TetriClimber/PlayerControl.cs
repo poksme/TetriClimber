@@ -42,7 +42,7 @@ namespace TetriClimber
             if (state == ButtonState.Released)
             {
                 MenuManager.Instance.CreatePauseMenu();
-                SceneManager.Instance.TogglePause(SceneManager.EScene.PLAY);
+                SceneManager.Instance.TogglePause(SceneManager.EScene.SOLO);
             }
         }
 

@@ -9,13 +9,9 @@ namespace TetriClimber
 {
     class OnePlayer : APlay
     {
-        private GameSession player1;
-        private TouchInput ipt;
-
-        public OnePlayer():base()
+        public OnePlayer()
+            : base(CoordHelper.EProfile.ONEPLAYER)
         {
-            player1 = new GameSession(SpriteManager.ESprite.CLIMBYBLUE);
-            CoordHelper.Instance.setProfile(CoordHelper.EProfile.ONEPLAYER);
             ipt = null;
             if (App.UserInput is TouchInput)
                 ipt = App.UserInput as TouchInput;
@@ -26,8 +22,6 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            //if (cur >= turnLat)
-            //    cur = new TimeSpan(0);
             if (App.UserInput.isPressed(AUserInput.EInputKeys.RIGHT))
             {
                 if (ipt != null)

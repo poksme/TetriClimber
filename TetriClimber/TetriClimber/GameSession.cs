@@ -23,11 +23,23 @@ namespace TetriClimber
         private Dictionary<Climby.EAroundSquare, Point> aroundRect;
         private Climby.EDirection lastDir;
         private Next next;
+        private HUD hud;
+        private CoordHelper.EProfile playerType;
 
-        public GameSession(SpriteManager.ESprite playerType):base(App.Game)
+        public GameSession(CoordHelper.EProfile pt, HUD h):base(App.Game)
         {
-            board = new Board(new Vector2(Constants.Measures.boardBlockWidth, Constants.Measures.boardBlockHeight));
-            climby = new Climby(playerType);
+            hud = h;
+            playerType = pt;
+            if (playerType == CoordHelper.EProfile.ONEPLAYER)
+            {
+                board = new Board(new Vector2(Constants.Measures.boardBlockWidth, Constants.Measures.boardBlockHeight), new Vector2(CoordHelper.Instance.leftBoardMargin1, (Constants.Measures.upBoardMargin)));
+                climby = new Climby(SpriteManager.ESprite.CLIMBYBLUE);
+            }
+            else
+            {
+                board = new Board(new Vector2(Constants.Measures.boardBlockWidth, Constants.Measures.boardBlockHeight), new Vector2(CoordHelper.Instance.leftBoardMargin2, (Constants.Measures.upBoardMargin)));
+                climby = new Climby(SpriteManager.ESprite.CLIMBYRED);
+            }
 
             //
             aroundRect = new Dictionary<Climby.EAroundSquare, Point>();
@@ -94,6 +106,7 @@ namespace TetriClimber
                     {
                         Point climbyRelPos = climby.getRelPos();
                         score.addLineScore(brokenLines.Count * brokenLines.Count);
+                        hud.setScore(score.TotalScore, playerType);
                         int nbDown = 0;
                         foreach (int l in brokenLines)
                             if (climbyRelPos.Y < l)
@@ -122,7 +135,10 @@ namespace TetriClimber
             lastDir = climby.Direction;
             var tmpClimbyStepHeight =  climby.OldMinHeight - climby.MinHeight;
             if (tmpClimbyStepHeight > 0)
+            {
                 score.addClimbyScore(tmpClimbyStepHeight);
+                hud.setScore(score.TotalScore, playerType);
+            }
             if (level.updateLevel(tmpClimbyStepHeight))
             {
                 lat = new TimeSpan(10000000 / (level.level + 1));
@@ -147,9 +163,9 @@ namespace TetriClimber
                 shadowTetrimino.Draw(gameTime);
              currTetrimino.Draw(gameTime);
              climby.Draw(gameTime);
-             score.Draw(gameTime);
-             level.Draw(gameTime);
-             next.Draw(gameTime);
+             //score.Draw(gameTime);
+             //level.Draw(gameTime);
+             //next.Draw(gameTime);
             
             // DEBUG COLORS
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT]), Color.Red);

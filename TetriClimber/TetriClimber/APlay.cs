@@ -9,46 +9,40 @@ namespace TetriClimber
 {
     public class APlay : AScene
     {
-        private PlayerControl control;
+        protected PlayerControl control;
         protected TimeSpan lat = new TimeSpan(10000000 / 2);
         protected TimeSpan cur = new TimeSpan(0);
         protected TimeSpan turnLat = new TimeSpan(10000000 / 10);
+        protected GameSession player1;
+        protected TouchInput ipt;
+        protected HUD hud;
 
-        //private Vector2 tmpOrtSize = new Vector2(0.2f, 50f);
-        //private Vector2 tmpPos = new Vector2();
-
-        public APlay() : base()
+        public APlay(CoordHelper.EProfile profile) : base()
         {
+            CoordHelper.Instance.setProfile(profile);
+            hud = new HUD();
             control = new PlayerControl();
-            //SoundManager.Instance.bgmPlay(SoundManager.ESound.BGM);
-           // bg = new Background();
+            player1 = new GameSession(CoordHelper.EProfile.ONEPLAYER, hud);
+            ipt = null;
+            if (App.UserInput is TouchInput)
+                ipt = App.UserInput as TouchInput;
+            else
+                (App.UserInput as KeyboardInput).setKeyRepeatTime(new TimeSpan(1500000));
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-           // bg.Draw(gameTime);
-            //SpriteManager.Instance.drawShapeAtPos(tmpPos, TextureManager.ETexture.GREEN_CROSS, tmpOrtSize.X, tmpOrtSize.Y);
-            //SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X, tmpPos.Y + 100f), TextureManager.ETexture.BLUE_SQUARE, tmpOrtSize.X, tmpOrtSize.Y);
-            //SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X - 500f, tmpPos.Y - 100f), TextureManager.ETexture.GREEN_SQUARE, tmpOrtSize.X, tmpOrtSize.Y);
-            //SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X, tmpPos.Y - 500f), TextureManager.ETexture.ORANGE_TRIANGLE, tmpOrtSize.X, tmpOrtSize.Y);
-            //SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X - 250f, tmpPos.Y), TextureManager.ETexture.PINK_CROSS, tmpOrtSize.X, tmpOrtSize.Y);
-            //SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X, tmpPos.Y - 250f), TextureManager.ETexture.VIOLET_HEXAGONE, tmpOrtSize.X, tmpOrtSize.Y);
-            //SpriteManager.Instance.drawShapeAtPos(new Vector2(tmpPos.X - 750f, tmpPos.Y), TextureManager.ETexture.YELLOW_LINES, tmpOrtSize.X, tmpOrtSize.Y);
-            //player1.Draw(gameTime);
             control.Draw(gameTime);
+            hud.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            //bg.Update(gameTime);
-            //tmpPos.X += 0.5f;
-            //tmpPos.Y += 0.5f;
-            //tmpOrtSize.X += 0.001f;
-            //tmpOrtSize.Y -= 1f;
             cur += gameTime.ElapsedGameTime;
             control.Update(gameTime);
+            hud.Update(gameTime);
         }
     }
 }

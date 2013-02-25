@@ -14,10 +14,12 @@ namespace TetriClimber
         private HashSet<int> updatedLine;
         private int camUp;
         private int limitLineHeight;
+        private Rectangle pos;
 
-        public Board(Vector2 size) : base(App.Game)
+        public Board(Vector2 size, Vector2 v) : base(App.Game)
         {
             this.size = size;
+            pos = new Rectangle((int)(v.X), (int)(v.Y), (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize));
             grid = new Block[(int)size.Y][];
             limitLineHeight = 4;
             for (int i = 0; i < grid.Length; i++)
@@ -40,19 +42,18 @@ namespace TetriClimber
         public override void  Draw(GameTime gameTime)
         {
  	        base.Draw(gameTime);
-            SpriteManager.Instance.drawBoardedRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin), (int)(Constants.Measures.upBoardMargin), (int)(size.X * Constants.Measures.blockSize), (int)(size.Y * Constants.Measures.blockSize)), Color.White * 0.8f,
+            SpriteManager.Instance.drawBoardedRectangleAbsPos(pos, Color.White * 0.8f,
                                                               Constants.Measures.borderSize, Constants.Color.border);
             if (SettingsManager.Instance.LimitLine) //LimitLine
-                SpriteManager.Instance.drawRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin), 
-                                                                         (int)(Constants.Measures.upBoardMargin + (Constants.Measures.boardBlockHeight / 2 - 2) * Constants.Measures.blockSize) - (limitLineHeight / 2), 
+                SpriteManager.Instance.drawRectangleAbsPos(new Rectangle((int)(pos.X), 
+                                                                         (int)(pos.Y + (Constants.Measures.boardBlockHeight / 2 - 2) * Constants.Measures.blockSize) - (limitLineHeight / 2), 
                                                                          (int)(size.X * Constants.Measures.blockSize), 
                                                                          limitLineHeight), 
                                                        Constants.Color.p1Light * 0.4f);
             for (int y = 0; y < Constants.Measures.boardBlockHeight; y++)
                 for (int x = 0; x < Constants.Measures.boardBlockWidth; x++)
                     if (grid[y][x] != null)
-                        SpriteManager.Instance.drawRotatedAtPos(grid[y][x].Color, new Vector2(Constants.Measures.leftBoardMargin + x * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + y * Constants.Measures.blockSize), grid[y][x].Orientation, Constants.Measures.blockSize);
-                        //SpriteManager.Instance.drawAtPos(grid[y][x].Color, new Vector2(x * Constants.Measures.blockSize, y * Constants.Measures.blockSize));
+                        SpriteManager.Instance.drawRotatedAtPos(grid[y][x].Color, new Vector2(pos.X + x * Constants.Measures.blockSize, pos.Y + y * Constants.Measures.blockSize), grid[y][x].Orientation, Constants.Measures.blockSize);
         }
 
         public bool isFullLine(int Y)

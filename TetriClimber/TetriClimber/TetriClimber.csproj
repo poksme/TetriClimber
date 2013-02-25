@@ -128,6 +128,7 @@
     <Compile Include="CoordHelper.cs" />
     <Compile Include="GameSession.cs" />
     <Compile Include="AUserInput.cs" />
+    <Compile Include="HUD.cs" />
     <Compile Include="KeyboardInput.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Menu.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="ToggleButton.cs" />
     <Compile Include="TouchInput.cs" />
     <Compile Include="TouchRec.cs" />
+    <Compile Include="TwoPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

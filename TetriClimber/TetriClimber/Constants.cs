@@ -49,16 +49,19 @@ namespace TetriClimber
             public const int borderSize = 4;
             public const float boardBlockWidth = 10f;
             public const float boardBlockHeight = 20f;
+
             public static float leftBoardMargin = 704f;
             //public static float leftBoardMargin = 200f;
             public static float upBoardMargin = 34f;
-            
+
             public const float boardWidth = boardBlockWidth * blockSize;
             public const float boardHeight = boardBlockHeight * blockSize;
             public const int kickDegree = 2;
             public const float buttonSize = 70f;
             public static float portraitHeight;
             public static float portraitWidth;
+            public static float landscapeHeight;
+            public static float landscapeWidth;
             public const float BgShapesSize = 800f;
             //public const float Scale = 0.875f;
             public const float Scale = 1f;
