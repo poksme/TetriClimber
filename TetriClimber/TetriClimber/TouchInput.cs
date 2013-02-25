@@ -10,153 +10,79 @@ namespace TetriClimber
 {
     public class TouchInput : AUserInput
     {
-        //public Vector2 NewPos { get { return this.newPos; } }
-        //Vector2 newPos;
-        //Vector2 oldPos;
-        private Vector2 startingPos;
-        public Vector2 StartingPos 
-        {
-            get {
-                return CoordHelper.Instance.Replace(startingPos);
-            }
-        }
-        Vector2 actualPos;
-        Point tapedPoint;
-        bool dropedDown;
-        bool taped;
-        //bool move = false;
-        //bool tap = false;
+        private Dictionary<EGameMode, TouchRec> screenParts;
+        public Point tapedPoint { get; private set; }
+        private bool isTaped;
 
         public TouchInput():base()
         {
-            //newPos = Vector2.Zero;
-            //oldPos = Vector2.Zero;
-            startingPos = Vector2.Zero;
-            actualPos = Vector2.Zero;
-            dropedDown = false;
-            taped = false;
+            screenParts = new Dictionary<EGameMode, TouchRec>()
+            {
+                {EGameMode.SOLO, new TouchRec(states[EGameMode.SOLO], new Rectangle(0, 0, 1920, 1080))}, // NEED TO PUT THE REAL VALUES OF THE BOARD
+                {EGameMode.MULTI1P, new TouchRec(states[EGameMode.MULTI1P], new Rectangle())},
+                {EGameMode.MULTI2P, new TouchRec(states[EGameMode.MULTI2P], new Rectangle())}
+            };
             tapedPoint = Point.Zero;
+            isTaped = false;
         }
 
-        public void recenterStartingPoint(int blocks)
+        public void recenterStartingPoint(int blocks, EGameMode e = EGameMode.SOLO)
         {
-            //Console.Out.WriteLine("RECENTER FUNC");
-            startingPos.X += blocks * Constants.Measures.blockSize * Constants.Measures.Scale;
+            screenParts[e].RecenterStartingPos((int)(blocks * Constants.Measures.blockSize * Constants.Measures.Scale));
         }
 
-        public Point getPointTaped(bool turned = false)
+        public Point getPointTaped()
         {
-            return CoordHelper.Instance.Replace(tapedPoint);
-        }
-
-        public float getDropDownDistance()
-        {
-            return (actualPos.Y - startingPos.Y);
+            return tapedPoint;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (startingPos.X + Constants.Measures.blockSize * Constants.Measures.Scale < actualPos.X)
-            {
-                //Console.Out.WriteLine("ActualPos: " + actualPos + " StartPos: " + startingPos);
-                state[EInput.RIGHT] = true;
-            }
-            else if (startingPos.X - Constants.Measures.blockSize * Constants.Measures.Scale > actualPos.X)
-                state[EInput.LEFT] = true;
-            if (dropedDown)
-                state[EInput.TAP] = true;
-            if (taped)
-                state[EInput.DOWN] = true;
-            dropedDown = false;
-            taped = false;
-            // if (move && newPos.X > oldPos.X + 10 && newPos.X - oldPos.X > newPos.Y - oldPos.Y)
-            //     state[EInput.RIGHT] += gameTime.ElapsedGameTime;
-            // else
-            //     state[EInput.RIGHT] = TimeSpan.Zero;
-            // if (move && newPos.X < oldPos.X - 10 && oldPos.X - newPos.X > oldPos.Y - newPos.Y)
-            //     state[EInput.LEFT] += gameTime.ElapsedGameTime;
-            // else
-            //     state[EInput.LEFT] = TimeSpan.Zero;
-            // if (move && newPos.Y > oldPos.Y + 10)
-            //     state[EInput.TAP] += gameTime.ElapsedGameTime;
-            // else
-            //     state[EInput.TAP] = TimeSpan.Zero;
-
-            //if (!move && tap)
-            // {
-            //     state[EInput.DOWN] += gameTime.ElapsedGameTime;
-            //     tap = false;
-            // }
-            // else
-            //     state[EInput.DOWN] = TimeSpan.Zero;
+            if (!isTaped) // IN ORDER TO PASS AT LEAST ONE UPDATE TURN
+                tapedPoint = Point.Zero;
+            else
+                isTaped = false;
+            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
+                screenParts[id].update();
         }
 
        
         public void Move(Object sender, TouchEventArgs e)
         {
-            //Console.Out.WriteLine("MOVE FUNC");
-            Vector2 tp  = new Vector2(e.TouchPoint.X, e.TouchPoint.Y);
+            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
+                screenParts[id].Move(e.TouchPoint);
+        }
 
-            if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
-                actualPos = tp;
-            else
-            {
-                actualPos.X = e.TouchPoint.X;
-                actualPos.Y = e.TouchPoint.Y;
-            }
-            if (startingPos == Vector2.Zero)
-            {
-                startingPos.X = actualPos.X;
-                startingPos.Y = actualPos.Y;
-            }
-
-            //if (move == false)
-            //{
-            //    if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
-            //       oldPos = Vector2.Transform(tp, Matrix.CreateRotationZ(MathHelper.ToRadians(-90)));
-            //    else
-            //    {
-            //        oldPos.X = e.TouchPoint.X;
-            //        oldPos.Y = e.TouchPoint.Y;
-            //    }
-            //}
-            //if (SettingsManager.Instance.Device == SettingsManager.EDevice.SURFACE)
-            //    newPos = Vector2.Transform(tp, Matrix.CreateRotationZ(MathHelper.ToRadians(-90)));
-            //else
-            //{
-            //    newPos.X = e.TouchPoint.X;
-            //    newPos.Y = e.TouchPoint.Y;
-            //}
-            //move = true;
+        public void Down(Object sender, TouchEventArgs e)
+        {
+            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
+                if (screenParts[id].boundaries.Contains((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY))
+                    screenParts[id].Down(e.TouchPoint);
         }
 
         public void Up(Object sender, TouchEventArgs e)
         {
-            //Console.Out.WriteLine("UP FUNC");
-            if (actualPos.Y - Constants.Measures.blockSize * Constants.Measures.Scale * 2 >= startingPos.Y)
-                dropedDown = true;
-            //taped = Vector2.Distance(actualPos, startingPos) < Constants.Measures.blockSize * Constants.Measures.Scale;
-            if (taped)
-            {
-                tapedPoint.X = (int)actualPos.X;
-                tapedPoint.Y = (int)actualPos.Y;
-            }
-            startingPos = Vector2.Zero;
-            actualPos = Vector2.Zero;
+            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
+                screenParts[id].Up(e.TouchPoint);
         }
 
         public void Tap(Object sender, TouchEventArgs e)
         {
-            //Console.Out.WriteLine("TAP FUNC");
-            //newPos.X =  e.TouchPoint.X;
-            //newPos.Y =  e.TouchPoint.Y;
-            actualPos.X = e.TouchPoint.X;
-            actualPos.Y = e.TouchPoint.Y;
-            startingPos.X = e.TouchPoint.X;
-            startingPos.Y = e.TouchPoint.Y;
-            taped = true;
-            //tap = true;
+            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
+                if (screenParts[id].boundaries.Contains((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY)) // THIS IF IS NOT NEEDED NORMALY
+                    screenParts[id].Tap(e.TouchPoint);
+            isTaped = true;
+            tapedPoint = new Point((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY);
+        }
+
+
+        public bool pointTaped
+        {
+            get
+            {
+                return (!tapedPoint.Equals(Point.Zero));
+            }
         }
     }
 }

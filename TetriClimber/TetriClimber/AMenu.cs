@@ -70,9 +70,10 @@ namespace TetriClimber
 
         private void UpdateSurface(GameTime gameTime)
         {
-            if (App.UserInput.isPressed(AUserInput.EInput.DOWN))
+            //if (App.UserInput.isPressed(AUserInput.EInput.DOWN)) // TO KNOW IF A POINT IS TAPED US POINTTAPED (IT RESETS THE BOOL WHEN CALLED)
+            if ((App.UserInput as TouchInput).pointTaped)
             {
-                Point touch = (App.UserInput as TouchInput).getPointTaped();
+                Point touch = (App.UserInput as TouchInput).tapedPoint;
                 foreach (AButton btn in buttons)
                 {
                     if (btn.hitTest.Contains(touch))
@@ -88,7 +89,7 @@ namespace TetriClimber
         {
             if (cur >= turnLat)
                 cur = new TimeSpan(0);
-            if (App.UserInput.isPressed(AUserInput.EInput.DOWN))
+            if (App.UserInput.isPressed(AUserInput.EInputKeys.DOWN))
             {
                 SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
@@ -98,7 +99,7 @@ namespace TetriClimber
                     cursor = 0;
                 buttons[cursor].Select();
             }
-            else if (App.UserInput.isPressed(AUserInput.EInput.UP))
+            else if (App.UserInput.isPressed(AUserInput.EInputKeys.UP))
             {
                 SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
@@ -108,7 +109,7 @@ namespace TetriClimber
                     cursor--;
                 buttons[cursor].Select();
             }
-            else if (App.UserInput.isPressed(AUserInput.EInput.ENTER))
+            else if (App.UserInput.isPressed(AUserInput.EInputKeys.ENTER))
             {
                 buttons[cursor].Execute();
             }

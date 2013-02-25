@@ -9,49 +9,62 @@ namespace TetriClimber
 {
     public class KeyboardInput : AUserInput
     {
-        // TO DO USE TIMESPANS
-        private Dictionary<EInput, Tuple<Keys, TimeSpan>> inputs;
-        private TimeSpan KeyRepeatTime;
+        private Dictionary<EGameMode, Dictionary<EInputKeys, Tuple<Keys, TimeSpan>>> inputs;
+        public TimeSpan KeyRepeatTime { private get; set; }
 
         public KeyboardInput() : base()
         {
-            inputs = new Dictionary<EInput, Tuple<Keys, TimeSpan>>();
-            inputs.Add(EInput.UP, new Tuple<Keys, TimeSpan>(Keys.Up, TimeSpan.Zero));
-            inputs.Add(EInput.DOWN, new Tuple<Keys, TimeSpan>(Keys.Down, TimeSpan.Zero));
-            inputs.Add(EInput.LEFT, new Tuple<Keys, TimeSpan>(Keys.Left, TimeSpan.Zero));
-            inputs.Add(EInput.RIGHT, new Tuple<Keys, TimeSpan>(Keys.Right, TimeSpan.Zero));
-            inputs.Add(EInput.TAP, new Tuple<Keys, TimeSpan>(Keys.Space, TimeSpan.Zero));
-            inputs.Add(EInput.ENTER, new Tuple<Keys, TimeSpan>(Keys.Enter, TimeSpan.Zero));
+            inputs = new Dictionary<EGameMode, Dictionary<EInputKeys, Tuple<Keys, TimeSpan>>>()
+            {
+                {EGameMode.SOLO, new Dictionary<EInputKeys, Tuple<Keys, TimeSpan>>()
+                {
+                    {EInputKeys.UP, new Tuple<Keys, TimeSpan>(Keys.Up, TimeSpan.Zero)},
+                    {EInputKeys.DOWN, new Tuple<Keys, TimeSpan>(Keys.Down, TimeSpan.Zero)},
+                    {EInputKeys.LEFT, new Tuple<Keys, TimeSpan>(Keys.Left, TimeSpan.Zero)},
+                    {EInputKeys.RIGHT, new Tuple<Keys, TimeSpan>(Keys.Right, TimeSpan.Zero)},
+                    {EInputKeys.SPACE_BAR, new Tuple<Keys, TimeSpan>(Keys.Space, TimeSpan.Zero)},
+                    {EInputKeys.ENTER, new Tuple<Keys, TimeSpan>(Keys.Enter, TimeSpan.Zero)}
+                }},
+                {EGameMode.MULTI1P, new Dictionary<EInputKeys, Tuple<Keys, TimeSpan>>()
+                {
+                    {EInputKeys.UP, new Tuple<Keys, TimeSpan>(Keys.W, TimeSpan.Zero)},
+                    {EInputKeys.DOWN, new Tuple<Keys, TimeSpan>(Keys.S, TimeSpan.Zero)},
+                    {EInputKeys.LEFT, new Tuple<Keys, TimeSpan>(Keys.A, TimeSpan.Zero)},
+                    {EInputKeys.RIGHT, new Tuple<Keys, TimeSpan>(Keys.D, TimeSpan.Zero)},
+                    {EInputKeys.SPACE_BAR, new Tuple<Keys, TimeSpan>(Keys.Space, TimeSpan.Zero)},
+                    {EInputKeys.ENTER, new Tuple<Keys, TimeSpan>(Keys.Enter, TimeSpan.Zero)}
+                }},
+                {EGameMode.MULTI2P, new Dictionary<EInputKeys, Tuple<Keys, TimeSpan>>()
+                {
+                    {EInputKeys.UP, new Tuple<Keys, TimeSpan>(Keys.Up, TimeSpan.Zero)},
+                    {EInputKeys.DOWN, new Tuple<Keys, TimeSpan>(Keys.Down, TimeSpan.Zero)},
+                    {EInputKeys.LEFT, new Tuple<Keys, TimeSpan>(Keys.Left, TimeSpan.Zero)},
+                    {EInputKeys.RIGHT, new Tuple<Keys, TimeSpan>(Keys.Right, TimeSpan.Zero)},
+                    {EInputKeys.SPACE_BAR, new Tuple<Keys, TimeSpan>(Keys.RightControl, TimeSpan.Zero)},
+                    {EInputKeys.ENTER, new Tuple<Keys, TimeSpan>(Keys.Enter, TimeSpan.Zero)}
+                }},
+            };
             KeyRepeatTime = new TimeSpan(2000000);            
-        }
-
-        public void setKeyRepeatTime(TimeSpan t)
-        {
-            KeyRepeatTime = t;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            foreach (EInput ipt in Enum.GetValues(typeof(EInput)))
+            foreach (EGameMode gm in Enum.GetValues(typeof(EGameMode)))
             {
-                if (Keyboard.GetState().IsKeyDown(inputs[ipt].Item1))
+                foreach (EInputKeys ipt in Enum.GetValues(typeof(EInputKeys)))
                 {
-                    if (inputs[ipt].Item2 == TimeSpan.Zero)
-                        state[ipt] = true;
-                    inputs[ipt] = new Tuple<Keys, TimeSpan>(inputs[ipt].Item1, inputs[ipt].Item2 + gameTime.ElapsedGameTime);
+                    if (Keyboard.GetState().IsKeyDown(inputs[gm][ipt].Item1))
+                    {
+                        if (inputs[gm][ipt].Item2 == TimeSpan.Zero)
+                            states[gm][ipt] = true;
+                        inputs[gm][ipt] = new Tuple<Keys, TimeSpan>(inputs[gm][ipt].Item1, inputs[gm][ipt].Item2 + gameTime.ElapsedGameTime);
+                    }
+                    else
+                        inputs[gm][ipt] = new Tuple<Keys, TimeSpan>(inputs[gm][ipt].Item1, TimeSpan.Zero);
+                    if (inputs[gm][ipt].Item2 > KeyRepeatTime)
+                        inputs[gm][ipt] = new Tuple<Keys, TimeSpan>(inputs[gm][ipt].Item1, TimeSpan.Zero);
                 }
-                else
-                    inputs[ipt] = new Tuple<Keys, TimeSpan>(inputs[ipt].Item1, TimeSpan.Zero);
-                if (inputs[ipt].Item2 > KeyRepeatTime)
-                {
-                    inputs[ipt] = new Tuple<Keys, TimeSpan>(inputs[ipt].Item1, TimeSpan.Zero);
-                    //state[ipt] = true;
-                }
-                //state[input.Key] += gameTime.ElapsedGameTime;
-                //else
-                //    state[input.Key] = false;
-                    //state[input.Key] = TimeSpan.Zero;
             }
         }
     }

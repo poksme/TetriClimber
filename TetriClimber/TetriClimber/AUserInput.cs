@@ -10,41 +10,57 @@ namespace TetriClimber
 {
     public abstract class AUserInput : GameComponent
     {
-        public enum EInput {UP, DOWN, LEFT, RIGHT, TAP, ENTER}
-        public enum EType {KEYBOARD, TOUCH}
-        //protected Dictionary<EInput, TimeSpan> state;
-        protected Dictionary<EInput, bool> state;
+        public enum EInputKeys { UP, DOWN, LEFT, RIGHT, SPACE_BAR, ENTER }
+        public enum EInputType { KEYBOARD, TOUCH_SCREEN }
+        public enum EGameMode { SOLO, MULTI1P, MULTI2P }
+        protected Dictionary<EGameMode, Dictionary<EInputKeys, bool>> states;
 
-        public AUserInput():base(App.Game)
+        public AUserInput()
+            : base(App.Game)
         {
-            //state = new Dictionary<EInput, TimeSpan>();
-            //state.Add(EInput.UP,    TimeSpan.Zero);
-            //state.Add(EInput.DOWN,  TimeSpan.Zero);
-            //state.Add(EInput.LEFT,  TimeSpan.Zero);
-            //state.Add(EInput.RIGHT, TimeSpan.Zero);
-            //state.Add(EInput.TAP, TimeSpan.Zero);
-            //state.Add(EInput.ENTER, TimeSpan.Zero);
-
-            state = new Dictionary<EInput, bool>();
-            state.Add(EInput.UP, false);
-            state.Add(EInput.DOWN, false);
-            state.Add(EInput.LEFT, false);
-            state.Add(EInput.RIGHT, false);
-            state.Add(EInput.TAP, false);
-            state.Add(EInput.ENTER, false);
+            states = new Dictionary<EGameMode, Dictionary<EInputKeys, bool>>()
+            {
+                {EGameMode.SOLO, new Dictionary<EInputKeys, bool>()
+                {
+                    {EInputKeys.UP, false},
+                    {EInputKeys.DOWN, false},
+                    {EInputKeys.LEFT, false},
+                    {EInputKeys.RIGHT, false},
+                    {EInputKeys.SPACE_BAR, false},
+                    {EInputKeys.ENTER, false}
+                }},
+                {EGameMode.MULTI1P, new Dictionary<EInputKeys, bool>()
+                {
+                    {EInputKeys.UP, false},
+                    {EInputKeys.DOWN, false},
+                    {EInputKeys.LEFT, false},
+                    {EInputKeys.RIGHT, false},
+                    {EInputKeys.SPACE_BAR, false},
+                    {EInputKeys.ENTER, false}
+                }},
+                {EGameMode.MULTI2P, new Dictionary<EInputKeys, bool>()
+                {
+                    {EInputKeys.UP, false},
+                    {EInputKeys.DOWN, false},
+                    {EInputKeys.LEFT, false},
+                    {EInputKeys.RIGHT, false},
+                    {EInputKeys.SPACE_BAR, false},
+                    {EInputKeys.ENTER, false}
+                }}
+            };
         }
 
-        public bool isPressed(EInput e)
+        public bool isPressed(EInputKeys e, EGameMode g = EGameMode.SOLO)
         {
-            return state[e];
+            return states[g][e];
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            // RESET ALL INPUTS
-            foreach (EInput ipt in Enum.GetValues(typeof(EInput)))
-                state[ipt] = false;
+            foreach (EGameMode gm in Enum.GetValues(typeof(EGameMode)))
+                foreach (EInputKeys ipt in Enum.GetValues(typeof(EInputKeys)))
+                    states[gm][ipt] = false;
         }
     }
 }
