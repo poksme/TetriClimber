@@ -119,7 +119,7 @@ namespace TetriClimber
                     var tmp = tetriminoFactory.getTetrimino();
                     currTetrimino = tmp.Item1;
                     shadowTetrimino = tmp.Item2;
-                    next.Update(gameTime);
+                    hud.setNext(TetriminoFactory.Instance.getNextTetrimino(), playerType);
                     tSpinCur = TimeSpan.Zero;
                 }
             }
@@ -141,6 +141,7 @@ namespace TetriClimber
             }
             if (level.updateLevel(tmpClimbyStepHeight))
             {
+                hud.setLevel(level.level, playerType);
                 lat = new TimeSpan(10000000 / (level.level + 1));
                 climby.setSpeedFromLevel(level.level);
             }

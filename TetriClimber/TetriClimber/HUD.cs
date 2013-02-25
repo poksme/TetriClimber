@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-
 namespace TetriClimber
 {
     public class HUD : DrawableGameComponent
@@ -15,12 +14,12 @@ namespace TetriClimber
         Rectangle scoreBox;
         Rectangle levelBox;
 
-        List<ATetrimino> nextValue = new List<ATetrimino>();
-        List<GameString> scoreValue = new List<GameString>();
-        List<GameString> levelValue = new List<GameString>();
-        List<Rectangle> nextValBox = new List<Rectangle>();
-        List<Rectangle> scoreValBox = new List<Rectangle>();
-        List<Rectangle> levelValBox = new List<Rectangle>();
+        Dictionary<CoordHelper.EProfile, ATetrimino> nextValue = new Dictionary<CoordHelper.EProfile, ATetrimino>();
+        Dictionary<CoordHelper.EProfile, GameString> scoreValue = new Dictionary<CoordHelper.EProfile, GameString>();
+        Dictionary<CoordHelper.EProfile, GameString> levelValue = new Dictionary<CoordHelper.EProfile, GameString>();
+        Dictionary<CoordHelper.EProfile, Rectangle> nextValBox = new Dictionary<CoordHelper.EProfile, Rectangle>();
+        Dictionary<CoordHelper.EProfile, Rectangle> scoreValBox = new Dictionary<CoordHelper.EProfile, Rectangle>();
+        Dictionary<CoordHelper.EProfile, Rectangle> levelValBox = new Dictionary<CoordHelper.EProfile, Rectangle>();
 
 
         public HUD():
@@ -41,24 +40,24 @@ namespace TetriClimber
 
             var tmp = new GameString("0", TextManager.EFont.AHARONI, Constants.Color.p1Dark, 0.8f);
             tmp.Pos = CoordHelper.Instance.getScoreValue(tmp, CoordHelper.EProfile.ONEPLAYER);
-            scoreValue.Add(tmp);
+            scoreValue.Add(CoordHelper.EProfile.ONEPLAYER, tmp);
             tmp = new GameString("0", TextManager.EFont.AHARONI, Constants.Color.p1Dark, 0.8f);
             tmp.Pos = CoordHelper.Instance.getLevelValue(tmp, CoordHelper.EProfile.ONEPLAYER);
-            levelValue.Add(tmp);
-            scoreValBox.Add(CoordHelper.Instance.getScoreValueBox(scoreValue.Last(), CoordHelper.EProfile.ONEPLAYER));
-            levelValBox.Add(CoordHelper.Instance.getLevelValueBox(levelValue.Last(), CoordHelper.EProfile.ONEPLAYER));
-            nextValBox.Add(CoordHelper.Instance.getNextValueBox(CoordHelper.EProfile.ONEPLAYER));
+            levelValue.Add(CoordHelper.EProfile.ONEPLAYER, tmp);
+            scoreValBox.Add(CoordHelper.EProfile.ONEPLAYER, CoordHelper.Instance.getScoreValueBox(scoreValue[CoordHelper.EProfile.ONEPLAYER], CoordHelper.EProfile.ONEPLAYER));
+            levelValBox.Add(CoordHelper.EProfile.ONEPLAYER, CoordHelper.Instance.getLevelValueBox(levelValue[CoordHelper.EProfile.ONEPLAYER], CoordHelper.EProfile.ONEPLAYER));
+            nextValBox.Add(CoordHelper.EProfile.ONEPLAYER, CoordHelper.Instance.getNextValueBox(CoordHelper.EProfile.ONEPLAYER));
             if (CoordHelper.Instance.Profile == CoordHelper.EProfile.TWOPLAYER)
             {
                 tmp = new GameString("0", TextManager.EFont.AHARONI, Constants.Color.p2Dark, 0.8f);
                 tmp.Pos = CoordHelper.Instance.getScoreValue(tmp, CoordHelper.EProfile.TWOPLAYER);
-                scoreValue.Add(tmp);
+                scoreValue.Add(CoordHelper.EProfile.TWOPLAYER, tmp);
                 tmp = new GameString("0", TextManager.EFont.AHARONI, Constants.Color.p2Dark, 0.8f);
                 tmp.Pos = CoordHelper.Instance.getLevelValue(tmp, CoordHelper.EProfile.TWOPLAYER);
-                levelValue.Add(tmp);
-                scoreValBox.Add(CoordHelper.Instance.getScoreValueBox(scoreValue.Last(), CoordHelper.EProfile.TWOPLAYER));
-                levelValBox.Add(CoordHelper.Instance.getLevelValueBox(levelValue.Last(), CoordHelper.EProfile.TWOPLAYER));
-                nextValBox.Add(CoordHelper.Instance.getNextValueBox(CoordHelper.EProfile.TWOPLAYER));
+                levelValue.Add(CoordHelper.EProfile.TWOPLAYER, tmp);
+                scoreValBox.Add(CoordHelper.EProfile.TWOPLAYER, CoordHelper.Instance.getScoreValueBox(scoreValue[CoordHelper.EProfile.TWOPLAYER], CoordHelper.EProfile.TWOPLAYER));
+                levelValBox.Add(CoordHelper.EProfile.TWOPLAYER, CoordHelper.Instance.getLevelValueBox(levelValue[CoordHelper.EProfile.TWOPLAYER], CoordHelper.EProfile.TWOPLAYER));
+                nextValBox.Add(CoordHelper.EProfile.TWOPLAYER, CoordHelper.Instance.getNextValueBox(CoordHelper.EProfile.TWOPLAYER));
 
             }
         }
@@ -75,18 +74,18 @@ namespace TetriClimber
             TextManager.Instance.Draw(scoreStr);
             TextManager.Instance.Draw(levelStr);
 
-            foreach (Rectangle rec in nextValBox)
-                SpriteManager.Instance.drawBoardedRectangleAbsPos(rec, Constants.Color.background, Constants.Measures.borderSize, Constants.Color.border);
-            foreach (Rectangle rec in scoreValBox)
-                SpriteManager.Instance.drawBoardedRectangleAbsPos(rec, Constants.Color.background, Constants.Measures.borderSize, Constants.Color.border);
-            foreach (Rectangle rec in levelValBox)
-                SpriteManager.Instance.drawBoardedRectangleAbsPos(rec, Constants.Color.background, Constants.Measures.borderSize, Constants.Color.border);
-            foreach (ATetrimino t in nextValue)
-                t.DrawAsPreview(gameTime);
-            foreach (GameString gs in scoreValue)
-                TextManager.Instance.Draw(gs);
-            foreach (GameString gs in levelValue)
-                TextManager.Instance.Draw(gs);
+            foreach (KeyValuePair<CoordHelper.EProfile, Rectangle> rec in nextValBox)
+                SpriteManager.Instance.drawBoardedRectangleAbsPos(rec.Value, Constants.Color.background, Constants.Measures.borderSize, Constants.Color.border);
+            foreach (KeyValuePair<CoordHelper.EProfile, Rectangle> rec in scoreValBox)
+                SpriteManager.Instance.drawBoardedRectangleAbsPos(rec.Value, Constants.Color.background, Constants.Measures.borderSize, Constants.Color.border);
+            foreach (KeyValuePair<CoordHelper.EProfile, Rectangle> rec in levelValBox)
+                SpriteManager.Instance.drawBoardedRectangleAbsPos(rec.Value, Constants.Color.background, Constants.Measures.borderSize, Constants.Color.border);
+            foreach (KeyValuePair<CoordHelper.EProfile, ATetrimino> t in nextValue)
+                t.Value.DrawAsPreview(gameTime);
+            foreach (KeyValuePair<CoordHelper.EProfile, GameString> gs in scoreValue)
+                TextManager.Instance.Draw(gs.Value);
+            foreach (KeyValuePair<CoordHelper.EProfile, GameString> gs in levelValue)
+                TextManager.Instance.Draw(gs.Value);
         }
 
         public override void Update(GameTime gameTime)
@@ -96,10 +95,19 @@ namespace TetriClimber
 
         public void setScore(int p, CoordHelper.EProfile profile)
         {
-            if (profile == CoordHelper.EProfile.ONEPLAYER)
-                scoreValue.First().Value = p.ToString();
-            else
-                scoreValue.Last().Value = p.ToString();
+                scoreValue[profile].Value = p.ToString();
+                scoreValBox[profile] = CoordHelper.Instance.getScoreValueBox(scoreValue[profile], profile);
+        }
+
+        public void setLevel(int p, CoordHelper.EProfile profile)
+        {
+            levelValue[profile].Value = p.ToString();
+            levelValBox[profile] = CoordHelper.Instance.getLevelValueBox(levelValue[profile], profile);
+        }
+
+        public void setNext(ATetrimino t, CoordHelper.EProfile profile)
+        {
+            nextValue[profile] = t;
         }
     }
 }
