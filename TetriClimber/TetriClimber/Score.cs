@@ -22,9 +22,9 @@ namespace TetriClimber
             climbyScore = 0;
             TotalScore = 0;
             Level = 0;
-            scoreValue = new GameString("2010", TextManager.EFont.AHARONI, Constants.Color.p1Dark, 0.8f, new Vector2(Constants.Measures.leftBoardMargin + Constants.Measures.boardWidth + Constants.Measures.paddingTextX,
+            scoreValue = new GameString("2010", TextManager.EFont.AHARONI, Constants.Color.p1Dark, 0.8f, new Vector2(CoordHelper.Instance.leftBoardMargin1 + Constants.Measures.boardWidth + Constants.Measures.paddingTextX,
                                                                                                             Constants.Measures.scorePosY - Constants.Measures.paddingTextY/2 + Constants.Measures.textBoxH));
-            scoreText = new GameString("SCORE", TextManager.EFont.AHARONI, Color.White, 0.46f, new Vector2(Constants.Measures.leftBoardMargin + Constants.Measures.boardWidth + Constants.Measures.paddingTextX,
+            scoreText = new GameString("SCORE", TextManager.EFont.AHARONI, Color.White, 0.46f, new Vector2(CoordHelper.Instance.leftBoardMargin1 + Constants.Measures.boardWidth + Constants.Measures.paddingTextX,
                                                                                                             Constants.Measures.scorePosY + Constants.Measures.paddingTextY));
         }
         
@@ -66,11 +66,11 @@ namespace TetriClimber
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            SpriteManager.Instance.drawRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin + Constants.Measures.boardWidth), (int)Constants.Measures.scorePosY,
+            SpriteManager.Instance.drawRectangleAbsPos(new Rectangle((int)(CoordHelper.Instance.leftBoardMargin1 + Constants.Measures.boardWidth), (int)Constants.Measures.scorePosY,
                                                         (int)(TextManager.Instance.getSizeString(scoreText.Font, scoreText.Value).X * scoreText.Scale + Constants.Measures.paddingTextX * 2),
                                                         (int)Constants.Measures.textBoxH),
                                                         Constants.Color.border);
-            SpriteManager.Instance.drawBoardedRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin + Constants.Measures.boardWidth + Constants.Measures.borderSize), (int)(Constants.Measures.scorePosY + Constants.Measures.textBoxH),
+            SpriteManager.Instance.drawBoardedRectangleAbsPos(new Rectangle((int)(CoordHelper.Instance.leftBoardMargin1 + Constants.Measures.boardWidth + Constants.Measures.borderSize), (int)(Constants.Measures.scorePosY + Constants.Measures.textBoxH),
                                                         (int)(TextManager.Instance.getSizeString(scoreValue.Font, scoreValue.Value).X * scoreValue.Scale + Constants.Measures.paddingTextX * 2),
                                                         (int)(TextManager.Instance.getSizeString(scoreValue.Font, scoreValue.Value).Y * 0.70 * scoreValue.Scale)),
                                                         Constants.Color.background, Constants.Measures.borderSize, Constants.Color.border);

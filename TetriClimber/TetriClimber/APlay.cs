@@ -27,7 +27,7 @@ namespace TetriClimber
             if (App.UserInput is TouchInput)
                 ipt = App.UserInput as TouchInput;
             else
-                (App.UserInput as KeyboardInput).setKeyRepeatTime(new TimeSpan(1500000));
+                (App.UserInput as KeyboardInput).KeyRepeatTime = new TimeSpan(1500000);
         }
 
         public override void Draw(GameTime gameTime)

@@ -73,7 +73,7 @@ namespace TetriClimber
                 {
                     grid[Y][i] = grid[Y - 1][i];
                     if (grid[Y][i] != null)
-                        grid[Y][i].setHitBoxValue((int)(i * Constants.Measures.blockSize + Constants.Measures.leftBoardMargin),
+                        grid[Y][i].setHitBoxValue((int)(i * Constants.Measures.blockSize + CoordHelper.Instance.leftBoardMargin1),
                                     (int)(Y * Constants.Measures.blockSize + Constants.Measures.upBoardMargin));
                 }
             for (int x = 0; x < (int)size.X; x++)
@@ -90,7 +90,7 @@ namespace TetriClimber
             camUp = 0;
             foreach (Block b in blocks)
             {
-                b.setHitBoxValue((int)((b.PosRel.X + tx) * Constants.Measures.blockSize + Constants.Measures.leftBoardMargin),
+                b.setHitBoxValue((int)((b.PosRel.X + tx) * Constants.Measures.blockSize + CoordHelper.Instance.leftBoardMargin1),
                                  (int)((b.PosRel.Y + ty) * Constants.Measures.blockSize + Constants.Measures.upBoardMargin));
                 if (climbyDeadZone.Intersects(b.HitBox))
                     return true ; // DEATH
@@ -146,7 +146,7 @@ namespace TetriClimber
         {
             if (point.X >= Constants.Measures.boardBlockWidth || point.X < 0
                 || point.Y >= Constants.Measures.boardBlockHeight || point.Y < 0)
-                return new Rectangle(point.X * (int)(Constants.Measures.blockSize) + (int)(Constants.Measures.leftBoardMargin),
+                return new Rectangle(point.X * (int)(Constants.Measures.blockSize) + (int)(CoordHelper.Instance.leftBoardMargin1),
                                      point.Y * (int)(Constants.Measures.blockSize) + (int)(Constants.Measures.upBoardMargin),
                                      (int)(Constants.Measures.blockSize), (int)(Constants.Measures.blockSize));
             if (grid[point.Y][point.X] != null)

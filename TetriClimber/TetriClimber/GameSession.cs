@@ -377,7 +377,7 @@ namespace TetriClimber
         {
             Point p = aroundRect[e];
 
-            p.X = (point.X - (int)Constants.Measures.leftBoardMargin) / (int)Constants.Measures.blockSize + padX;
+            p.X = (point.X - (int)CoordHelper.Instance.leftBoardMargin1) / (int)Constants.Measures.blockSize + padX;
             p.Y = (point.Y - (int)Constants.Measures.upBoardMargin) / (int)Constants.Measures.blockSize + padY;
             aroundRect[e] = p;
         }

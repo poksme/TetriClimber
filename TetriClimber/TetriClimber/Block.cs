@@ -51,7 +51,7 @@ namespace TetriClimber
             base.Draw(gameTime);
             if (posRel.X + container.PosRel.X < Constants.Measures.boardBlockWidth && posRel.X + container.PosRel.X >= 0f &&
                 posRel.Y + container.PosRel.Y < Constants.Measures.boardBlockHeight && posRel.Y + container.PosRel.Y >= 0f)
-                SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(Constants.Measures.leftBoardMargin + (posRel.X + container.PosRel.X) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (posRel.Y + container.PosRel.Y) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize, transparency); // HERE TRANSPARENCY
+                SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(CoordHelper.Instance.leftBoardMargin1 + (posRel.X + container.PosRel.X) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (posRel.Y + container.PosRel.Y) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize, transparency); // HERE TRANSPARENCY
         }
 
         public override void Update(GameTime gameTime)
@@ -76,7 +76,7 @@ namespace TetriClimber
 
         public void DrawAsPreview(GameTime gameTime)
         {
-            SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(Constants.Measures.leftBoardMargin + (posRel.X + 10.5f) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (posRel.Y + 1.5f) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize, transparency); // HERE TRANSPARENCY
+            SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(CoordHelper.Instance.leftBoardMargin1 + (posRel.X + 10.5f) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (posRel.Y + 1.5f) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize, transparency); // HERE TRANSPARENCY
         }
     }
 }

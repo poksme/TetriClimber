@@ -14,7 +14,7 @@ namespace TetriClimber
         public Next()
             : base(App.Game)
         {
-           nextText = new GameString("NEXT", TextManager.EFont.AHARONI, Color.White, 0.46f, new Vector2(Constants.Measures.leftBoardMargin + Constants.Measures.boardWidth + Constants.Measures.paddingTextX,
+            nextText = new GameString("NEXT", TextManager.EFont.AHARONI, Color.White, 0.46f, new Vector2(CoordHelper.Instance.leftBoardMargin1 + Constants.Measures.boardWidth + Constants.Measures.paddingTextX,
                                                                                                             Constants.Measures.nextPosY + Constants.Measures.paddingTextY));
            next = TetriminoFactory.Instance.getNextTetrimino();
         }
@@ -22,7 +22,7 @@ namespace TetriClimber
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            SpriteManager.Instance.drawRectangleAbsPos(new Rectangle((int)(Constants.Measures.leftBoardMargin + Constants.Measures.boardWidth), (int)Constants.Measures.nextPosY,
+            SpriteManager.Instance.drawRectangleAbsPos(new Rectangle((int)(CoordHelper.Instance.leftBoardMargin1 + Constants.Measures.boardWidth), (int)Constants.Measures.nextPosY,
                                             (int)(TextManager.Instance.getSizeString(nextText.Font, nextText.Value).X * nextText.Scale + Constants.Measures.paddingTextX * 2),
                                             (int)Constants.Measures.textBoxH),
                                             Constants.Color.border);
