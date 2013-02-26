@@ -13,12 +13,13 @@ namespace TetriClimber
 
         public EProfile Profile { get; private set; }
         private Vector2 tool;
-        private Dictionary<EProfile, Matrix> matrixs;
-
+       // private Dictionary<EProfile, Matrix> matrixs;
+        private Matrix m;
 
         public float buttonSize = 70f;
-        public float leftBoardMargin1 = 704f;
-        public float leftBoardMargin2 = 1400f;
+        private Dictionary<EProfile, float> leftMargin;
+        //public float leftBoardMargin1 = 704f;
+        //public float leftBoardMargin2 = 1400f;
         public float paddingTextX = 30f;
         public float paddingTextY = 20f;
         public float textBoxH = 90f;
@@ -31,11 +32,16 @@ namespace TetriClimber
 
         private CoordHelper()
         {
-            Profile = EProfile.LANDSCAPE;
-            matrixs = new Dictionary<EProfile, Matrix>(){
-            {EProfile.ONEPLAYER, Matrix.CreateScale(new Vector3(Constants.Measures.Scale, Constants.Measures.Scale, 1))},
-            {EProfile.TWOPLAYER, Matrix.CreateScale(new Vector3(Constants.Measures.Scale, Constants.Measures.Scale, 1))},
-            {EProfile.LANDSCAPE, Matrix.Identity}};
+            Profile = EProfile.ONEPLAYER;
+            m = Matrix.CreateScale(new Vector3(Constants.Measures.Scale, Constants.Measures.Scale, 1));
+            //matrixs = new Dictionary<EProfile, Matrix>(){
+            //{EProfile.ONEPLAYER, },
+            //{EProfile.TWOPLAYER, Matrix.CreateScale(new Vector3(Constants.Measures.Scale, Constants.Measures.Scale, 1))},
+            leftMargin = new Dictionary<EProfile, float>(){
+             {EProfile.ONEPLAYER, 704f},
+             {EProfile.TWOPLAYER, 1400f}
+            };
+
         }
 
         public static CoordHelper Instance
@@ -50,7 +56,7 @@ namespace TetriClimber
 
         public Vector2 Replace(Vector2 v)
         {
-            return Vector2.Transform(v, Matrix.Invert(matrixs[Profile]));
+            return Vector2.Transform(v, Matrix.Invert(m));
         }
 
         public Point Replace(Point p)
@@ -65,7 +71,7 @@ namespace TetriClimber
 
         public Matrix getCurrentMatrix()
         {
-            return matrixs[Profile];
+            return m;
         }
 
         public void setProfile(EProfile p)
@@ -78,17 +84,22 @@ namespace TetriClimber
         public float getRightBoard(EProfile board)
         {
             if (board == EProfile.ONEPLAYER)
-                return leftBoardMargin1 + Constants.Measures.boardWidth + Constants.Measures.borderSize;
-            return leftBoardMargin2 + Constants.Measures.boardWidth + Constants.Measures.borderSize;
+                return leftMargin[EProfile.ONEPLAYER] + Constants.Measures.boardWidth + Constants.Measures.borderSize;
+            return leftMargin[EProfile.TWOPLAYER] + Constants.Measures.boardWidth + Constants.Measures.borderSize;
         }
 
         #region Positions
+        public float getLeftMargin(EProfile profile)
+        {
+            return leftMargin[profile];
+        }
+
         private void UpdatePosition()
         {
             if (Profile == EProfile.TWOPLAYER)
             {
-                leftBoardMargin1 = 10f;
-                textBoxW = leftBoardMargin2 - getRightBoard(EProfile.ONEPLAYER);
+                leftMargin[EProfile.ONEPLAYER] = 10f;
+                textBoxW = leftMargin[EProfile.TWOPLAYER] - getRightBoard(EProfile.ONEPLAYER);
             }
             
         }
@@ -122,7 +133,7 @@ namespace TetriClimber
                                      (int)(TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale + Constants.Measures.paddingTextX * 2),
                                      (int)(TextManager.Instance.getSizeString(text.Font, text.Value).Y * 0.70 * text.Scale));
 
-            return new Rectangle((int)(leftBoardMargin2 - TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale - paddingTextX * 2), (int)(scorePosY + textBoxH),
+            return new Rectangle((int)(leftMargin[EProfile.TWOPLAYER] - TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale - paddingTextX * 2), (int)(scorePosY + textBoxH),
                               (int)(TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale + Constants.Measures.paddingTextX * 2),
                               (int)(TextManager.Instance.getSizeString(text.Font, text.Value).Y * 0.70 * text.Scale));
         }
@@ -132,7 +143,7 @@ namespace TetriClimber
             if (board == EProfile.ONEPLAYER)
                 return new Vector2(getRightBoard(EProfile.ONEPLAYER) + paddingTextX , scorePosY - paddingTextY/2 + textBoxH);
 
-            return new Vector2(leftBoardMargin2 - TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale - paddingTextX,
+            return new Vector2(leftMargin[EProfile.TWOPLAYER] - TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale - paddingTextX,
                                 scorePosY - paddingTextY / 2 + textBoxH);
         }
 
@@ -159,7 +170,7 @@ namespace TetriClimber
         {
             if (board == EProfile.ONEPLAYER)
                 return new Rectangle((int)getRightBoard(EProfile.ONEPLAYER), (int)(nextPosY + textBoxH), (int)nextBoxW, (int)nextBoxH);
-            return new Rectangle((int)(leftBoardMargin2 - nextBoxW), (int)(nextPosY + textBoxH), (int)nextBoxW, (int)nextBoxH);
+            return new Rectangle((int)(leftMargin[EProfile.TWOPLAYER] - nextBoxW), (int)(nextPosY + textBoxH), (int)nextBoxW, (int)nextBoxH);
         }
 
         public Rectangle getLevelTextBox(GameString text)
@@ -190,7 +201,7 @@ namespace TetriClimber
                                      (int)(TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale + paddingTextX * 2),
                                      (int)(TextManager.Instance.getSizeString(text.Font, text.Value).Y * 0.70 * text.Scale));
 
-            return new Rectangle((int)(leftBoardMargin2 - TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale - paddingTextX * 2), (int)(levelPosY + textBoxH),
+            return new Rectangle((int)(leftMargin[EProfile.TWOPLAYER] - TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale - paddingTextX * 2), (int)(levelPosY + textBoxH),
                               (int)(TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale + Constants.Measures.paddingTextX * 2),
                               (int)(TextManager.Instance.getSizeString(text.Font, text.Value).Y * 0.70 * text.Scale));
         }
@@ -199,7 +210,7 @@ namespace TetriClimber
         {
             if (board == EProfile.ONEPLAYER)
                 return new Vector2(getRightBoard(EProfile.ONEPLAYER) + paddingTextX, levelPosY - paddingTextY / 2 + textBoxH);
-            return new Vector2(leftBoardMargin2 - TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale - paddingTextX,
+            return new Vector2(leftMargin[EProfile.TWOPLAYER] - TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale - paddingTextX,
                                 levelPosY - paddingTextY / 2 + textBoxH);
         }
     }

@@ -22,7 +22,6 @@ namespace TetriClimber
         private Dictionary<Climby.EState, Action> state;
         private Dictionary<Climby.EAroundSquare, Point> aroundRect;
         private Climby.EDirection lastDir;
-        private Next next;
         private HUD hud;
         private CoordHelper.EProfile playerType;
 
@@ -30,17 +29,8 @@ namespace TetriClimber
         {
             hud = h;
             playerType = pt;
-            if (playerType == CoordHelper.EProfile.ONEPLAYER)
-            {
-                board = new Board(new Vector2(Constants.Measures.boardBlockWidth, Constants.Measures.boardBlockHeight), new Vector2(CoordHelper.Instance.leftBoardMargin1, (Constants.Measures.upBoardMargin)));
-                climby = new Climby(SpriteManager.ESprite.CLIMBYBLUE);
-            }
-            else
-            {
-                board = new Board(new Vector2(Constants.Measures.boardBlockWidth, Constants.Measures.boardBlockHeight), new Vector2(CoordHelper.Instance.leftBoardMargin2, (Constants.Measures.upBoardMargin)));
-                climby = new Climby(SpriteManager.ESprite.CLIMBYRED);
-            }
-
+            board = new Board(playerType, new Vector2(Constants.Measures.boardBlockWidth, Constants.Measures.boardBlockHeight));
+            climby = new Climby(playerType);
             //
             aroundRect = new Dictionary<Climby.EAroundSquare, Point>();
             #region Set Around Rect
@@ -55,14 +45,13 @@ namespace TetriClimber
             //
 
             tetriminoFactory = TetriminoFactory.Instance;
-            var tmp = tetriminoFactory.getTetrimino();
+            var tmp = tetriminoFactory.getTetrimino(playerType);
             currTetrimino = tmp.Item1;
             shadowTetrimino = tmp.Item2;
             cur = TimeSpan.Zero;
             //lat = new TimeSpan(10000000/3); // 3
             score = new Score();
             level = new Level();
-            next = new Next();
             lat = new TimeSpan(10000000 / (level.level + 1));
             tSpinLimit = new TimeSpan(1000000 * 3); // TSPIN TIME
             tSpinCur = TimeSpan.Zero;
@@ -116,10 +105,10 @@ namespace TetriClimber
                     }
                     #endregion
                     climby.stepDown(aroundRect, board.CamUp);
-                    var tmp = tetriminoFactory.getTetrimino();
+                    var tmp = tetriminoFactory.getTetrimino(playerType);
                     currTetrimino = tmp.Item1;
                     shadowTetrimino = tmp.Item2;
-                    hud.setNext(TetriminoFactory.Instance.getNextTetrimino(), playerType);
+                    hud.setNext(TetriminoFactory.Instance.getNextTetrimino(playerType), playerType);
                     tSpinCur = TimeSpan.Zero;
                 }
             }
@@ -378,7 +367,7 @@ namespace TetriClimber
         {
             Point p = aroundRect[e];
 
-            p.X = (point.X - (int)CoordHelper.Instance.leftBoardMargin1) / (int)Constants.Measures.blockSize + padX;
+            p.X = (point.X - (int)CoordHelper.Instance.getLeftMargin(playerType)) / (int)Constants.Measures.blockSize + padX;
             p.Y = (point.Y - (int)Constants.Measures.upBoardMargin) / (int)Constants.Measures.blockSize + padY;
             aroundRect[e] = p;
         }

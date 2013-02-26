@@ -23,11 +23,16 @@ namespace TetriClimber
         private float speed;
         private Rectangle actualPosition;
         private Rectangle deadZone;
+        private CoordHelper.EProfile playerType;
 
-        public Climby(SpriteManager.ESprite sk):base(App.Game)
+        public Climby(CoordHelper.EProfile pt):base(App.Game)
         {
-            skin = sk;
-            pos = new Vector2(CoordHelper.Instance.leftBoardMargin1 + Constants.Measures.boardWidth / 2,
+            playerType = pt;
+            if (playerType == CoordHelper.EProfile.ONEPLAYER)
+                skin = SpriteManager.ESprite.CLIMBYBLUE;
+            else
+                skin = SpriteManager.ESprite.CLIMBYRED;
+            pos = new Vector2(CoordHelper.Instance.getLeftMargin(playerType) + Constants.Measures.boardWidth / 2,
                                   Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.blockSize);
             actualPosition = new Rectangle((int)pos.X, (int)pos.Y, (int)Constants.Measures.blockSize, (int)Constants.Measures.blockSize);
             deadZone = new Rectangle((int)pos.X + (int)(Constants.Measures.blockSize / 3),
@@ -104,7 +109,7 @@ namespace TetriClimber
 
         public Point getRelPos()
         {
-            return new Point((int)((pos.X - CoordHelper.Instance.leftBoardMargin1) / Constants.Measures.blockSize),
+            return new Point((int)((pos.X - CoordHelper.Instance.getLeftMargin(playerType)) / Constants.Measures.blockSize),
                              (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize));
         }
 

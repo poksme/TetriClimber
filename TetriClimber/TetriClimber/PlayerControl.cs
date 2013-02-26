@@ -17,9 +17,9 @@ namespace TetriClimber
         public PlayerControl():base(App.Game)
         {
             pause = new GameButton(SpriteManager.ESprite.PAUSE, new Vector2(Constants.Measures.upBoardMargin - Constants.Measures.borderSize), pauseGame);
-            left = new GameButton(SpriteManager.ESprite.LEFT, new Vector2(CoordHelper.Instance.leftBoardMargin1 - Constants.Measures.buttonSize - Constants.Measures.upBoardMargin - Constants.Measures.borderSize,
+            left = new GameButton(SpriteManager.ESprite.LEFT, new Vector2(CoordHelper.Instance.getLeftMargin(CoordHelper.EProfile.ONEPLAYER) - Constants.Measures.buttonSize - Constants.Measures.upBoardMargin - Constants.Measures.borderSize,
                                                                           Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.buttonSize), leftArrow);
-            right = new GameButton(SpriteManager.ESprite.RIGHT, new Vector2(CoordHelper.Instance.leftBoardMargin1 + Constants.Measures.boardWidth + Constants.Measures.upBoardMargin,
+            right = new GameButton(SpriteManager.ESprite.RIGHT, new Vector2(CoordHelper.Instance.getLeftMargin(CoordHelper.EProfile.ONEPLAYER) + Constants.Measures.boardWidth + Constants.Measures.upBoardMargin,
                                                                             Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.buttonSize), rightArrow);
         }
 

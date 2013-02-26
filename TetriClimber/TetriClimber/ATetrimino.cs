@@ -12,6 +12,7 @@ namespace TetriClimber
         protected   List<Block> shape = null;
         private     int orientation;
         private     Vector2 posRel;
+        public CoordHelper.EProfile PlayerType { get; private set; }
 
         public Vector2 PosRel
         {
@@ -27,8 +28,9 @@ namespace TetriClimber
                 b.setOrientation(orientation);
         }
 
-        public ATetrimino(SpriteManager.ESprite color, float transparency = 1f, bool shadow = false) : base(App.Game)
+        public ATetrimino(SpriteManager.ESprite color, CoordHelper.EProfile pt, float transparency = 1f, bool shadow = false) : base(App.Game)
         {
+            PlayerType = pt;
             orientation = 0;
             posRel = new Vector2(3, -3);
             orientations = new List<Action>();
