@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TetriClimber
 {
@@ -49,7 +50,8 @@ namespace TetriClimber
 
         public void begin()
         {
-            App.SpriteBatch.Begin();
+            // CHANGED HERE FOR SHADERS
+            App.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
         }
 
         public void drawAtRecPos(ESprite es, Rectangle rec, float transparency = 1f)
