@@ -95,13 +95,15 @@ namespace TetriClimber
 
         public void setScore(int p, CoordHelper.EProfile profile)
         {
-                scoreValue[profile].Value = p.ToString();
-                scoreValBox[profile] = CoordHelper.Instance.getScoreValueBox(scoreValue[profile], profile);
+            scoreValue[profile].Value = p.ToString();
+            scoreValue[profile].Pos = CoordHelper.Instance.getScoreValue(scoreValue[profile], profile);
+            scoreValBox[profile] = CoordHelper.Instance.getScoreValueBox(scoreValue[profile], profile);
         }
 
         public void setLevel(int p, CoordHelper.EProfile profile)
         {
             levelValue[profile].Value = p.ToString();
+            levelValue[profile].Pos = CoordHelper.Instance.getScoreValue(levelValue[profile], profile);
             levelValBox[profile] = CoordHelper.Instance.getLevelValueBox(levelValue[profile], profile);
         }
 

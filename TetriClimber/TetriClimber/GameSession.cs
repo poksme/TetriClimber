@@ -48,6 +48,7 @@ namespace TetriClimber
             var tmp = tetriminoFactory.getTetrimino(playerType);
             currTetrimino = tmp.Item1;
             shadowTetrimino = tmp.Item2;
+            hud.setNext(TetriminoFactory.Instance.getNextTetrimino(playerType), playerType);
             cur = TimeSpan.Zero;
             //lat = new TimeSpan(10000000/3); // 3
             score = new Score();
