@@ -94,6 +94,19 @@ namespace TetriClimber
             return leftMargin[profile];
         }
 
+        public float getLeftMargin(AUserInput.EGameMode gm)
+        {
+            switch (gm)
+            {
+                case AUserInput.EGameMode.MULTI1P:
+                    return 10f;
+                case AUserInput.EGameMode.MULTI2P:
+                    return 1400f;
+                default: // SOLO
+                    return 704f;
+            }
+        }
+
         private void UpdatePosition()
         {
             if (Profile == EProfile.TWOPLAYER)

@@ -54,9 +54,11 @@ namespace TetriClimber
 
         public void Up(TouchPoint tp)
         {
-            hasActiveId = false;
-            if (actualPos.Y >= startingPos.Y + Constants.Measures.blockSize)
+            if (actualPos.Y >= startingPos.Y + Constants.Measures.blockSize && hasActiveId && activeId == tp.Id)
                 dropedDown = true;
+            hasActiveId = false;
+            //if (actualPos.Y >= startingPos.Y + Constants.Measures.blockSize)
+            //    dropedDown = true;
         }
 
         public void RecenterStartingPos(int padding)
@@ -66,9 +68,9 @@ namespace TetriClimber
 
         public void update()
         {
-            if (startingPos.X + Constants.Measures.blockSize * Constants.Measures.Scale < actualPos.X)
+            if (hasActiveId && startingPos.X + Constants.Measures.blockSize * Constants.Measures.Scale < actualPos.X)
                 inputs[AUserInput.EInputKeys.RIGHT] = true;
-            else if (startingPos.X - Constants.Measures.blockSize * Constants.Measures.Scale > actualPos.X)
+            else if (hasActiveId && startingPos.X - Constants.Measures.blockSize * Constants.Measures.Scale > actualPos.X)
                 inputs[AUserInput.EInputKeys.LEFT] = true;
             if (dropedDown)
                 inputs[AUserInput.EInputKeys.SPACE_BAR] = true;

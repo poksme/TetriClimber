@@ -89,7 +89,7 @@ namespace TetriClimber
         {
             if (cur >= turnLat)
                 cur = new TimeSpan(0);
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.DOWN))
+            if (App.UserInput.isPressed(AUserInput.EInputKeys.DOWN, AUserInput.EGameMode.SOLO)) // NEED TO CREATE A MENU PROFILE
             {
                 SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
@@ -99,7 +99,7 @@ namespace TetriClimber
                     cursor = 0;
                 buttons[cursor].Select();
             }
-            else if (App.UserInput.isPressed(AUserInput.EInputKeys.UP))
+            else if (App.UserInput.isPressed(AUserInput.EInputKeys.UP, AUserInput.EGameMode.SOLO)) // NEED TO CREATE A MENU PROFILE
             {
                 SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.SHIFT);
                 buttons[cursor].Unselect();
@@ -109,7 +109,7 @@ namespace TetriClimber
                     cursor--;
                 buttons[cursor].Select();
             }
-            else if (App.UserInput.isPressed(AUserInput.EInputKeys.ENTER))
+            else if (App.UserInput.isPressed(AUserInput.EInputKeys.ENTER, AUserInput.EGameMode.SOLO)) // NEED TO CREATE A MENU PROFILE
             {
                 buttons[cursor].Execute();
             }

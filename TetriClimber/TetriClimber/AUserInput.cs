@@ -50,7 +50,7 @@ namespace TetriClimber
             };
         }
 
-        public bool isPressed(EInputKeys e, EGameMode g = EGameMode.SOLO)
+        public bool isPressed(EInputKeys e, EGameMode g)
         {
             return states[g][e];
         }
@@ -59,8 +59,10 @@ namespace TetriClimber
         {
             base.Update(gameTime);
             foreach (EGameMode gm in Enum.GetValues(typeof(EGameMode)))
+            {
                 foreach (EInputKeys ipt in Enum.GetValues(typeof(EInputKeys)))
                     states[gm][ipt] = false;
+            }
         }
     }
 }

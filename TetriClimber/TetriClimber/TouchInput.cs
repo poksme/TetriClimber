@@ -18,15 +18,15 @@ namespace TetriClimber
         {
             screenParts = new Dictionary<EGameMode, TouchRec>()
             {
-                {EGameMode.SOLO, new TouchRec(states[EGameMode.SOLO], new Rectangle(0, 0, 1920, 1080))}, // NEED TO PUT THE REAL VALUES OF THE BOARD
-                {EGameMode.MULTI1P, new TouchRec(states[EGameMode.MULTI1P], new Rectangle())},
-                {EGameMode.MULTI2P, new TouchRec(states[EGameMode.MULTI2P], new Rectangle())}
+                {EGameMode.SOLO, new TouchRec(states[EGameMode.SOLO], new Rectangle((int)CoordHelper.Instance.getLeftMargin(EGameMode.SOLO), (int)Constants.Measures.upBoardMargin, (int)Constants.Measures.boardWidth, (int)Constants.Measures.boardHeight))}, // NEED TO PUT THE REAL VALUES OF THE BOARD
+                {EGameMode.MULTI1P, new TouchRec(states[EGameMode.MULTI1P], new Rectangle((int)CoordHelper.Instance.getLeftMargin(EGameMode.MULTI1P), (int)Constants.Measures.upBoardMargin, (int)Constants.Measures.boardWidth, (int)Constants.Measures.boardHeight))},
+                {EGameMode.MULTI2P, new TouchRec(states[EGameMode.MULTI2P], new Rectangle((int)CoordHelper.Instance.getLeftMargin(EGameMode.MULTI2P), (int)Constants.Measures.upBoardMargin, (int)Constants.Measures.boardWidth, (int)Constants.Measures.boardHeight))}
             };
             tapedPoint = Point.Zero;
             isTaped = false;
         }
 
-        public void recenterStartingPoint(int blocks, EGameMode e = EGameMode.SOLO)
+        public void recenterStartingPoint(int blocks, EGameMode e)
         {
             screenParts[e].RecenterStartingPos((int)(blocks * Constants.Measures.blockSize * Constants.Measures.Scale));
         }

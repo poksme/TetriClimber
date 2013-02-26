@@ -132,7 +132,7 @@ namespace TetriClimber
                 {
                     removeLine(l);
                     brokenLine.Add(l);
-                    Console.Out.WriteLine(l);
+                    //Console.Out.WriteLine(l);
                 }
             int size = brokenLine.Count;
             if (size != 0)
