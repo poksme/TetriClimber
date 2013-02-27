@@ -39,9 +39,9 @@ namespace TetriClimber
         private void SurfaceUpdate(GameTime gameTime)
         {
             //if (App.UserInput.isPressed(AUserInput.EInput.DOWN)) // TO KNOW IF A POINT IS TAPED US POINTTAPED (IT RESETS THE BOOL WHEN CALLED)
-            if ((App.UserInput as TouchInput).pointTaped) 
+            if ((App.UserInput as TouchInput).hasTapEvent) 
             {
-                Point touch = (App.UserInput as TouchInput).getPointTaped();
+                Point touch = (App.UserInput as TouchInput).PointTaped;
                 if (coord.Contains(touch))
                     handler(btnState);
                 btnState = ButtonState.Pressed;

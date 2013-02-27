@@ -26,63 +26,68 @@ namespace TetriClimber
             isTaped = false;
         }
 
-        public void recenterStartingPoint(int blocks, EGameMode e)
-        {
-            screenParts[e].RecenterStartingPos((int)(blocks * Constants.Measures.blockSize * Constants.Measures.Scale));
-        }
-
-        public Point getPointTaped()
-        {
-            return tapedPoint;
-        }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            //UPDATE ALL SCREEN PARTS
+            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
+                screenParts[id].update();
+
+            //UPDATE TAP POSITION FOR UI
             if (!isTaped) // IN ORDER TO PASS AT LEAST ONE UPDATE TURN
                 tapedPoint = Point.Zero;
             else
                 isTaped = false;
-            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
-                screenParts[id].update();
         }
 
        
         public void Move(Object sender, TouchEventArgs e)
         {
-            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
-                screenParts[id].Move(e.TouchPoint);
+            if (e.TouchPoint.IsFingerRecognized)
+            {
+                foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
+                    screenParts[id].Move(e.TouchPoint);
+            }
         }
 
         public void Down(Object sender, TouchEventArgs e)
         {
-            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
-                if (screenParts[id].boundaries.Contains((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY))
-                    screenParts[id].Down(e.TouchPoint);
+            if (e.TouchPoint.IsFingerRecognized)
+            {
+                foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
+                    if (screenParts[id].boundaries.Contains((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY))
+                        screenParts[id].Down(e.TouchPoint);
+            }
         }
 
         public void Up(Object sender, TouchEventArgs e)
         {
-            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
-                screenParts[id].Up(e.TouchPoint);
+            if (e.TouchPoint.IsFingerRecognized)
+            {
+                foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
+                    screenParts[id].Up(e.TouchPoint);
+            }
         }
 
         public void Tap(Object sender, TouchEventArgs e)
         {
-            foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
-                if (screenParts[id].boundaries.Contains((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY)) // THIS IF IS NOT NEEDED NORMALY
-                    screenParts[id].Tap(e.TouchPoint);
-            isTaped = true;
-            tapedPoint = new Point((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY);
-        }
-
-
-        public bool pointTaped
-        {
-            get
+            if (e.TouchPoint.IsFingerRecognized)
             {
-                return (!tapedPoint.Equals(Point.Zero));
+                foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
+                    screenParts[id].Tap(e.TouchPoint);
+                isTaped = true;
+                tapedPoint = new Point((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY);
             }
         }
+
+        public void recenterStartingPoint(int blocks, EGameMode e)
+        {
+            screenParts[e].RecenterStartingPos((int)(blocks * Constants.Measures.blockSize * Constants.Measures.Scale));
+        }
+
+        public bool hasTapEvent { get { return (!tapedPoint.Equals(Point.Zero)); } }
+        public Point PointTaped { get { return tapedPoint; } }
     }
 }

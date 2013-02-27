@@ -39,26 +39,27 @@ namespace TetriClimber
 
         public void Move(TouchPoint tp)
         {
-            if (!hasActiveId || activeId != tp.Id)
-                return;
-            actualPos = new Vector2(tp.CenterX, tp.CenterY);
+            if (hasActiveId && activeId == tp.Id)
+                actualPos = new Vector2(tp.CenterX, tp.CenterY);
         }
 
         public void Tap(TouchPoint tp)
         {
-            if (!hasActiveId || activeId != tp.Id)
-                return;
-            tapedPoint = new Point((int)tp.CenterX, (int)tp.CenterY);
-            taped = true;
+            if (hasActiveId && activeId == tp.Id)
+            {
+                tapedPoint = new Point((int)tp.CenterX, (int)tp.CenterY);
+                taped = true;
+            }
         }
 
         public void Up(TouchPoint tp)
         {
-            if (actualPos.Y >= startingPos.Y + Constants.Measures.blockSize && hasActiveId && activeId == tp.Id)
-                dropedDown = true;
-            hasActiveId = false;
-            //if (actualPos.Y >= startingPos.Y + Constants.Measures.blockSize)
-            //    dropedDown = true;
+            if (hasActiveId && activeId == tp.Id)
+            {
+                if (actualPos.Y >= startingPos.Y + Constants.Measures.blockSize && hasActiveId && activeId == tp.Id)
+                    dropedDown = true;
+                hasActiveId = false;
+            }
         }
 
         public void RecenterStartingPos(int padding)
