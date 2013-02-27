@@ -88,6 +88,6 @@ namespace TetriClimber
         }
 
         public bool hasTapEvent { get { return (!tapedPoint.Equals(Point.Zero)); } }
-        public Point PointTaped { get { return tapedPoint; } }
+        //public Point PointTaped { get { return tapedPoint; } }
     }
 }
