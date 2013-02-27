@@ -76,7 +76,7 @@ namespace TetriClimber
 
         public void DrawAsPreview(GameTime gameTime)
         {
-            SpriteManager.Instance.drawRotatedAtPos(color, new Vector2(CoordHelper.Instance.getLeftMargin(container.PlayerType) + (posRel.X + 10.5f) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (posRel.Y + 1.5f) * Constants.Measures.blockSize), orientation, Constants.Measures.blockSize, transparency); // HERE TRANSPARENCY
+            SpriteManager.Instance.drawRotatedAtPos(color, CoordHelper.Instance.getNextValue(container.PlayerType, this), orientation, Constants.Measures.blockSize, transparency); // HERE TRANSPARENCY
         }
     }
 }

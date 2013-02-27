@@ -229,5 +229,12 @@ namespace TetriClimber
             return new Vector2(leftMargin[EProfile.TWOPLAYER] - TextManager.Instance.getSizeString(text.Font, text.Value).X * text.Scale - paddingTextX,
                                 levelPosY - paddingTextY / 2 + textBoxH);
         }
+
+        public Vector2 getNextValue(EProfile eProfile, Block b)
+        {
+            if (eProfile == EProfile.ONEPLAYER)
+                return new Vector2(CoordHelper.Instance.getLeftMargin(eProfile) + (b.PosRel.X + 10.5f) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (b.PosRel.Y + 1.5f) * Constants.Measures.blockSize);
+            return new Vector2(CoordHelper.Instance.getLeftMargin(eProfile) - nextBoxW - Constants.Measures.borderSize + (b.PosRel.X + 0.5f) * Constants.Measures.blockSize, Constants.Measures.upBoardMargin + (b.PosRel.Y + 1.5f) * Constants.Measures.blockSize);
+        }
     }
 }
