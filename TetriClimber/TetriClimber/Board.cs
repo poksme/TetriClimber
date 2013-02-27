@@ -84,6 +84,7 @@ namespace TetriClimber
 
         public bool pushBlocks(ATetrimino t, Rectangle climbyDeadZone)
         {
+            bool ret = false;
             updatedLine = new HashSet<int>();
             List<Block> blocks = t.getBlocks();
             int tx = (int)t.PosRel.X;
@@ -95,14 +96,14 @@ namespace TetriClimber
                 b.setHitBoxValue((int)((b.PosRel.X + tx) * Constants.Measures.blockSize + CoordHelper.Instance.getLeftMargin(playerType)),
                                  (int)((b.PosRel.Y + ty) * Constants.Measures.blockSize + Constants.Measures.upBoardMargin));
                 if (climbyDeadZone.Intersects(b.HitBox))
-                    return true ; // DEATH
+                    ret = true; // DEATH
                 grid[(int)(b.PosRel.Y + ty)][(int)(b.PosRel.X + tx)] = b;
                 updatedLine.Add((int)(b.PosRel.Y + ty));
                 if (min > b.PosRel.Y + ty)
                     min = b.PosRel.Y + ty;
             }
             camUp = (int)((Constants.Measures.boardBlockHeight / 2 - 2) - min);
-            return false;
+            return ret;
         }
 
         public bool isBusyCase(Vector2 coord)
@@ -139,8 +140,8 @@ namespace TetriClimber
                 SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.CLEARLINE, 0.25f * (float)size, 1f);
             camUp -= brokenLine.Count;
             camUp = camUp > 0 ? camUp : 0;
-            for(int i = 0; i < camUp; i++)
-                    removeLine(19);
+            for (int i = 0; i < camUp; i++)
+                removeLine(19);
             return brokenLine;
         }
 

@@ -125,6 +125,9 @@ namespace TetriClimber
                     p.Y += step;
                     asqr[e] = p;
                 }
+
+            // RECENTLY ADDED
+            actualPosition.Y += (int)(step * Constants.Measures.blockSize);
         }
 
         public void setSpeedFromLevel(int l)
@@ -141,5 +144,17 @@ namespace TetriClimber
         public Rectangle DeadZone           { get { deadZone.X = (int)pos.X + (int)(Constants.Measures.blockSize / 3); deadZone.Y = (int)pos.Y; return deadZone; } }
         public int MinHeight                { get { return minHeight; } }
         public int OldMinHeight             { get { return oldMinHeight; } }
+
+        //public bool isUnderBoard            { get { return (pos.Y - Constants.Measures.blockSize > Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.blockSize); } }
+
+        //public void stepUp()
+        //{
+        //    pos.Y -= Constants.Measures.blockSize;
+        //}
+
+        //public bool overLap(Board board)
+        //{
+        //    return (board.getRect(new Point((int)((pos.X - CoordHelper.Instance.getLeftMargin(playerType)) / Constants.Measures.blockSize),(int)(Constants.Measures.boardBlockHeight - 1)))).Intersects(this.deadZone);
+        //}
     }
 }

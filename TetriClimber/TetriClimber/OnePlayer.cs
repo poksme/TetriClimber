@@ -21,30 +21,33 @@ namespace TetriClimber
 
         public override void Update(GameTime gameTime)
         {
-            if (this.IsPause)
-                return;      
             base.Update(gameTime);
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.RIGHT, AUserInput.EGameMode.SOLO))
+            if (this.IsPause)
+                return;
+            if (!player1.death)
             {
-                if (ipt != null)
-                    ipt.recenterStartingPoint(player1.rightMove() ? 1 : 0, AUserInput.EGameMode.SOLO); // For DROP DOWN
-                else
-                    player1.rightMove();
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.RIGHT, AUserInput.EGameMode.SOLO))
+                {
+                    if (ipt != null)
+                        ipt.recenterStartingPoint(player1.rightMove() ? 1 : 0, AUserInput.EGameMode.SOLO); // For DROP DOWN
+                    else
+                        player1.rightMove();
+                }
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.LEFT, AUserInput.EGameMode.SOLO))
+                {
+                    if (ipt != null)
+                        ipt.recenterStartingPoint(player1.leftMove() ? -1 : 0, AUserInput.EGameMode.SOLO); // For DROP DOWN
+                    else
+                        player1.leftMove();
+                }
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.DOWN, AUserInput.EGameMode.SOLO))
+                    player1.rightShift();
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.UP, AUserInput.EGameMode.SOLO))
+                    player1.leftShift();
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.SPACE_BAR, AUserInput.EGameMode.SOLO))
+                    player1.dropDown();
+                player1.Update(gameTime);
             }
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.LEFT, AUserInput.EGameMode.SOLO))
-            {
-                if (ipt != null)
-                    ipt.recenterStartingPoint(player1.leftMove() ? -1 : 0, AUserInput.EGameMode.SOLO); // For DROP DOWN
-                else
-                    player1.leftMove();
-            }
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.DOWN, AUserInput.EGameMode.SOLO))
-                player1.rightShift();
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.UP, AUserInput.EGameMode.SOLO))
-                player1.leftShift();
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.SPACE_BAR, AUserInput.EGameMode.SOLO))
-                player1.dropDown();
-            player1.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)

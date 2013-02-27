@@ -18,55 +18,60 @@ namespace TetriClimber
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             if (this.IsPause)
                 return;            
-            base.Update(gameTime);
             //PLAYER1
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.RIGHT, AUserInput.EGameMode.MULTI1P))
+            if (!player1.death)
             {
-                if (ipt != null)
-                    ipt.recenterStartingPoint(player1.rightMove() ? 1 : 0, AUserInput.EGameMode.MULTI1P);
-                else
-                    player1.rightMove();
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.RIGHT, AUserInput.EGameMode.MULTI1P))
+                {
+                    if (ipt != null)
+                        ipt.recenterStartingPoint(player1.rightMove() ? 1 : 0, AUserInput.EGameMode.MULTI1P);
+                    else
+                        player1.rightMove();
+                }
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.LEFT, AUserInput.EGameMode.MULTI1P))
+                {
+                    if (ipt != null)
+                        ipt.recenterStartingPoint(player1.leftMove() ? -1 : 0, AUserInput.EGameMode.MULTI1P);
+                    else
+                        player1.leftMove();
+                }
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.DOWN, AUserInput.EGameMode.MULTI1P))
+                    player1.rightShift();
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.UP, AUserInput.EGameMode.MULTI1P))
+                    player1.leftShift();
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.SPACE_BAR, AUserInput.EGameMode.MULTI1P))
+                    player1.dropDown();
+                player1.Update(gameTime);
             }
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.LEFT, AUserInput.EGameMode.MULTI1P))
-            {
-                if (ipt != null)
-                    ipt.recenterStartingPoint(player1.leftMove() ? -1 : 0, AUserInput.EGameMode.MULTI1P);
-                else
-                    player1.leftMove();
-            }
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.DOWN, AUserInput.EGameMode.MULTI1P))
-                player1.rightShift();
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.UP, AUserInput.EGameMode.MULTI1P))
-                player1.leftShift();
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.SPACE_BAR, AUserInput.EGameMode.MULTI1P))
-                player1.dropDown();
-            player1.Update(gameTime);
-
 
             //PLAYER 2
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.RIGHT, AUserInput.EGameMode.MULTI2P))
+            if (!player2.death)
             {
-                if (ipt != null)
-                    ipt.recenterStartingPoint(player2.rightMove() ? 1 : 0, AUserInput.EGameMode.MULTI2P);
-                else
-                    player2.rightMove();
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.RIGHT, AUserInput.EGameMode.MULTI2P))
+                {
+                    if (ipt != null)
+                        ipt.recenterStartingPoint(player2.rightMove() ? 1 : 0, AUserInput.EGameMode.MULTI2P);
+                    else
+                        player2.rightMove();
+                }
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.LEFT, AUserInput.EGameMode.MULTI2P))
+                {
+                    if (ipt != null)
+                        ipt.recenterStartingPoint(player2.leftMove() ? -1 : 0, AUserInput.EGameMode.MULTI2P);
+                    else
+                        player2.leftMove();
+                }
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.DOWN, AUserInput.EGameMode.MULTI2P))
+                    player2.rightShift();
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.UP, AUserInput.EGameMode.MULTI2P))
+                    player2.leftShift();
+                if (App.UserInput.isPressed(AUserInput.EInputKeys.SPACE_BAR, AUserInput.EGameMode.MULTI2P))
+                    player2.dropDown();
+                player2.Update(gameTime);
             }
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.LEFT, AUserInput.EGameMode.MULTI2P))
-            {
-                if (ipt != null)
-                    ipt.recenterStartingPoint(player2.leftMove() ? -1 : 0, AUserInput.EGameMode.MULTI2P);
-                else
-                    player2.leftMove();
-            }
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.DOWN, AUserInput.EGameMode.MULTI2P))
-                player2.rightShift();
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.UP, AUserInput.EGameMode.MULTI2P))
-                player2.leftShift();
-            if (App.UserInput.isPressed(AUserInput.EInputKeys.SPACE_BAR, AUserInput.EGameMode.MULTI2P))
-                player2.dropDown();
-            player2.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)

@@ -24,6 +24,7 @@ namespace TetriClimber
         private Climby.EDirection lastDir;
         private HUD hud;
         private CoordHelper.EProfile playerType;
+        public bool death { get; private set; }
 
         public GameSession(CoordHelper.EProfile pt, HUD h):base(App.Game)
         {
@@ -89,7 +90,7 @@ namespace TetriClimber
                 if (tSpinCur > tSpinLimit)
                 {
                     SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.DROP, 0, 0.5f, false);
-                    board.pushBlocks(currTetrimino, climby.DeadZone);
+                    death = board.pushBlocks(currTetrimino, climby.DeadZone);
                     #region FullLine Event
                     List<int> brokenLines = board.checkFullLine();
                     if (brokenLines.Count > 0) // Happens when lines are borken
@@ -106,6 +107,19 @@ namespace TetriClimber
                     }
                     #endregion
                     climby.stepDown(aroundRect, board.CamUp);
+                    if (climby.State != Climby.EState.CLIMB && climby.ActualPosition.Bottom > Constants.Measures.upBoardMargin + Constants.Measures.boardHeight)
+                        death = true;
+                    //while (climby.isUnderBoard)
+                    //{
+                    //    climby.stepUp();
+                    //    if (climby.overLap(board))
+                    //    {
+                    //        death = true;
+                    //        break;
+                    //    }
+                    //    else // THIS ELSE IS A TEST
+                    //        climby.State = Climby.EState.FREE_FALL;
+                    //}
                     var tmp = tetriminoFactory.getTetrimino(playerType);
                     currTetrimino = tmp.Item1;
                     shadowTetrimino = tmp.Item2;
