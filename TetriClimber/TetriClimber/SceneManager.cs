@@ -11,6 +11,7 @@ namespace TetriClimber
         public enum EScene { ATRACT_MODE, SOLO, MULTI, BACKGROUND }
         private Dictionary<EScene, AScene> scenes = new Dictionary<EScene, AScene>();
         private static SceneManager instance = null;
+        private EScene current;
 
         private SceneManager():base(App.Game)
         {
@@ -38,10 +39,7 @@ namespace TetriClimber
         {
             base.Update(gameTime);
             foreach (KeyValuePair<EScene, AScene> pair in scenes)
-            {
-                if (!pair.Value.IsPause)
-                    pair.Value.Update(gameTime);
-            }
+                pair.Value.Update(gameTime);
         }
 
         public void addScene(EScene e)
@@ -50,10 +48,12 @@ namespace TetriClimber
             {
                 case EScene.SOLO:
                     scenes.Add(e, new OnePlayer());
+                    current = EScene.SOLO;
                     MenuManager.Instance.Flush();
                     break;
                 case EScene.MULTI:
                     scenes.Add(e, new TwoPlayer());
+                    current = EScene.MULTI;
                     MenuManager.Instance.Flush();
                     break;
                 default:
@@ -66,12 +66,14 @@ namespace TetriClimber
             scenes.Remove(eScene);
         }
 
-        public  void TogglePause(EScene eScene)
+        public void TogglePause(AScene scene)
         {
-            if (scenes[eScene].IsPause)
-                scenes[eScene].Resume();
-            else
-                scenes[eScene].Pause();
+            scene.TogglePause();
+        }
+
+        public void removePlayScene()
+        {
+            removeScene(current);
         }
     }
 }

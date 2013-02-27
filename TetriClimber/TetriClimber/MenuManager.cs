@@ -68,12 +68,12 @@ namespace TetriClimber
             menus.Push(main);
         }
 
-        public void CreatePauseMenu()
+        public void CreatePauseMenu(AScene target)
         {
             Menu pause = new Menu();
             pause.setButtons(new List<AButton>()
                 {
-                    new TextButton(pause, "Resume", new Vector2(0, 0), MenuManager.Instance.ResumeGame, SceneManager.EScene.SOLO),
+                    new TextButton(pause, "Resume", new Vector2(0, 0), MenuManager.Instance.ResumeGame, target),
                     new TextButton(pause, "Options", new Vector2(0, 1 * 100), MenuManager.Instance.launchMenu, EMenu.OPTIONS),
                     new TextButton(pause, "Give Up", new Vector2(0, 2 *100), MenuManager.Instance.launchMenu, EMenu.MAIN)
                 });
@@ -132,15 +132,8 @@ namespace TetriClimber
             {
                 case EMenu.MAIN:
                     CreateMainMenu();
-                    SceneManager.Instance.removeScene(SceneManager.EScene.SOLO);
+                    SceneManager.Instance.removePlayScene();
                     SoundManager.Instance.stop(SoundManager.EChannel.BGM);
-                    //CoordHelper.Instance.setProfile(CoordHelper.EProfile.LANDSCAPE);
-                    //SoundManager.Instance.bgmPause();
-                    break;
-                case EMenu.PAUSE:
-                    CreatePauseMenu();
-                    SoundManager.Instance.play(SoundManager.EChannel.BGM, SoundManager.ESound.OPTBGM, 0, 0.5f, true);
-                    //SoundManager.Instance.bgmPlay(SoundManager.ESound.OPTBGM);
                     break;
                 case EMenu.OPTIONS:
                     CreateOptionMenu();
@@ -169,10 +162,10 @@ namespace TetriClimber
             menus.Pop();
         }
 
-        public void ResumeGame(Object data = null)
+        public void ResumeGame(Object target)
         {
             BackMenu();
-            SceneManager.Instance.TogglePause((SceneManager.EScene)data);
+            SceneManager.Instance.TogglePause((AScene)target);
             SoundManager.Instance.play(SoundManager.EChannel.BGM, SoundManager.ESound.BGM);
         }
 

@@ -21,7 +21,7 @@ namespace TetriClimber
         {
             CoordHelper.Instance.setProfile(profile);
             hud = new HUD();
-            control = new PlayerControl();
+            control = new PlayerControl(this);
             player1 = new GameSession(CoordHelper.EProfile.ONEPLAYER, hud);
             ipt = null;
             if (App.UserInput is TouchInput)
@@ -40,9 +40,9 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            cur += gameTime.ElapsedGameTime;
-            control.Update(gameTime);
-            hud.Update(gameTime);
+                cur += gameTime.ElapsedGameTime;
+                control.Update(gameTime);
+                hud.Update(gameTime);
         }
     }
 }

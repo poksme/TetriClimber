@@ -26,6 +26,7 @@ namespace TetriClimber
         public float scorePosY = 354f;
         public float levelPosY = 593f;
         public float nextPosY = 40f;
+        public Vector2 pause;
 
         private CoordHelper()
         {
@@ -35,6 +36,7 @@ namespace TetriClimber
              {EProfile.ONEPLAYER, 704f},
              {EProfile.TWOPLAYER, 1400f}
             };
+            pause = new Vector2(Constants.Measures.upBoardMargin - Constants.Measures.borderSize);
         }
 
         public static CoordHelper Instance
@@ -106,6 +108,14 @@ namespace TetriClimber
             {
                 leftMargin[EProfile.ONEPLAYER] = 10f;
                 textBoxW = leftMargin[EProfile.TWOPLAYER] - getRightBoard(EProfile.ONEPLAYER);
+                pause.X = 930f;
+                pause.Y = 880f;
+            }
+            else
+            {
+                leftMargin[EProfile.ONEPLAYER] = 704f;
+                pause.X = Constants.Measures.upBoardMargin - Constants.Measures.borderSize;
+                pause.Y = Constants.Measures.upBoardMargin - Constants.Measures.borderSize;
             }
             
         }

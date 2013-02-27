@@ -13,10 +13,12 @@ namespace TetriClimber
         private GameButton pause;
         private GameButton left;
         private GameButton right;
+        private AScene target;
 
-        public PlayerControl():base(App.Game)
+        public PlayerControl(AScene target):base(App.Game)
         {
-            pause = new GameButton(SpriteManager.ESprite.PAUSE, new Vector2(Constants.Measures.upBoardMargin - Constants.Measures.borderSize), pauseGame);
+            this.target = target;
+            pause = new GameButton(SpriteManager.ESprite.PAUSE, CoordHelper.Instance.pause, pauseGame);
             left = new GameButton(SpriteManager.ESprite.LEFT, new Vector2(CoordHelper.Instance.getLeftMargin(CoordHelper.EProfile.ONEPLAYER) - Constants.Measures.buttonSize - Constants.Measures.upBoardMargin - Constants.Measures.borderSize,
                                                                           Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.buttonSize), leftArrow);
             right = new GameButton(SpriteManager.ESprite.RIGHT, new Vector2(CoordHelper.Instance.getLeftMargin(CoordHelper.EProfile.ONEPLAYER) + Constants.Measures.boardWidth + Constants.Measures.upBoardMargin,
@@ -39,11 +41,8 @@ namespace TetriClimber
 
         public void pauseGame(ButtonState state)
         {
-            if (state == ButtonState.Released)
-            {
-                MenuManager.Instance.CreatePauseMenu();
-                SceneManager.Instance.TogglePause(SceneManager.EScene.SOLO);
-            }
+            MenuManager.Instance.CreatePauseMenu(target);
+            target.TogglePause();
         }
 
         public void rightArrow(ButtonState state)

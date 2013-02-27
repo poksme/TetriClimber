@@ -21,6 +21,8 @@ namespace TetriClimber
 
         public override void Update(GameTime gameTime)
         {
+            if (this.IsPause)
+                return;      
             base.Update(gameTime);
             if (App.UserInput.isPressed(AUserInput.EInputKeys.RIGHT, AUserInput.EGameMode.SOLO))
             {

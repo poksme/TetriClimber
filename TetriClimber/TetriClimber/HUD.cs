@@ -103,7 +103,7 @@ namespace TetriClimber
         public void setLevel(int p, CoordHelper.EProfile profile)
         {
             levelValue[profile].Value = p.ToString();
-            levelValue[profile].Pos = CoordHelper.Instance.getScoreValue(levelValue[profile], profile);
+            levelValue[profile].Pos = CoordHelper.Instance.getLevelValue(levelValue[profile], profile);
             levelValBox[profile] = CoordHelper.Instance.getLevelValueBox(levelValue[profile], profile);
         }
 

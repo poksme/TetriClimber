@@ -44,10 +44,10 @@ namespace TetriClimber
                 Point touch = (App.UserInput as TouchInput).PointTaped;
                 if (coord.Contains(touch))
                     handler(btnState);
-                btnState = ButtonState.Pressed;
+                //btnState = ButtonState.Pressed;
             }
-            else
-                btnState = ButtonState.Released;
+            //else
+            //    btnState = ButtonState.Released;
         }
 
         private void KeyboardUpdate(GameTime gameTime)

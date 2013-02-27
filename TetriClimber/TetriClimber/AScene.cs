@@ -34,5 +34,14 @@ namespace TetriClimber
         {
             IsPause = false;
         }
+
+        public void TogglePause()
+        {
+            if (this.IsPause)
+                this.Resume();
+            else
+                this.Pause();
+        }
+
     }
 }
