@@ -49,7 +49,8 @@ namespace TetriClimber
             state = EState.MOVE;
             direction = EDirection.RIGHT;
             rotation = 0f;
-            speed = 0.00002f / 6;
+            setSpeedFromLevel(0);
+            //speed = 0.00002f / 6;
             minHeight = (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize);
             oldMinHeight = minHeight;
         }
@@ -132,7 +133,10 @@ namespace TetriClimber
 
         public void setSpeedFromLevel(int l)
         {
-            speed += (l + 1) * 0.000001f;
+            //l = 0;
+            //speed += (l + 1) * (l + 1) / 50000000f;
+            //speed = 0.000004f + (l + 1) / 1000000f;
+            speed = (3 +  l * 1.2f) / 1000000f;
         }
 
         public int          getIntOrt()     { return direction == EDirection.LEFT ? -1 : 1; }

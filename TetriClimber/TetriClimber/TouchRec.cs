@@ -20,9 +20,6 @@ namespace TetriClimber
         //private bool dropedDown;
         private bool taped;
 
-        // FOR DROPDOWNS
-        private float deltaDown;
-        private TimeSpan prevUpdate;
 
         public TouchRec(Dictionary<AUserInput.EInputKeys, bool> inputs, Rectangle boundaries = new Rectangle())
         {
@@ -30,7 +27,6 @@ namespace TetriClimber
             this.hasActiveId = false;
             this.inputs = inputs;
             //this.dropedDown = false;
-            this.deltaDown = 0f;
             this.prevPos = Vector2.Zero;
         }
 
