@@ -66,6 +66,7 @@ namespace TetriClimber
                 //if (actualPos.Y >= startingPos.Y + Constants.Measures.blockSize && hasActiveId && activeId == tp.Id)
                 //    dropedDown = true;
                 hasActiveId = false;
+                prevPos = Vector2.Zero;
             }
         }
 
@@ -91,8 +92,11 @@ namespace TetriClimber
             // RESET HANDLERS VARS
             //dropedDown = false;
             taped = false;
-            prevPos.X = actualPos.X;
-            prevPos.Y = actualPos.Y;
+            if (hasActiveId)
+            {
+                prevPos.X = actualPos.X;
+                prevPos.Y = actualPos.Y;
+            }
         }
     }
 }
