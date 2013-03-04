@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace TetriClimber
 {
@@ -74,7 +75,36 @@ namespace TetriClimber
             public static float levelPosY = 593f;
             public static float nextPosY = 40f;
             public static Rectangle boxPreview = new Rectangle((int)(leftBoardMargin + boardWidth + borderSize), (int)(nextPosY + textBoxH), 243, 170);
-
+        }
+        public static class Other
+        {
+            public static Dictionary<Keys, Char> letters = new Dictionary<Keys,Char>(){
+            {Keys.A, 'A'},
+            {Keys.B, 'B'},
+            {Keys.C, 'C'},
+            {Keys.D, 'D'},
+            {Keys.E, 'E'},
+            {Keys.F, 'F'},
+            {Keys.G, 'G'},
+            {Keys.H, 'H'},
+            {Keys.I, 'I'},
+            {Keys.J, 'J'},
+            {Keys.K, 'K'},
+            {Keys.L, 'L'},
+            {Keys.M, 'M'},
+            {Keys.N, 'N'},
+            {Keys.O, 'O'},
+            {Keys.P, 'P'},
+            {Keys.Q, 'Q'},
+            {Keys.R, 'R'},
+            {Keys.S, 'S'},
+            {Keys.T, 'T'},
+            {Keys.U, 'U'},
+            {Keys.V, 'V'},
+            {Keys.W, 'W'},
+            {Keys.X, 'X'},
+            {Keys.Y, 'Y'},
+            {Keys.Z, 'Z'}};
         }
     }
 }
