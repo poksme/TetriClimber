@@ -36,7 +36,7 @@ namespace TetriClimber
                                   Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.blockSize);
             actualPosition = new Rectangle((int)pos.X, (int)pos.Y, (int)Constants.Measures.blockSize, (int)Constants.Measures.blockSize);
             deadZone = new Rectangle((int)pos.X + (int)(Constants.Measures.blockSize / 3),
-                                     (int)pos.Y , (int)Constants.Measures.blockSize / 3, (int)Constants.Measures.blockSize);
+                                     (int)pos.Y + (int)(Constants.Measures.blockSize / 3), (int)(Constants.Measures.blockSize / 3), (int)(Constants.Measures.blockSize / 3));
             actions = new Dictionary<EState, Action<GameTime>>();
             #region Actions
             actions.Add(EState.CLIMB, climb);
@@ -141,7 +141,7 @@ namespace TetriClimber
         public EState       State           { get { return state; }             set { state = value; } }
         public EDirection   Direction       { get { return direction; }         set { direction = value; } }
         public float        Speed           { get { return speed; }             set { speed = value; } }
-        public Rectangle DeadZone           { get { deadZone.X = (int)pos.X + (int)(Constants.Measures.blockSize / 3); deadZone.Y = (int)pos.Y; return deadZone; } }
+        public Rectangle DeadZone           { get { deadZone.X = (int)pos.X + (int)(Constants.Measures.blockSize / 3); deadZone.Y = (int)pos.Y + (int)(Constants.Measures.blockSize / 3); return deadZone; } }
         public int MinHeight                { get { return minHeight; } }
         public int OldMinHeight             { get { return oldMinHeight; } }
 

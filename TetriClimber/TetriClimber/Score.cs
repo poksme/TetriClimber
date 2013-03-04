@@ -6,12 +6,14 @@ using Microsoft.Xna.Framework;
 
 namespace TetriClimber
 {
+    [Serializable ()]
     public class Score
     {
         private int lineScore;
         private int climbyScore;
-        public int TotalScore { get; private set; }
-        public int Level { private get; set; }
+        public int TotalScore { get; set; }
+        public int Level { get; set; }
+        public String pseudo { get; set; }
 
         public Score(Vector2 p = new Vector2(), Vector2 o = new Vector2())
         {
@@ -19,8 +21,18 @@ namespace TetriClimber
             climbyScore = 0;
             TotalScore = 0;
             Level = 0;
+            pseudo = "";
         }
-        
+
+        public Score()
+        {
+            //lineScore = 0;
+            //climbyScore = 0;
+            //TotalScore = 0;
+            //Level = 0;
+            //pseudo = "";
+        }
+
         public void addLineScore(int ls)
         {
             switch (ls)

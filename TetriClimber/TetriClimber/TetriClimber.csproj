@@ -142,6 +142,7 @@
     <Compile Include="App.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="Score.cs" />
+    <Compile Include="ScoreBoard.cs" />
     <Compile Include="SettingsManager.cs" />
     <Compile Include="ShapeData.cs" />
     <Compile Include="SoundManager.cs" />
