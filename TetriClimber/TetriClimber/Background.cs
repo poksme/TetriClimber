@@ -31,7 +31,7 @@ namespace TetriClimber
             shapes.Add(new KeyValuePair<TextureManager.ETexture, BackgroundShapeData>(
                 TextureManager.ETexture.YELLOW_LINES, new BackgroundShapeData(new Vector2(50, 50), 0.02f, 360 / 7 * 6, 600)));
             //if (SettingsManager.Instance.Music)
-            //    SoundManager.Instance.bgmPlay();
+            //    SoundManager.Instance.bgmPlay(); 
         }
 
         public override void Update(GameTime gameTime)
