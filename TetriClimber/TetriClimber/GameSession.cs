@@ -54,7 +54,9 @@ namespace TetriClimber
             //lat = new TimeSpan(10000000/3); // 3
             score = new Score();
             level = new Level();
-            lat = new TimeSpan(10000000 / (level.level + 1));
+            //lat = new TimeSpan(10000000 / (level.level + 1));
+            lat = new TimeSpan((10 - level.level) * 1000000);
+            //lat = new TimeSpan(2 / (level.level + 1) * 10000000);
             tSpinLimit = new TimeSpan(1000000 * 3); // TSPIN TIME
             tSpinCur = TimeSpan.Zero;
             state = new Dictionary<Climby.EState, Action>();
@@ -146,7 +148,9 @@ namespace TetriClimber
             if (level.updateLevel(tmpClimbyStepHeight))
             {
                 hud.setLevel(level.level, playerType);
-                lat = new TimeSpan(10000000 / (level.level + 1));
+                //lat = new TimeSpan(10000000 / (level.level + 1));
+                //lat = new TimeSpan(2 / ((level.level + 1) * 11) * 1000000000);
+                lat = new TimeSpan((10 - level.level) * 1000000);
                 climby.setSpeedFromLevel(level.level);
             }
             projectShadow();
