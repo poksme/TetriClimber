@@ -47,6 +47,7 @@ namespace TetriClimber
                 Device = EDevice.SURFACE;
             else
                 Device = EDevice.PC;
+            Device = EDevice.SURFACE;
             loadSetting();
         }
 

@@ -33,7 +33,7 @@ namespace TetriClimber
 
             //UPDATE ALL SCREEN PARTS
             foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
-                screenParts[id].update();
+                screenParts[id].update(gameTime);
 
             //UPDATE TAP POSITION FOR UI
             if (!isTaped) // IN ORDER TO PASS AT LEAST ONE UPDATE TURN

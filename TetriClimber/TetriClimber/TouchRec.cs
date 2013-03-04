@@ -15,16 +15,23 @@ namespace TetriClimber
         private bool hasActiveId;
         private Vector2 startingPos;
         private Vector2 actualPos;
+        private Vector2 prevPos;
         public Point tapedPoint     { get; private set; }
-        private bool dropedDown;
+        //private bool dropedDown;
         private bool taped;
+
+        // FOR DROPDOWNS
+        private float deltaDown;
+        private TimeSpan prevUpdate;
 
         public TouchRec(Dictionary<AUserInput.EInputKeys, bool> inputs, Rectangle boundaries = new Rectangle())
         {
             this.boundaries = boundaries;
             this.hasActiveId = false;
             this.inputs = inputs;
-            this.dropedDown = false;
+            //this.dropedDown = false;
+            this.deltaDown = 0f;
+            this.prevPos = Vector2.Zero;
         }
 
         public void Down(TouchPoint tp)
@@ -56,8 +63,8 @@ namespace TetriClimber
         {
             if (hasActiveId && activeId == tp.Id)
             {
-                if (actualPos.Y >= startingPos.Y + Constants.Measures.blockSize && hasActiveId && activeId == tp.Id)
-                    dropedDown = true;
+                //if (actualPos.Y >= startingPos.Y + Constants.Measures.blockSize && hasActiveId && activeId == tp.Id)
+                //    dropedDown = true;
                 hasActiveId = false;
             }
         }
@@ -67,20 +74,25 @@ namespace TetriClimber
             startingPos.X += padding;
         }
 
-        public void update()
+        public void update(GameTime gt)
         {
+            float speed = (actualPos.Y - prevPos.Y) / gt.ElapsedGameTime.Milliseconds;
             if (hasActiveId && startingPos.X + Constants.Measures.blockSize * Constants.Measures.Scale < actualPos.X)
                 inputs[AUserInput.EInputKeys.RIGHT] = true;
             else if (hasActiveId && startingPos.X - Constants.Measures.blockSize * Constants.Measures.Scale > actualPos.X)
                 inputs[AUserInput.EInputKeys.LEFT] = true;
-            if (dropedDown)
+            if (hasActiveId && prevPos != Vector2.Zero && speed > 2)
                 inputs[AUserInput.EInputKeys.SPACE_BAR] = true;
+            //if (dropedDown)
+            //    inputs[AUserInput.EInputKeys.SPACE_BAR] = true;
             if (taped)
                 inputs[AUserInput.EInputKeys.DOWN] = true;
 
             // RESET HANDLERS VARS
-            dropedDown = false;
+            //dropedDown = false;
             taped = false;
+            prevPos.X = actualPos.X;
+            prevPos.Y = actualPos.Y;
         }
     }
 }
