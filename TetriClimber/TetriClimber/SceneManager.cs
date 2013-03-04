@@ -16,11 +16,9 @@ namespace TetriClimber
         private static SceneManager instance = null;
         private EScene current;
 
-        TextBox tb;
         private SceneManager():base(App.Game)
         {
             scenes.Add(EScene.BACKGROUND, new Background());
-            tb = new TextBox(new Rectangle(400,400,300,60));
         }
 
         public static SceneManager Instance
@@ -38,7 +36,6 @@ namespace TetriClimber
             base.Draw(gameTime);
             foreach (KeyValuePair<EScene, AScene> pair in scenes)
                 pair.Value.Draw(gameTime);
-            tb.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
@@ -46,7 +43,6 @@ namespace TetriClimber
             base.Update(gameTime);
             foreach (KeyValuePair<EScene, AScene> pair in scenes)
                 pair.Value.Update(gameTime);
-            tb.Update(gameTime);
         }
 
         public void addScene(EScene e)

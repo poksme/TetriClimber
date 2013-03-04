@@ -16,7 +16,7 @@ namespace TetriClimber
         private TimeSpan lat;
         private TimeSpan tSpinLimit;
         private TimeSpan tSpinCur;
-        private Score score;
+        public Score score {get; private set;}
         private Level level;
         private Climby climby;
         private Dictionary<Climby.EState, Action> state;
@@ -111,17 +111,6 @@ namespace TetriClimber
                     climby.stepDown(aroundRect, board.CamUp);
                     if (climby.State != Climby.EState.CLIMB && climby.ActualPosition.Bottom > Constants.Measures.upBoardMargin + Constants.Measures.boardHeight)
                         death = true;
-                    //while (climby.isUnderBoard)
-                    //{
-                    //    climby.stepUp();
-                    //    if (climby.overLap(board))
-                    //    {
-                    //        death = true;
-                    //        break;
-                    //    }
-                    //    else // THIS ELSE IS A TEST
-                    //        climby.State = Climby.EState.FREE_FALL;
-                    //}
                     var tmp = tetriminoFactory.getTetrimino(playerType);
                     currTetrimino = tmp.Item1;
                     shadowTetrimino = tmp.Item2;
@@ -172,11 +161,8 @@ namespace TetriClimber
                 shadowTetrimino.Draw(gameTime);
              currTetrimino.Draw(gameTime);
              climby.Draw(gameTime);
-             //score.Draw(gameTime);
-             //level.Draw(gameTime);
-             //next.Draw(gameTime);
-            
-            // DEBUG COLORS
+
+             // DEBUG COLORS
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT]), Color.Red);
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_TOP]), Color.Red);
              //SpriteManager.Instance.drawRectangleAbsPos(board.getRect(aroundRect[Climby.EAroundSquare.FRONT_UNDER]), Color.Red);

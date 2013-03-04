@@ -9,17 +9,27 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace TetriClimber
 {
-    class ScoreBoard : DrawableGameComponent
+    public class ScoreBoard
     {
         private String filename;
         List<Score> scores;
+        private static ScoreBoard instance = null;
 
-        public ScoreBoard() :
-            base(App.Game)
+        private ScoreBoard()
         {
             filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/TetriClimber/scoreboard.sav";
             scores = new List<Score>();
             loadScoreBoard();
+        }
+
+        public static ScoreBoard Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new ScoreBoard();
+                return instance;
+            }
         }
 
         public void addScore(Score s)
@@ -30,6 +40,7 @@ namespace TetriClimber
 
         public void Dump()
         {
+            Console.WriteLine("Liste des scores :\n================== ");
             foreach(Score s in scores)
                 Console.WriteLine(""+s.pseudo+" "+s.TotalScore);
         }

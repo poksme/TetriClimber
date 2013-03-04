@@ -66,5 +66,10 @@ namespace TetriClimber
         {
             TotalScore = climbyScore + lineScore;
         }
+
+        public void setPseudo(String p)
+        {
+            pseudo = p[0] + p.Substring(1).ToLower();
+        }
     }
 }
