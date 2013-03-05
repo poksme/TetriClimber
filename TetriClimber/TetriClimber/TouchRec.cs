@@ -78,7 +78,7 @@ namespace TetriClimber
                 inputs[AUserInput.EInputKeys.RIGHT] = true;
             else if (hasActiveId && startingPos.X - Constants.Measures.blockSize * Constants.Measures.Scale > actualPos.X)
                 inputs[AUserInput.EInputKeys.LEFT] = true;
-            if (hasActiveId && prevPos != Vector2.Zero && speed > 2)
+            if (hasActiveId && prevPos != Vector2.Zero && speed > 1)
                 inputs[AUserInput.EInputKeys.SPACE_BAR] = true;
             //if (dropedDown)
             //    inputs[AUserInput.EInputKeys.SPACE_BAR] = true;
