@@ -79,6 +79,7 @@ namespace TetriClimber
  	        base.Update(gameTime);
             board.Update(gameTime);
             cur += gameTime.ElapsedGameTime;
+//ACTIVE TETRIMiNO
             if (cur > lat)
             {
                 cur = TimeSpan.Zero;
@@ -95,8 +96,11 @@ namespace TetriClimber
                 {
                     SoundManager.Instance.play(SoundManager.EChannel.SFX, SoundManager.ESound.DROP, 0, 0.5f, false);
                     death = board.pushBlocks(currTetrimino, climby.DeadZone);
+//END -- ACTIVE TETRIMiNO
+//BOARD
                     #region FullLine Event
                     List<int> brokenLines = board.checkFullLine();
+                    climby.stepDown(aroundRect, board.CamUp);
                     if (brokenLines.Count > 0) // Happens when lines are borken
                     {
                         Point climbyRelPos = climby.getRelPos();
@@ -110,7 +114,6 @@ namespace TetriClimber
                             climby.stepDown(aroundRect, nbDown);
                     }
                     #endregion
-                    climby.stepDown(aroundRect, board.CamUp);
                     if (climby.State != Climby.EState.CLIMB && climby.ActualPosition.Bottom > Constants.Measures.upBoardMargin + Constants.Measures.boardHeight)
                         death = true;
                     var tmp = tetriminoFactory.getTetrimino(playerType);
@@ -120,6 +123,7 @@ namespace TetriClimber
                     tSpinCur = TimeSpan.Zero;
                 }
             }
+
             //state[climby.State]();
             climby.Update(gameTime);
             //

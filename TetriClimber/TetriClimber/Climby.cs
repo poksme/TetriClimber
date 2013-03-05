@@ -116,17 +116,20 @@ namespace TetriClimber
 
         public void stepDown(Dictionary<EAroundSquare,Point> asqr , int step = 1)
         {
+            if (step < 1)
+                return;
             pos.Y += step * Constants.Measures.blockSize;
             minHeight += step;
             oldMinHeight += step;
-            if (this.state == EState.CLIMB || this.state == EState.FALL || this.state == EState.END_CLIMB)
+            //if (this.state == EState.CLIMB || this.state == EState.FALL || this.state == EState.END_CLIMB)
                 foreach (EAroundSquare e in Enum.GetValues(typeof(EAroundSquare)))
                 {
                     Point p = asqr[e];
                     p.Y += step;
                     asqr[e] = p;
                 }
-
+            if (this.state == EState.MOVE)
+                this.state = EState.FREE_FALL;
             // RECENTLY ADDED
             actualPosition.Y += (int)(step * Constants.Measures.blockSize);
         }
