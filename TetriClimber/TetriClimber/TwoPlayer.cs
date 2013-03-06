@@ -9,11 +9,13 @@ namespace TetriClimber
     public class TwoPlayer : APlay
     {
         private GameSession player2;
+        private TimeSpan timer;
 
         public TwoPlayer():
             base(CoordHelper.EProfile.TWOPLAYER)
         {
             player2 = new GameSession(CoordHelper.EProfile.TWOPLAYER, hud);
+            timer = TimeSpan.FromMilliseconds(120000);
         }
 
         public override void Update(GameTime gameTime)
@@ -82,6 +84,23 @@ namespace TetriClimber
                 SceneManager.Instance.requestRemovePlayScene();
                 SceneManager.Instance.requestAddScene(SceneManager.EScene.END_GAME, new EndGame(player1.score, CoordHelper.EProfile.ONEPLAYER));
             }
+            timer -= gameTime.ElapsedGameTime;
+            if (timer <= TimeSpan.Zero)
+            {
+                if (player1.score.TotalScore == player2.score.TotalScore
+                    && player1.score.ClimbyScore == player2.score.ClimbyScore)
+                    return ;
+                SceneManager.Instance.requestRemovePlayScene();
+
+                if (player1.score.TotalScore > player2.score.TotalScore)
+                    SceneManager.Instance.requestAddScene(SceneManager.EScene.END_GAME, new EndGame(player1.score, CoordHelper.EProfile.ONEPLAYER));
+                else if (player1.score.TotalScore < player2.score.TotalScore)
+                    SceneManager.Instance.requestAddScene(SceneManager.EScene.END_GAME, new EndGame(player2.score, CoordHelper.EProfile.TWOPLAYER));
+                else if (player1.score.ClimbyScore > player2.score.ClimbyScore)
+                    SceneManager.Instance.requestAddScene(SceneManager.EScene.END_GAME, new EndGame(player1.score, CoordHelper.EProfile.ONEPLAYER));
+                else
+                    SceneManager.Instance.requestAddScene(SceneManager.EScene.END_GAME, new EndGame(player2.score, CoordHelper.EProfile.TWOPLAYER));
+            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -89,6 +108,7 @@ namespace TetriClimber
             base.Draw(gameTime);
             player1.Draw(gameTime);
             player2.Draw(gameTime);
+            SpriteManager.Instance.drawRotatedAtPos(SpriteManager.ESprite.CLIMBYRED, new Vector2(Constants.Measures.landscapeWidth / 2 - 115/2, CoordHelper.Instance.nextPosY + CoordHelper.Instance.nextBoxH - 50), -MathHelper.ToRadians((float)(timer.TotalMilliseconds * 360) / 120000 + 90), 115);
         }
     }
 }

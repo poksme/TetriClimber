@@ -10,7 +10,7 @@ namespace TetriClimber
     public class Score
     {
         private int lineScore;
-        private int climbyScore;
+        public int ClimbyScore {get; private set;}
         public int TotalScore { get; set; }
         public int Level { get; set; }
         public String pseudo { get; set; }
@@ -18,7 +18,7 @@ namespace TetriClimber
         public Score(Vector2 p = new Vector2(), Vector2 o = new Vector2())
         {
             lineScore = 0;
-            climbyScore = 0;
+            ClimbyScore = 0;
             TotalScore = 0;
             Level = 0;
             pseudo = "";
@@ -57,14 +57,14 @@ namespace TetriClimber
 
         public void addClimbyScore(int cs)
         {
-            climbyScore +=  cs * ((1200 / 4) * (Level + 1));
+            ClimbyScore +=  cs * ((1200 / 4) * (Level + 1));
             majTotalScore();
 
         }
 
         public void majTotalScore()
         {
-            TotalScore = climbyScore + lineScore;
+            TotalScore = ClimbyScore + lineScore;
         }
 
         public void setPseudo(String p)

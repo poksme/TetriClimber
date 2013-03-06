@@ -39,7 +39,10 @@ namespace TetriClimber
 
         public void pauseGame(ButtonState state)
         {
-            MenuManager.Instance.CreatePauseMenu(target);
+            if (!target.IsPause)
+                MenuManager.Instance.CreatePauseMenu(target);
+            else
+                MenuManager.Instance.Flush();
             target.TogglePause();
         }
 

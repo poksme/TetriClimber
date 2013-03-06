@@ -73,7 +73,6 @@ namespace TetriClimber
                 (int)(TextManager.Instance.getSizeString(TextManager.EFont.AHARONI, name.Value).Y * name.Scale + 40));
             tb = new TextBox(saveScore, tbcolor, ph, new Rectangle((int)(Constants.Measures.landscapeWidth - 400) / 2, (int)nameBox.Bottom, 400, 150));
 
-            SurfaceKeyboard.IsVisible = true;
             SurfaceKeyboard.CenterX = (float)InteractiveSurface.PrimarySurfaceDevice.Width - (SurfaceKeyboard.Width / 2);
             SurfaceKeyboard.CenterY = (float)InteractiveSurface.PrimarySurfaceDevice.Height - (SurfaceKeyboard.Height / 2);
             SurfaceKeyboard.Layout = Microsoft.Surface.KeyboardLayout.Alphanumeric;
