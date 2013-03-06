@@ -149,14 +149,6 @@ namespace TetriClimber
                 climby.setSpeedFromLevel(level.level);
             }
             projectShadow();
-            if (death)
-            {
-                SurfaceKeyboard.IsVisible = true;
-                SurfaceKeyboard.CenterX = (float)InteractiveSurface.PrimarySurfaceDevice.Width - (SurfaceKeyboard.Width / 2);
-                SurfaceKeyboard.CenterY = (float)InteractiveSurface.PrimarySurfaceDevice.Height - (SurfaceKeyboard.Height / 2);
-                SurfaceKeyboard.Layout = Microsoft.Surface.KeyboardLayout.Alphanumeric;
-                SurfaceKeyboard.ShowsFeedback = false;
-            }
         }
 
         private void projectShadow()

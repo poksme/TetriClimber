@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Surface;
 
 namespace TetriClimber
 {
@@ -19,24 +20,31 @@ namespace TetriClimber
 
         public String Text { get { return gs.Value; } set { gs.Value = value;} }
         public GameString gs;
+        private GameString placeHolder;
         private HandlerAction handler;
 
         private TimeSpan lat = TimeSpan.FromMilliseconds(120);
         private TimeSpan cur = TimeSpan.Zero;
 
-        public TextBox(HandlerAction h ,Rectangle l = new Rectangle(), String val ="") :
+        public TextBox(HandlerAction h, Color textColor, Color placeHolderColor, Rectangle l = new Rectangle(), String val = "") :
             base(App.Game)
         {
             location = l;
-            gs = new GameString(val, TextManager.EFont.AHARONI, Color.Black, 0.5f, new Vector2((float)l.X + 10, (float)(l.Y + 45)));
+            gs = new GameString(val, TextManager.EFont.AHARONI, textColor, 0.5f, new Vector2((float)l.X + 10, (float)(l.Y + 45)));
             Active = true;
             handler = h;
+            placeHolder = new GameString("TAP HERE", TextManager.EFont.AHARONI, placeHolderColor, 0.5f);
+            placeHolder.Pos = new Vector2((float)(l.Center.X - TextManager.Instance.getSizeString(TextManager.EFont.AHARONI, placeHolder.Value).X * placeHolder.Scale / 2),
+                (float)(l.Y + 45));
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             cur += gameTime.ElapsedGameTime;
+            if (App.UserInput is TouchInput)
+                if (location.Contains((App.UserInput as TouchInput).tapedPoint))
+                    SurfaceKeyboard.IsVisible = true;
             if (cur > lat)
             {
                 if (gs.Value.Length < 6)
@@ -58,6 +66,7 @@ namespace TetriClimber
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter) && gs.Value.Length > 0)
                 {
+                    App.UserInput.reset();
                     handler(gs.Value);
                     cur = TimeSpan.Zero;
                 }
@@ -69,6 +78,8 @@ namespace TetriClimber
             base.Draw(gameTime);
             SpriteManager.Instance.drawBoardedRectangleAbsPos(location, Color.White, Constants.Measures.borderSize, Constants.Color.border);
             TextManager.Instance.Draw(gs);
+            if (gs.Value.Length < 1 && !SurfaceKeyboard.IsVisible)
+                TextManager.Instance.Draw(placeHolder);
         }
     }
 }

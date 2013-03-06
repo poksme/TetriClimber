@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Surface.Core;
+using Microsoft.Surface;
 
 namespace TetriClimber
 {
@@ -23,14 +25,27 @@ namespace TetriClimber
         public EndGame(Score s, CoordHelper.EProfile player) :
             base()
         {
+            Color ph;
+            Color tbcolor;
             score = s;
-            score.TotalScore = 155484;
             if (player == CoordHelper.EProfile.TWOPLAYER)
-                who = new GameString("RED", TextManager.EFont.AHARONI, Constants.Color.p2Dark, 0.8f);
+            {
+                tbcolor = Constants.Color.p2Dark;
+                who = new GameString("RED", TextManager.EFont.AHARONI, tbcolor, 0.8f);
+                ph = Constants.Color.p2Light;
+            }
             else if (CoordHelper.Instance.Profile == CoordHelper.EProfile.TWOPLAYER)
-                who = new GameString("BLUE", TextManager.EFont.AHARONI, Constants.Color.p1Dark, 0.8f);
+            {
+                tbcolor = Constants.Color.p1Dark;
+                who = new GameString("BLUE", TextManager.EFont.AHARONI, tbcolor, 0.8f);
+                ph = Constants.Color.p1Light;
+            }
             else
-                who = new GameString("YOU", TextManager.EFont.AHARONI, Constants.Color.p1Dark, 0.8f);
+            {
+                tbcolor = Constants.Color.p1Dark;
+                who = new GameString("YOU", TextManager.EFont.AHARONI, tbcolor, 0.8f);
+                ph = Constants.Color.p1Light;
+            }
 
             scored = new GameString(" SCORED", TextManager.EFont.AHARONI, Color.White, 0.8f);
             who.Pos = new Vector2((Constants.Measures.landscapeWidth - TextManager.Instance.getSizeString(TextManager.EFont.AHARONI, who.Value+scored.Value).X * who.Scale) / 2,
@@ -42,7 +57,7 @@ namespace TetriClimber
                                           (int)(TextManager.Instance.getSizeString(TextManager.EFont.AHARONI, who.Value + scored.Value).X * scored.Scale + 100),
                                           (int)(TextManager.Instance.getSizeString(TextManager.EFont.AHARONI, who.Value + scored.Value).Y * scored.Scale + 40));
 
-            scoreStr = new GameString(score.TotalScore.ToString(), TextManager.EFont.AHARONI, Constants.Color.p1Dark);
+            scoreStr = new GameString(score.TotalScore.ToString(), TextManager.EFont.AHARONI, who.Color);
             scoreStr.Pos = new Vector2((Constants.Measures.landscapeWidth - TextManager.Instance.getSizeString(TextManager.EFont.AHARONI,scoreStr.Value).X) / 2,
                                         scoredBox.Bottom + 5);
 
@@ -56,7 +71,13 @@ namespace TetriClimber
             nameBox = new Rectangle((int)name.Pos.X - 50, (int)name.Pos.Y - 40,
                 (int)(TextManager.Instance.getSizeString(TextManager.EFont.AHARONI, name.Value).X * name.Scale + 100),
                 (int)(TextManager.Instance.getSizeString(TextManager.EFont.AHARONI, name.Value).Y * name.Scale + 40));
-            tb = new TextBox(saveScore, new Rectangle((int)(Constants.Measures.landscapeWidth - 400) / 2, (int)nameBox.Bottom ,400, 150));
+            tb = new TextBox(saveScore, tbcolor, ph, new Rectangle((int)(Constants.Measures.landscapeWidth - 400) / 2, (int)nameBox.Bottom, 400, 150));
+
+            SurfaceKeyboard.IsVisible = true;
+            SurfaceKeyboard.CenterX = (float)InteractiveSurface.PrimarySurfaceDevice.Width - (SurfaceKeyboard.Width / 2);
+            SurfaceKeyboard.CenterY = (float)InteractiveSurface.PrimarySurfaceDevice.Height - (SurfaceKeyboard.Height / 2);
+            SurfaceKeyboard.Layout = Microsoft.Surface.KeyboardLayout.Alphanumeric;
+            SurfaceKeyboard.ShowsFeedback = false;
         }
 
         public override void Update(GameTime gameTime)

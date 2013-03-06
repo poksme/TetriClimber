@@ -58,6 +58,11 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            reset();
+        }
+
+        public void reset()
+        {
             foreach (EGameMode gm in Enum.GetValues(typeof(EGameMode)))
             {
                 foreach (EInputKeys ipt in Enum.GetValues(typeof(EInputKeys)))
