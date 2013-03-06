@@ -61,8 +61,8 @@ namespace TetriClimber
             public const float buttonSize = 70f;
             public static float portraitHeight;
             public static float portraitWidth;
-            public static float landscapeHeight;
-            public static float landscapeWidth;
+            public static float landscapeHeight = 1080;
+            public static float landscapeWidth = 1920;
             public const float BgShapesSize = 800f;
             //public const float Scale = 0.875f;
             public const float Scale = 1f;

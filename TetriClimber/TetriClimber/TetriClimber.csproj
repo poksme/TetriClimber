@@ -121,6 +121,7 @@
     <Compile Include="Block.cs" />
     <Compile Include="ATetrimino.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="EndGame.cs" />
     <Compile Include="GameButton.cs" />
     <Compile Include="GameString.cs" />
     <Compile Include="Climby.cs" />
@@ -155,7 +156,7 @@
     <Compile Include="Tetrimini\TetriO.cs" />
     <Compile Include="Tetrimini\TetriP.cs" />
     <Compile Include="Tetrimini\TetriQ.cs" />
-	<Compile Include="TextBox.cs" />
+    <Compile Include="TextBox.cs" />
     <Compile Include="TextButton.cs" />
     <Compile Include="TextManager.cs" />
     <Compile Include="TextureManager.cs" />

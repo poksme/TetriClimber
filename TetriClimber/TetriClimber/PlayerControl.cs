@@ -19,10 +19,8 @@ namespace TetriClimber
         {
             this.target = target;
             pause = new GameButton(SpriteManager.ESprite.PAUSE, CoordHelper.Instance.pause, pauseGame);
-            left = new GameButton(SpriteManager.ESprite.LEFT, new Vector2(CoordHelper.Instance.getLeftMargin(CoordHelper.EProfile.ONEPLAYER) - Constants.Measures.buttonSize - Constants.Measures.upBoardMargin - Constants.Measures.borderSize,
-                                                                          Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.buttonSize), leftArrow);
-            right = new GameButton(SpriteManager.ESprite.RIGHT, new Vector2(CoordHelper.Instance.getLeftMargin(CoordHelper.EProfile.ONEPLAYER) + Constants.Measures.boardWidth + Constants.Measures.upBoardMargin,
-                                                                            Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.buttonSize), rightArrow);
+            left = new GameButton(SpriteManager.ESprite.LEFT, CoordHelper.Instance.leftArrow, leftArrow);
+            right = new GameButton(SpriteManager.ESprite.RIGHT, CoordHelper.Instance.rightArrow, rightArrow);
         }
 
         public override void Update(GameTime gameTime)

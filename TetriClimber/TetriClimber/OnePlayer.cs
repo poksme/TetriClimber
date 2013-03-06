@@ -9,8 +9,6 @@ namespace TetriClimber
 {
     class OnePlayer : APlay
     {
-        private TextBox tb;
-
         public OnePlayer()
             : base(CoordHelper.EProfile.ONEPLAYER)
         {
@@ -19,7 +17,6 @@ namespace TetriClimber
                 ipt = App.UserInput as TouchInput;
             else
                 (App.UserInput as KeyboardInput).KeyRepeatTime = new TimeSpan(1500000);
-            tb = new TextBox(saveScore, new Rectangle(400, 400, 300, 60));
         }
 
         public override void Update(GameTime gameTime)
@@ -51,16 +48,17 @@ namespace TetriClimber
                     player1.dropDown();
                 player1.Update(gameTime);
             }
-            else if (tb.Active)
-                tb.Update(gameTime);
+            else
+            {
+                SceneManager.Instance.requestRemovePlayScene();
+                SceneManager.Instance.requestAddScene(SceneManager.EScene.END_GAME, new EndGame(player1.score, CoordHelper.EProfile.ONEPLAYER));
+            }
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
             player1.Draw(gameTime);
-            if (player1.death && tb.Active)
-                tb.Draw(gameTime);
             //if (ipt != null)
             //{
             //    var ddd = ipt.getDropDownDistance();
@@ -69,14 +67,6 @@ namespace TetriClimber
             //    else if (ddd > 0)
             //        SpriteManager.Instance.drawRectangleAbsPos(new Rectangle((int)(ipt.StartingPos.X) - 10, (int)(ipt.StartingPos.Y) - 10, 20, 20), Color.Black * (ddd / (Constants.Measures.Scale * Constants.Measures.blockSize * 2)));
             //}
-        }
-
-        public void saveScore(String pseudo)
-        {
-            player1.score.setPseudo(pseudo);
-            ScoreBoard.Instance.addScore(player1.score);
-            ScoreBoard.Instance.Dump();
-            tb.Active = false;
         }
     }
 }

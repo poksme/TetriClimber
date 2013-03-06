@@ -11,10 +11,12 @@ namespace TetriClimber
 {
     public class SceneManager : DrawableGameComponent
     {
-        public enum EScene { ATRACT_MODE, SOLO, MULTI, BACKGROUND }
+        public enum EScene { ATRACT_MODE, SOLO, MULTI, BACKGROUND, END_GAME }
         private Dictionary<EScene, AScene> scenes = new Dictionary<EScene, AScene>();
         private static SceneManager instance = null;
         private EScene current;
+        private List<EScene> removeRqst = new List<EScene>();
+        private Dictionary<EScene, AScene> addRqst = new Dictionary<EScene,AScene>();
 
         private SceneManager():base(App.Game)
         {
@@ -43,6 +45,12 @@ namespace TetriClimber
             base.Update(gameTime);
             foreach (KeyValuePair<EScene, AScene> pair in scenes)
                 pair.Value.Update(gameTime);
+            foreach (EScene rqst in removeRqst)
+                scenes.Remove(rqst);
+            foreach (KeyValuePair<EScene, AScene> rqst in addRqst)
+                scenes.Add(rqst.Key, rqst.Value);
+            removeRqst.Clear();
+            addRqst.Clear();
         }
 
         public void addScene(EScene e)
@@ -64,9 +72,9 @@ namespace TetriClimber
             }
         }
 
-        public void removeScene(EScene eScene)
+        public void requestRemoveScene(EScene e)
         {
-            scenes.Remove(eScene);
+            removeRqst.Add(e);
         }
 
         public void TogglePause(AScene scene)
@@ -74,9 +82,14 @@ namespace TetriClimber
             scene.TogglePause();
         }
 
-        public void removePlayScene()
+        public void requestRemovePlayScene()
         {
-            removeScene(current);
+            removeRqst.Add(current);
+        }
+
+        public void requestAddScene(EScene e, AScene s)
+        {
+            addRqst.Add(e, s);
         }
     }
 }

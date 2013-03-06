@@ -132,7 +132,7 @@ namespace TetriClimber
             {
                 case EMenu.MAIN:
                     CreateMainMenu();
-                    SceneManager.Instance.removePlayScene();
+                    SceneManager.Instance.requestRemovePlayScene();
                     SoundManager.Instance.stop(SoundManager.EChannel.BGM);
                     break;
                 case EMenu.OPTIONS:

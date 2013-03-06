@@ -28,7 +28,7 @@ namespace TetriClimber
             base(App.Game)
         {
             location = l;
-            gs = new GameString(val, TextManager.EFont.AHARONI, Color.Black, 0.5f, new Vector2((float)l.X, (float)(l.Y + 2)));
+            gs = new GameString(val, TextManager.EFont.AHARONI, Color.Black, 0.5f, new Vector2((float)l.X + 10, (float)(l.Y + 45)));
             Active = true;
             handler = h;
         }
@@ -45,6 +45,7 @@ namespace TetriClimber
                         if (Keyboard.GetState().IsKeyDown(p.Key))
                         {
                             gs.Value = gs.Value + p.Value;
+                            gs.setX(location.Center.X - (TextManager.Instance.getSizeString(TextManager.EFont.AHARONI, gs.Value).X * gs.Scale)/2);
                             cur = TimeSpan.Zero;
                             break;
                         }
@@ -52,6 +53,7 @@ namespace TetriClimber
                 if (Keyboard.GetState().IsKeyDown(Keys.Back) && gs.Value.Length > 0)
                 {
                     gs.Value = gs.Value.Remove(gs.Value.Length - 1);
+                    gs.setX(location.Center.X - (TextManager.Instance.getSizeString(TextManager.EFont.AHARONI, gs.Value).X * gs.Scale) / 2);
                     cur = TimeSpan.Zero;
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter) && gs.Value.Length > 0)
@@ -65,7 +67,7 @@ namespace TetriClimber
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            SpriteManager.Instance.drawBoardedRectangleAbsPos(location, Color.WhiteSmoke, 1, Color.Black);
+            SpriteManager.Instance.drawBoardedRectangleAbsPos(location, Color.White, Constants.Measures.borderSize, Constants.Color.border);
             TextManager.Instance.Draw(gs);
         }
     }

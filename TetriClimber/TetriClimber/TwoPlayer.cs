@@ -46,6 +46,11 @@ namespace TetriClimber
                     player1.dropDown();
                 player1.Update(gameTime);
             }
+            else
+            {
+                SceneManager.Instance.requestRemovePlayScene();
+                SceneManager.Instance.requestAddScene(SceneManager.EScene.END_GAME, new EndGame(player2.score, CoordHelper.EProfile.TWOPLAYER));
+            }
 
             //PLAYER 2
             if (!player2.death)
@@ -71,6 +76,11 @@ namespace TetriClimber
                 if (App.UserInput.isPressed(AUserInput.EInputKeys.SPACE_BAR, AUserInput.EGameMode.MULTI2P))
                     player2.dropDown();
                 player2.Update(gameTime);
+            }
+            else
+            {
+                SceneManager.Instance.requestRemovePlayScene();
+                SceneManager.Instance.requestAddScene(SceneManager.EScene.END_GAME, new EndGame(player1.score, CoordHelper.EProfile.ONEPLAYER));
             }
         }
 

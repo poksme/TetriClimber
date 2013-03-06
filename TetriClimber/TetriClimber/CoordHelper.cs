@@ -27,6 +27,8 @@ namespace TetriClimber
         public float levelPosY = 593f;
         public float nextPosY = 40f;
         public Vector2 pause;
+        public Vector2 leftArrow;
+        public Vector2 rightArrow;
 
         private CoordHelper()
         {
@@ -37,6 +39,10 @@ namespace TetriClimber
              {EProfile.TWOPLAYER, 1400f}
             };
             pause = new Vector2(Constants.Measures.upBoardMargin - Constants.Measures.borderSize);
+            leftArrow = new Vector2(getLeftMargin(EProfile.ONEPLAYER) - Constants.Measures.buttonSize - Constants.Measures.upBoardMargin - Constants.Measures.borderSize,
+                                                                          Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.buttonSize);
+            rightArrow = new Vector2(getRightBoard(EProfile.ONEPLAYER) + Constants.Measures.upBoardMargin,
+                                     Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.buttonSize);
         }
 
         public static CoordHelper Instance
@@ -110,12 +116,20 @@ namespace TetriClimber
                 textBoxW = leftMargin[EProfile.TWOPLAYER] - getRightBoard(EProfile.ONEPLAYER);
                 pause.X = 930f;
                 pause.Y = 880f;
+                leftArrow.X = 800f;
+                leftArrow.Y = 880f;
+                rightArrow.X = 1060f;
+                rightArrow.Y = 880f;
             }
             else
             {
                 leftMargin[EProfile.ONEPLAYER] = 704f;
                 pause.X = Constants.Measures.upBoardMargin - Constants.Measures.borderSize;
                 pause.Y = Constants.Measures.upBoardMargin - Constants.Measures.borderSize;
+                leftArrow.X = getLeftMargin(EProfile.ONEPLAYER) - Constants.Measures.buttonSize - Constants.Measures.upBoardMargin - Constants.Measures.borderSize;
+                leftArrow.Y = Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.buttonSize;
+                rightArrow.X = getRightBoard(EProfile.ONEPLAYER) + Constants.Measures.upBoardMargin;
+                rightArrow.Y = Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.buttonSize;
             }
             
         }

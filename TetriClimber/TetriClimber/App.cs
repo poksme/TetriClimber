@@ -66,8 +66,6 @@ namespace TetriClimber
                 ti = new TouchInput();
                 Constants.Measures.portraitHeight = 1080;
                 Constants.Measures.portraitWidth = 1920;
-                Constants.Measures.portraitHeight = 1080;
-                Constants.Measures.portraitWidth = 1920;
                 //Constants.Measures.leftBoardMargin = (float)Math.Round((Constants.Measures.portraitHeight - Constants.Measures.boardBlockWidth * Constants.Measures.blockSize) / 2f);
                 //Constants.Measures.upBoardMargin = (float)Math.Round((Constants.Measures.portraitWidth - Constants.Measures.boardBlockHeight * Constants.Measures.blockSize) / 2f);
             }
