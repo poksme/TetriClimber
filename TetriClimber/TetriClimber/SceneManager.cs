@@ -11,7 +11,7 @@ namespace TetriClimber
 {
     public class SceneManager : DrawableGameComponent
     {
-        public enum EScene { ATRACT_MODE, SOLO, MULTI, BACKGROUND, END_GAME }
+        public enum EScene { SOLO, MULTI, BACKGROUND, END_GAME, TUTO, LEADER_BOARD, TITLE }
         private Dictionary<EScene, AScene> scenes = new Dictionary<EScene, AScene>();
         private static SceneManager instance = null;
         private EScene current;
@@ -90,6 +90,11 @@ namespace TetriClimber
         public void requestAddScene(EScene e, AScene s)
         {
             addRqst.Add(e, s);
+        }
+
+        public bool HasScene(EScene eScene)
+        {
+            return scenes.ContainsKey(eScene);
         }
     }
 }

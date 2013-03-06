@@ -17,11 +17,34 @@ namespace TetriClimber
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+            SceneManager.Instance.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (App.UserInput is KeyboardInput)
+            {
+                foreach (AUserInput.EInputKeys ipt in Enum.GetValues(typeof(AUserInput.EInputKeys)))
+                    if (App.UserInput.isPressed(ipt, AUserInput.EGameMode.SOLO))
+                    {
+                        ModeManager.Instance.TryChangeMode(ModeManager.EMode.GAME_MODE);
+                        return;
+                    }
+            }
+            else
+            {
+                if ((App.UserInput as TouchInput).hasTapEvent)
+                {
+                    ModeManager.Instance.TryChangeMode(ModeManager.EMode.GAME_MODE);
+                    return;
+                }
+            }
+            if (!SceneManager.Instance.HasScene(SceneManager.EScene.TITLE) &&
+                !SceneManager.Instance.HasScene(SceneManager.EScene.TUTO) &&
+                !SceneManager.Instance.HasScene(SceneManager.EScene.LEADER_BOARD))
+                SceneManager.Instance.requestAddScene(SceneManager.EScene.TITLE, new TitleScene());
+            SceneManager.Instance.Update(gameTime);
         }
 
         public override bool FadeOut(GameTime gt)
@@ -31,6 +54,12 @@ namespace TetriClimber
                 ReinitFadeTime(TimeSpan.Zero); // ZERO FOR NO TRANSITIONS
 
                 // HERE RE-INIT VALUES BEFORE NEVER BEING UPDATED AGAIN
+                if (SceneManager.Instance.HasScene(SceneManager.EScene.TITLE))
+                    SceneManager.Instance.requestRemoveScene(SceneManager.EScene.TITLE);
+                if (SceneManager.Instance.HasScene(SceneManager.EScene.TUTO))
+                    SceneManager.Instance.requestRemoveScene(SceneManager.EScene.TUTO);
+                if (SceneManager.Instance.HasScene(SceneManager.EScene.LEADER_BOARD))
+                    SceneManager.Instance.requestRemoveScene(SceneManager.EScene.LEADER_BOARD);
 
                 return true;
             }
@@ -38,6 +67,7 @@ namespace TetriClimber
             {
 
                 // HERE PUT FADE OUT ANIMATION USING THE FADETIME TO ANIMATE IT
+                // THIS WILL REPLACE THE UPDATE
 
                 return false;
             }

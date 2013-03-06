@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetriClimber
 {
-    public class APlay : AScene
+    public abstract class APlay : AScene
     {
         protected PlayerControl control;
         protected TimeSpan lat = new TimeSpan(10000000 / 2);

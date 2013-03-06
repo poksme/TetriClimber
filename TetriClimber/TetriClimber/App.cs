@@ -214,9 +214,7 @@ namespace TetriClimber
                     // use the following code to get the state of all current touch points.
                     // ReadOnlyTouchPointCollection touches = touchTarget.GetState();
                 }
-
-                SceneManager.Instance.Update(gameTime);
-                MenuManager.Instance.Update(gameTime);
+                ModeManager.Instance.Update(gameTime);
                 // TODO: Add your update logic here
             }
 
@@ -241,12 +239,8 @@ namespace TetriClimber
             GraphicsDevice.Clear(Constants.Color.background);
 
 
-            //SpriteManager.Instance.begin();
-            //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null);
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,CoordHelper.Instance.getCurrentMatrix());
-            SceneManager.Instance.Draw(gameTime);
-            MenuManager.Instance.Draw(gameTime);
-            //SpriteManager.Instance.drawAtPos(SpriteManager.ESprite.L, Vector2.Zero);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, CoordHelper.Instance.getCurrentMatrix());
+            ModeManager.Instance.Draw(gameTime);
             SpriteManager.Instance.end();
 
             //TODO: Add your drawing code here

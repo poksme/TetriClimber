@@ -24,6 +24,8 @@ namespace TetriClimber
         {
             curMode = EMode.ATTRACT_MODE;
             nextMode = EMode.ATTRACT_MODE;
+            //curMode = EMode.GAME_MODE;
+            //nextMode = EMode.GAME_MODE;
             modes = new Dictionary<EMode, AMode>()
             {
                 {EMode.ATTRACT_MODE, new AttractMode()},
@@ -53,7 +55,8 @@ namespace TetriClimber
             base.Update(gameTime);
             if (curMode != nextMode && modes[curMode].FadeOut(gameTime)) // IF A MODE CHANGE IS REQUESTED FADE OUT CURMODE
                 curMode = nextMode; // IF FADE OUT FINISHED THEN SET THE NEW MODE
-            modes[curMode].Update(gameTime);
+            if (curMode == nextMode) // IF IS FADING OUT
+                modes[curMode].Update(gameTime); // DONT UPDATE
         }
 
         public bool TryChangeMode(EMode e) // TRY TO CHANGE MODE BUT MAY FAIL

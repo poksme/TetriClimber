@@ -17,11 +17,15 @@ namespace TetriClimber
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+            SceneManager.Instance.Draw(gameTime);
+            MenuManager.Instance.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            SceneManager.Instance.Update(gameTime);
+            MenuManager.Instance.Update(gameTime);
         }
 
         public override bool FadeOut(GameTime gt)
