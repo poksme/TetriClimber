@@ -45,6 +45,11 @@ namespace TetriClimber
                 Console.WriteLine(""+s.pseudo+" "+s.TotalScore);
         }
 
+        public List<Score> getScores()
+        {
+            return scores;
+        }
+
         private void saveScoreBoard()
         {
             try

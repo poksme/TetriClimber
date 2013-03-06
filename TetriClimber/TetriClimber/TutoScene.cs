@@ -12,7 +12,7 @@ namespace TetriClimber
         public TutoScene()
             : base()
         {
-            displayTime = new TimeSpan(0, 0, 5);
+            displayTime = new TimeSpan(0, 0, 1);
         }
 
         public override void Draw(GameTime gameTime)
