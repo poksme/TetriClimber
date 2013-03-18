@@ -55,6 +55,13 @@ namespace TetriClimber
             return (ATetrimino)tetriminiConstructors[next[profile]].Item1.Invoke(new object[] {profile, 1f, false});
         }
 
+        // HEXA 0 to D
+        public ATetrimino getAndSetNextTetriminoFromId(long tagValue, CoordHelper.EProfile profile) // RETURNS A VISUAL NEXT TETRIMINO FROM A TAG ID AND SET THE TETRIMINO TO CREATE NEXT
+        {
+            next[profile] = (int)(tagValue % tetriminiConstructors.Count);
+            return (ATetrimino)tetriminiConstructors[(int)(tagValue % tetriminiConstructors.Count)].Item1.Invoke(new object[] {profile, 1f, false});
+        }
+
         private void resetTetriminiConstructors(CoordHelper.EProfile profile)
         {
             for (int i = 0; i < tetriminiConstructors.Count; i++)

@@ -116,6 +116,9 @@ namespace TetriClimber
                     #endregion
                     if (climby.State != Climby.EState.CLIMB && climby.ActualPosition.Bottom > Constants.Measures.upBoardMargin + Constants.Measures.boardHeight)
                         death = true;
+                    //IF TAG RECOGNIZED
+                    //hud.setNext(tetriminoFactory.getAndSetNextTetriminoFromId(0, playerType), playerType);
+                    //
                     var tmp = tetriminoFactory.getTetrimino(playerType);
                     currTetrimino = tmp.Item1;
                     shadowTetrimino = tmp.Item2;
