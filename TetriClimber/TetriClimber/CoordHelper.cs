@@ -8,7 +8,7 @@ namespace TetriClimber
 {
     public class CoordHelper
     {
-        public enum EProfile {PORTRAIT, LANDSCAPE, ONEPLAYER, TWOPLAYER }
+        public enum EProfile {ONEPLAYER, TWOPLAYER }
         private static  CoordHelper instance = null;
 
         public EProfile Profile { get; private set; }

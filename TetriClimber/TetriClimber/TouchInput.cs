@@ -60,6 +60,10 @@ namespace TetriClimber
                     if (screenParts[id].boundaries.Contains((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY))
                         screenParts[id].Down(e.TouchPoint);
             }
+            if (e.TouchPoint.IsTagRecognized)
+            {
+                TagManager.Instance.addTag(e.TouchPoint);
+            }
         }
 
         public void Up(Object sender, TouchEventArgs e)

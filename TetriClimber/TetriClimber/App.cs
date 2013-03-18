@@ -215,7 +215,7 @@ namespace TetriClimber
                     // ReadOnlyTouchPointCollection touches = touchTarget.GetState();
                 }
                 ModeManager.Instance.Update(gameTime);
-                // TODO: Add your update logic here
+
             }
 
             base.Update(gameTime);

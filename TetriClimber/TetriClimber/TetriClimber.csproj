@@ -154,6 +154,7 @@
     <Compile Include="ShapeData.cs" />
     <Compile Include="SoundManager.cs" />
     <Compile Include="SpriteManager.cs" />
+    <Compile Include="TagManager.cs" />
     <Compile Include="Tetrimini\TetriL.cs" />
     <Compile Include="TetriminoFactory.cs" />
     <Compile Include="Tetrimini\TetriS.cs" />

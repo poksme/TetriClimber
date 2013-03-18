@@ -79,6 +79,9 @@ namespace TetriClimber
  	        base.Update(gameTime);
             board.Update(gameTime);
             cur += gameTime.ElapsedGameTime;
+
+            if (TagManager.Instance.NextTagIsPlace(playerType))
+                Console.WriteLine(TagManager.Instance.getNextTag(playerType));
 //ACTIVE TETRIMiNO
             if (cur > lat)
             {
