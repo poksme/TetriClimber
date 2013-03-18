@@ -80,6 +80,7 @@ namespace TetriClimber
                 BinaryFormatter bin = new BinaryFormatter();
                 scores = (List<Score>)bin.Deserialize(stream);
                 stream.Close();
+                //orderScore();
             }
             catch (Exception)
             {
@@ -87,6 +88,38 @@ namespace TetriClimber
                 if (stream != null)
                     stream.Close();
             }
+        }
+
+        private void orderScore()
+        {
+            List<Score> tmp = new List<Score>();
+
+            foreach (Score a in scores)
+            {
+                foreach (Score s in scores)
+                {
+                    if (isMax(s))
+                        tmp.Add(s);
+                }
+            }
+            scores = tmp;
+        }
+
+        private bool isMax(Score v)
+        {
+            int index = scores.IndexOf(v, 0);
+            int i = 0;
+
+            foreach(Score s in scores)
+            {
+                if (i > index)
+                {
+                    if (v.TotalScore > s.TotalScore)
+                        return true;
+                }
+                i++;
+            }
+            return false;
         }
     }
 }

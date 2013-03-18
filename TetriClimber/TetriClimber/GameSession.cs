@@ -81,7 +81,7 @@ namespace TetriClimber
             cur += gameTime.ElapsedGameTime;
 
             if (TagManager.Instance.NextTagIsPlace(playerType))
-                Console.WriteLine(TagManager.Instance.getNextTag(playerType));
+                hud.setNext(tetriminoFactory.getAndSetNextTetriminoFromId(TagManager.Instance.getNextTag(playerType), playerType), playerType);
 //ACTIVE TETRIMiNO
             if (cur > lat)
             {
@@ -119,9 +119,6 @@ namespace TetriClimber
                     #endregion
                     if (climby.State != Climby.EState.CLIMB && climby.ActualPosition.Bottom > Constants.Measures.upBoardMargin + Constants.Measures.boardHeight)
                         death = true;
-                    //IF TAG RECOGNIZED
-                    //hud.setNext(tetriminoFactory.getAndSetNextTetriminoFromId(0, playerType), playerType);
-                    //
                     var tmp = tetriminoFactory.getTetrimino(playerType);
                     currTetrimino = tmp.Item1;
                     shadowTetrimino = tmp.Item2;
