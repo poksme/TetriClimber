@@ -386,5 +386,10 @@ namespace TetriClimber
             aroundRect[e] = p;
         }
         #endregion
+
+        public void addInfluence(float p)
+        {
+            climby.setInfluence(p);
+        }
     }
 }

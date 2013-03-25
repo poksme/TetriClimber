@@ -40,9 +40,9 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-                cur += gameTime.ElapsedGameTime;
-                control.Update(gameTime);
-                hud.Update(gameTime);
+            cur += gameTime.ElapsedGameTime;
+            control.Update(gameTime);
+            hud.Update(gameTime);
         }
     }
 }

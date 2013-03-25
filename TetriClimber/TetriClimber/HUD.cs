@@ -21,6 +21,9 @@ namespace TetriClimber
         Dictionary<CoordHelper.EProfile, Rectangle> scoreValBox = new Dictionary<CoordHelper.EProfile, Rectangle>();
         Dictionary<CoordHelper.EProfile, Rectangle> levelValBox = new Dictionary<CoordHelper.EProfile, Rectangle>();
 
+        Dictionary<CoordHelper.EProfile, Color> nextBoardColor = new Dictionary<CoordHelper.EProfile, Color>();
+        TimeSpan lat = TimeSpan.FromMilliseconds(100);
+        TimeSpan cur = TimeSpan.Zero;
 
         public HUD():
             base(App.Game)
@@ -47,6 +50,7 @@ namespace TetriClimber
             scoreValBox.Add(CoordHelper.EProfile.ONEPLAYER, CoordHelper.Instance.getScoreValueBox(scoreValue[CoordHelper.EProfile.ONEPLAYER], CoordHelper.EProfile.ONEPLAYER));
             levelValBox.Add(CoordHelper.EProfile.ONEPLAYER, CoordHelper.Instance.getLevelValueBox(levelValue[CoordHelper.EProfile.ONEPLAYER], CoordHelper.EProfile.ONEPLAYER));
             nextValBox.Add(CoordHelper.EProfile.ONEPLAYER, CoordHelper.Instance.getNextValueBox(CoordHelper.EProfile.ONEPLAYER));
+            nextBoardColor[CoordHelper.EProfile.ONEPLAYER] = Color.White;
             if (CoordHelper.Instance.Profile == CoordHelper.EProfile.TWOPLAYER)
             {
                 tmp = new GameString("0", TextManager.EFont.AHARONI, Constants.Color.p2Dark, 0.8f);
@@ -58,7 +62,7 @@ namespace TetriClimber
                 scoreValBox.Add(CoordHelper.EProfile.TWOPLAYER, CoordHelper.Instance.getScoreValueBox(scoreValue[CoordHelper.EProfile.TWOPLAYER], CoordHelper.EProfile.TWOPLAYER));
                 levelValBox.Add(CoordHelper.EProfile.TWOPLAYER, CoordHelper.Instance.getLevelValueBox(levelValue[CoordHelper.EProfile.TWOPLAYER], CoordHelper.EProfile.TWOPLAYER));
                 nextValBox.Add(CoordHelper.EProfile.TWOPLAYER, CoordHelper.Instance.getNextValueBox(CoordHelper.EProfile.TWOPLAYER));
-
+                nextBoardColor[CoordHelper.EProfile.TWOPLAYER] = Color.White;
             }
         }
 
@@ -75,13 +79,18 @@ namespace TetriClimber
             TextManager.Instance.Draw(levelStr);
 
             foreach (KeyValuePair<CoordHelper.EProfile, Rectangle> rec in nextValBox)
-                SpriteManager.Instance.drawBoardedRectangleAbsPos(rec.Value, Constants.Color.background, Constants.Measures.borderSize, Constants.Color.border);
+                SpriteManager.Instance.drawBoardedRectangleAbsPos(rec.Value, Color.White, Constants.Measures.borderSize, Constants.Color.border);
             foreach (KeyValuePair<CoordHelper.EProfile, Rectangle> rec in scoreValBox)
                 SpriteManager.Instance.drawBoardedRectangleAbsPos(rec.Value, Constants.Color.background, Constants.Measures.borderSize, Constants.Color.border);
             foreach (KeyValuePair<CoordHelper.EProfile, Rectangle> rec in levelValBox)
                 SpriteManager.Instance.drawBoardedRectangleAbsPos(rec.Value, Constants.Color.background, Constants.Measures.borderSize, Constants.Color.border);
             foreach (KeyValuePair<CoordHelper.EProfile, ATetrimino> t in nextValue)
                 t.Value.DrawAsPreview(gameTime);
+            foreach (KeyValuePair<CoordHelper.EProfile, Rectangle> rec in nextValBox)
+            {
+                if (!nextBoardColor[rec.Key].Equals(Color.White))
+                    SpriteManager.Instance.drawBoardedRectangleAbsPos(rec.Value, nextBoardColor[rec.Key], Constants.Measures.borderSize, Constants.Color.border);
+            }
             foreach (KeyValuePair<CoordHelper.EProfile, GameString> gs in scoreValue)
                 TextManager.Instance.Draw(gs.Value);
             foreach (KeyValuePair<CoordHelper.EProfile, GameString> gs in levelValue)
@@ -91,6 +100,21 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            
+            cur += gameTime.ElapsedGameTime;
+            if (cur > lat)
+            {
+                foreach (CoordHelper.EProfile e in Enum.GetValues(typeof(CoordHelper.EProfile)))
+                        if (TagManager.Instance.getBlob(e))
+                        {
+                            Color c = Color.Multiply(nextBoardColor[e], 0.9f);
+                            c.A = 255;
+                            nextBoardColor[e] = c;
+                        }
+                        else if (nextBoardColor.ContainsKey(e) && !nextBoardColor[e].Equals(Color.White))
+                            nextBoardColor[e] = Color.White;
+                cur = TimeSpan.Zero;
+            }
         }
 
         public void setScore(int p, CoordHelper.EProfile profile)

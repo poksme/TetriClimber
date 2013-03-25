@@ -14,6 +14,8 @@ namespace TetriClimber
         private GameButton left;
         private GameButton right;
         private AScene target;
+        public float rightSpeed = 0;
+        public float leftSpeed = 0;
 
         public PlayerControl(AScene target):base(App.Game)
         {
@@ -25,6 +27,8 @@ namespace TetriClimber
 
         public override void Update(GameTime gameTime)
         {
+            rightSpeed = 0;
+            leftSpeed = 0;
             pause.Update(gameTime);
             left.Update(gameTime);
             right.Update(gameTime);
@@ -39,23 +43,24 @@ namespace TetriClimber
 
         public void pauseGame(ButtonState state)
         {
-            if (!target.IsPause)
-                MenuManager.Instance.CreatePauseMenu(target);
-            else
-                MenuManager.Instance.Flush();
-            target.TogglePause();
+            if (state == ButtonState.Released)
+            {
+                if (!target.IsPause)
+                    MenuManager.Instance.CreatePauseMenu(target);
+                else
+                    MenuManager.Instance.Flush();
+                target.TogglePause();
+            }
         }
 
         public void rightArrow(ButtonState state)
         {
-            if (state == ButtonState.Pressed)
-                Console.Out.WriteLine("Right Holder");
+            rightSpeed = 1f;
         }
 
         public void leftArrow(ButtonState state)
         {
-            if (state == ButtonState.Pressed)
-                Console.Out.WriteLine("Left Holder");
+            leftSpeed = -1f;
         }
     }
 }

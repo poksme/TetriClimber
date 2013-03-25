@@ -107,6 +107,7 @@ namespace TetriClimber
             ScoreBoard.Instance.Dump();
             SceneManager.Instance.requestRemoveScene(SceneManager.EScene.END_GAME);
             MenuManager.Instance.launchMenu(MenuManager.EMenu.MAIN);
+            TagManager.Instance.reset();
         }
     }
 }

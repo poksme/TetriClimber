@@ -13,6 +13,7 @@ namespace TetriClimber
         private Dictionary<EGameMode, TouchRec> screenParts;
         public Point tapedPoint { get; private set; }
         private bool isTaped;
+        private Dictionary<int, Point> pressedPoints;
 
         public TouchInput():base()
         {
@@ -24,6 +25,7 @@ namespace TetriClimber
             };
             tapedPoint = Point.Zero;
             isTaped = false;
+            pressedPoints = new Dictionary<int, Point>();
         }
 
 
@@ -47,6 +49,7 @@ namespace TetriClimber
         {
             if (e.TouchPoint.IsFingerRecognized)
             {
+                pressedPoints[e.TouchPoint.Id] = new Point((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY);
                 foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
                     screenParts[id].Move(e.TouchPoint);
             }
@@ -56,13 +59,19 @@ namespace TetriClimber
         {
             if (e.TouchPoint.IsFingerRecognized)
             {
+                pressedPoints.Add(e.TouchPoint.Id, new Point((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY));
                 foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
                     if (screenParts[id].boundaries.Contains((int)e.TouchPoint.CenterX, (int)e.TouchPoint.CenterY))
                         screenParts[id].Down(e.TouchPoint);
             }
-            if (e.TouchPoint.IsTagRecognized)
+            else if (e.TouchPoint.IsTagRecognized)
             {
                 TagManager.Instance.addTag(e.TouchPoint);
+            }
+            else
+            {
+                TagManager.Instance.addBlob(e.TouchPoint);
+                Console.WriteLine("Blob");
             }
         }
 
@@ -70,8 +79,13 @@ namespace TetriClimber
         {
             if (e.TouchPoint.IsFingerRecognized)
             {
+                pressedPoints.Remove(e.TouchPoint.Id);
                 foreach (EGameMode id in Enum.GetValues(typeof(EGameMode)))
                     screenParts[id].Up(e.TouchPoint);
+            }
+            else if (!e.TouchPoint.IsTagRecognized)
+            {
+                TagManager.Instance.removeBlob(e.TouchPoint);
             }
         }
 
@@ -93,5 +107,18 @@ namespace TetriClimber
 
         public bool hasTapEvent { get { return (!tapedPoint.Equals(Point.Zero)); } }
         //public Point PointTaped { get { return tapedPoint; } }
+
+        public bool hasPressedPoints()
+        {
+            return (pressedPoints.Count > 0);
+        }
+
+        public bool rectIsPressed(Rectangle r)
+        {
+            foreach (KeyValuePair<int, Point> p in pressedPoints)
+                if (r.Contains(p.Value))
+                    return true;
+            return false;
+        }
     }
 }

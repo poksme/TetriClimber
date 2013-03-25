@@ -68,6 +68,7 @@ namespace TetriClimber
                 {
                     App.UserInput.reset();
                     handler(gs.Value);
+                    SurfaceKeyboard.IsVisible = false;
                     cur = TimeSpan.Zero;
                 }
             }

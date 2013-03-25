@@ -21,6 +21,7 @@ namespace TetriClimber
         private Dictionary<Climby.EState, Action<GameTime>> actions;
         private float rotation;
         private float speed;
+        private float influence;
         private Rectangle actualPosition;
         private Rectangle deadZone;
         private CoordHelper.EProfile playerType;
@@ -50,7 +51,7 @@ namespace TetriClimber
             direction = EDirection.RIGHT;
             rotation = 0f;
             setSpeedFromLevel(0);
-            //speed = 0.00002f / 6;
+            influence = 1f;
             minHeight = (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize);
             oldMinHeight = minHeight;
         }
@@ -73,19 +74,19 @@ namespace TetriClimber
         private void fall(GameTime gameTime)
         {
             if (direction == EDirection.LEFT)
-                rotation -= 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
+                rotation -= 0.09f * (speed * influence) * gameTime.ElapsedGameTime.Ticks;
             else
-                rotation += 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
-            pos.Y += speed * gameTime.ElapsedGameTime.Ticks;
+                rotation += 0.09f * (speed * influence) * gameTime.ElapsedGameTime.Ticks;
+            pos.Y += (speed * influence) * gameTime.ElapsedGameTime.Ticks;
         }
 
         private void climb(GameTime gameTime)
         {
             if (direction == EDirection.LEFT)
-                rotation -= 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
+                rotation -= 0.09f * (speed * influence) * gameTime.ElapsedGameTime.Ticks;
             else
-                rotation += 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
-            pos.Y -= speed * gameTime.ElapsedGameTime.Ticks;
+                rotation += 0.09f * (speed * influence) * gameTime.ElapsedGameTime.Ticks;
+            pos.Y -= (speed * influence) * gameTime.ElapsedGameTime.Ticks;
             if (minHeight > (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize))
                 minHeight = (int)((pos.Y - Constants.Measures.upBoardMargin) / Constants.Measures.blockSize);
         }   
@@ -98,13 +99,13 @@ namespace TetriClimber
         {
             if (direction == EDirection.LEFT)
             {
-                pos.X -= speed * gameTime.ElapsedGameTime.Ticks;
-                rotation -= 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
+                pos.X -= (speed * influence) * gameTime.ElapsedGameTime.Ticks;
+                rotation -= 0.09f * (speed * influence) * gameTime.ElapsedGameTime.Ticks;
             }
             else
             {
-                rotation += 0.09f * speed * gameTime.ElapsedGameTime.Ticks;
-                pos.X += speed * gameTime.ElapsedGameTime.Ticks;
+                rotation += 0.09f * (speed * influence) * gameTime.ElapsedGameTime.Ticks;
+                pos.X += (speed * influence) * gameTime.ElapsedGameTime.Ticks;
             }
         }
 
@@ -142,6 +143,16 @@ namespace TetriClimber
             speed = (3 +  l * 1.2f) / 1000000f;
         }
 
+        public void setInfluence(float p)
+        {
+            if ((direction == EDirection.LEFT && p < 0)  || (direction == EDirection.RIGHT && p > 0))
+                influence = 2f;
+            else if ((direction == EDirection.LEFT && p > 0) || (direction == EDirection.RIGHT && p < 0))
+                influence = 0.5f;
+            else
+                influence = 1f;
+        }
+
         public int          getIntOrt()     { return direction == EDirection.LEFT ? -1 : 1; }
         public Rectangle    ActualPosition  { get { return actualPosition; }    set { actualPosition = value; } }
         public Vector2      Pos             { get { return pos; }               set { pos = value; } }
@@ -150,18 +161,6 @@ namespace TetriClimber
         public float        Speed           { get { return speed; }             set { speed = value; } }
         public Rectangle DeadZone           { get { deadZone.X = (int)pos.X + (int)(Constants.Measures.blockSize / 3); deadZone.Y = (int)pos.Y + (int)(Constants.Measures.blockSize / 3); return deadZone; } }
         public int MinHeight                { get { return minHeight; } }
-        public int OldMinHeight             { get { return oldMinHeight; } }
-
-        //public bool isUnderBoard            { get { return (pos.Y - Constants.Measures.blockSize > Constants.Measures.upBoardMargin + Constants.Measures.boardHeight - Constants.Measures.blockSize); } }
-
-        //public void stepUp()
-        //{
-        //    pos.Y -= Constants.Measures.blockSize;
-        //}
-
-        //public bool overLap(Board board)
-        //{
-        //    return (board.getRect(new Point((int)((pos.X - CoordHelper.Instance.getLeftMargin(playerType)) / Constants.Measures.blockSize),(int)(Constants.Measures.boardBlockHeight - 1)))).Intersects(this.deadZone);
-        //}
+        public int OldMinHeight             { get { return oldMinHeight; } } 
     }
 }

@@ -46,6 +46,7 @@ namespace TetriClimber
                     player1.leftShift();
                 if (App.UserInput.isPressed(AUserInput.EInputKeys.SPACE_BAR, AUserInput.EGameMode.SOLO))
                     player1.dropDown();
+                player1.addInfluence(control.leftSpeed + control.rightSpeed);
                 player1.Update(gameTime);
             }
             else

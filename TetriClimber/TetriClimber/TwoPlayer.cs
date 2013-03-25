@@ -46,6 +46,7 @@ namespace TetriClimber
                     player1.leftShift();
                 if (App.UserInput.isPressed(AUserInput.EInputKeys.SPACE_BAR, AUserInput.EGameMode.MULTI1P))
                     player1.dropDown();
+                player1.addInfluence(control.leftSpeed + control.rightSpeed);
                 player1.Update(gameTime);
             }
             else
@@ -77,6 +78,7 @@ namespace TetriClimber
                     player2.leftShift();
                 if (App.UserInput.isPressed(AUserInput.EInputKeys.SPACE_BAR, AUserInput.EGameMode.MULTI2P))
                     player2.dropDown();
+                player2.addInfluence(control.leftSpeed + control.rightSpeed);
                 player2.Update(gameTime);
             }
             else
