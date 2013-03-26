@@ -105,14 +105,17 @@ namespace TetriClimber
             if (cur > lat)
             {
                 foreach (CoordHelper.EProfile e in Enum.GetValues(typeof(CoordHelper.EProfile)))
+                    if (nextBoardColor.ContainsKey(e))
+                    {
                         if (TagManager.Instance.getBlob(e))
                         {
                             Color c = Color.Multiply(nextBoardColor[e], 0.9f);
                             c.A = 255;
                             nextBoardColor[e] = c;
                         }
-                        else if (nextBoardColor.ContainsKey(e) && !nextBoardColor[e].Equals(Color.White))
+                        else if (!nextBoardColor[e].Equals(Color.White))
                             nextBoardColor[e] = Color.White;
+                    }
                 cur = TimeSpan.Zero;
             }
         }
