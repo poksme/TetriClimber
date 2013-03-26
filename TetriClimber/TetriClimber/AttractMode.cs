@@ -23,27 +23,34 @@ namespace TetriClimber
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (App.UserInput is KeyboardInput)
-            {
-                foreach (AUserInput.EInputKeys ipt in Enum.GetValues(typeof(AUserInput.EInputKeys)))
-                    if (App.UserInput.isPressed(ipt, AUserInput.EGameMode.SOLO))
-                    {
-                        ModeManager.Instance.TryChangeMode(ModeManager.EMode.GAME_MODE);
-                        return;
-                    }
-            }
-            else
-            {
-                if ((App.UserInput as TouchInput).hasTapEvent)
-                {
-                    ModeManager.Instance.TryChangeMode(ModeManager.EMode.GAME_MODE);
-                    return;
-                }
-            }
+            // // PLACED IN SCENES
+            //if (App.UserInput is KeyboardInput)
+            //{
+            //    foreach (AUserInput.EInputKeys ipt in Enum.GetValues(typeof(AUserInput.EInputKeys)))
+            //        if (App.UserInput.isPressed(ipt, AUserInput.EGameMode.SOLO))
+            //        {
+            //            ModeManager.Instance.TryChangeMode(ModeManager.EMode.GAME_MODE);
+            //            return;
+            //        }
+            //}
+            //else
+            //{
+            //    if ((App.UserInput as TouchInput).hasTapEvent)
+            //    {
+            //        ModeManager.Instance.TryChangeMode(ModeManager.EMode.GAME_MODE);
+            //        return;
+            //    }
+            //}
             if (!SceneManager.Instance.HasScene(SceneManager.EScene.TITLE) &&
                 !SceneManager.Instance.HasScene(SceneManager.EScene.TUTO) &&
                 !SceneManager.Instance.HasScene(SceneManager.EScene.LEADER_BOARD))
-                SceneManager.Instance.requestAddScene(SceneManager.EScene.TITLE, new TitleScene());
+            {
+                if ((ModeManager.Instance.getArguments() is SceneManager.EScene) && (SceneManager.EScene)(ModeManager.Instance.getArguments()) == SceneManager.EScene.TUTO)
+                    SceneManager.Instance.requestAddScene(SceneManager.EScene.TUTO, new TutoScene());
+                else
+                    SceneManager.Instance.requestAddScene(SceneManager.EScene.TITLE, new TitleScene());
+
+            }
             SceneManager.Instance.Update(gameTime);
         }
 

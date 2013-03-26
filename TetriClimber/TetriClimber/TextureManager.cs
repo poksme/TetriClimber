@@ -10,7 +10,7 @@ namespace TetriClimber
 {
     class TextureManager
     {
-        public enum ETexture {TETRIMINO, RECTANGLE, BLUE_SQUARE, GREEN_CROSS, GREEN_SQUARE, ORANGE_TRIANGLE, PINK_CROSS, VIOLET_HEXAGONE, YELLOW_LINES};
+        public enum ETexture { TETRIMINO, RECTANGLE, BLUE_SQUARE, GREEN_CROSS, GREEN_SQUARE, ORANGE_TRIANGLE, PINK_CROSS, VIOLET_HEXAGONE, YELLOW_LINES, TUTORIAL_P1, TUTORIAL_P2, TUTORIAL_P3, LOGO };
         private Dictionary<ETexture, Texture2D> textures = null;
         private static TextureManager instance = null;
 
@@ -25,6 +25,10 @@ namespace TetriClimber
             textures.Add(ETexture.PINK_CROSS, App.ContentManager.Load<Texture2D>("pink_cross"));
             textures.Add(ETexture.VIOLET_HEXAGONE, App.ContentManager.Load<Texture2D>("violet_hexagone"));
             textures.Add(ETexture.YELLOW_LINES, App.ContentManager.Load<Texture2D>("yellow_lines"));
+            textures.Add(ETexture.TUTORIAL_P1, App.ContentManager.Load<Texture2D>("tutorialPage1"));
+            textures.Add(ETexture.TUTORIAL_P2, App.ContentManager.Load<Texture2D>("tutorialPage2"));
+            textures.Add(ETexture.TUTORIAL_P3, App.ContentManager.Load<Texture2D>("tutorialPage3"));
+            textures.Add(ETexture.LOGO, App.ContentManager.Load<Texture2D>("logo1001_402"));
             #region COLOR FILL TEXTURE
             Texture2D t = new Texture2D(App.Game.GraphicsDevice, 1, 1);
             t.SetData(new[] { Color.White });

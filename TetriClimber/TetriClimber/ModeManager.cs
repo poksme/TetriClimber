@@ -18,6 +18,7 @@ namespace TetriClimber
         private EMode curMode;
         private EMode nextMode;
         private static ModeManager instance = null;
+        private object arg = null;
 
         private ModeManager()
             : base(App.Game)
@@ -59,14 +60,22 @@ namespace TetriClimber
                 modes[curMode].Update(gameTime); // DONT UPDATE
         }
 
-        public bool TryChangeMode(EMode e) // TRY TO CHANGE MODE BUT MAY FAIL
+        public bool TryChangeMode(EMode e, Object data = null) // TRY TO CHANGE MODE BUT MAY FAIL
         {
             if (curMode == nextMode) // NO RUNNING TRANSITIONS
             {
                 nextMode = e;
+                arg = data;
                 return true;
             }
             return false; // THERE IS ALREADY A RUNNING TRANSITION
+        }
+
+        public object getArguments()
+        {
+            if (curMode == nextMode)
+                return arg;
+            return null;
         }
     }
 }

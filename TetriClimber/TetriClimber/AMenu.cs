@@ -8,6 +8,12 @@ namespace TetriClimber
 {
     public class AMenu : DrawableGameComponent
     {
+        public enum MenuType
+        {
+            MAIN_MENU,
+            UNKNOWN
+        };
+        public MenuType mt { get; private set; }
         protected TimeSpan lat = new TimeSpan(10000000 / 2);
         protected TimeSpan cur = new TimeSpan(0);
         protected TimeSpan turnLat = new TimeSpan(10000000 / 10);
@@ -17,9 +23,10 @@ namespace TetriClimber
         public float Width { get; protected set; }
         public Vector2 Pos { get { return pos; }}
 
-        public AMenu():base(App.Game)
+        public AMenu(MenuType mt):base(App.Game)
         {
             pos = Vector2.Zero;
+            this.mt = mt;
         }
 
         public void setButtons(List<AButton> btns)

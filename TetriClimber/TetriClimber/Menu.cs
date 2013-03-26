@@ -8,8 +8,8 @@ namespace TetriClimber
 {
     public class Menu : AMenu
     {
-        public Menu()
-            : base()
+        public Menu(MenuType mt = MenuType.UNKNOWN)
+            : base(mt)
         {
         }
 

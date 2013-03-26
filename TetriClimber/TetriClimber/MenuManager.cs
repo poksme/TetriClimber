@@ -38,14 +38,22 @@ namespace TetriClimber
         {
             base.Draw(gameTime);
             if (menus.Count > 0)
+            {
+                if (menus.First().mt == AMenu.MenuType.MAIN_MENU)
+                    SpriteManager.Instance.drawAtPos(SpriteManager.ESprite.LOGO, new Vector2((1920 - 1001) / 2, 70));
                 menus.First().Draw(gameTime);
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             if (menus.Count > 0)
+            {
+                if (menus.First().mt == AMenu.MenuType.MAIN_MENU)
+                    SoundManager.Instance.stop(SoundManager.EChannel.BGM);
                 menus.First().Update(gameTime);
+            }
         }
 
         public void Flush()
@@ -56,13 +64,14 @@ namespace TetriClimber
         #region CreateMenu
         public void CreateMainMenu()
         {
-            Menu main = new Menu();
+            Menu main = new Menu(AMenu.MenuType.MAIN_MENU);
             main.setButtons(new List<AButton>()
                 {
-                    new TextButton(main, "Solo", new Vector2(0, 0), MenuManager.Instance.runScene, SceneManager.EScene.SOLO),
-                    new TextButton(main, "Multi", new Vector2(0, 1 * 100), MenuManager.Instance.runScene, SceneManager.EScene.MULTI),
-                    new TextButton(main, "Options", new Vector2(0, 2 * 100), MenuManager.Instance.launchMenu, EMenu.OPTIONS),
-                    new TextButton(main, "Quit", new Vector2(0, 3 *100), MenuManager.Instance.Quit)
+                    new TextButton(main, "Solo", new Vector2(0, 4 * 100 + 50), MenuManager.Instance.runScene, SceneManager.EScene.SOLO),
+                    new TextButton(main, "Multi", new Vector2(0, 5 * 100 + 50), MenuManager.Instance.runScene, SceneManager.EScene.MULTI),
+                    new TextButton(main, "Options", new Vector2(0, 6 * 100 + 50), MenuManager.Instance.launchMenu, EMenu.OPTIONS),
+                    new TextButton(main, "Tutorial", new Vector2(0, 7 * 100 + 50), MenuManager.Instance.changeMode),
+                    new TextButton(main, "Quit", new Vector2(0, 8 * 100 + 50), MenuManager.Instance.Quit)
                 });
             main.Center();
             menus.Push(main);
@@ -174,6 +183,11 @@ namespace TetriClimber
             SceneManager.Instance.addScene((SceneManager.EScene)data);
             // if one player
             SoundManager.Instance.play(SoundManager.EChannel.BGM, SoundManager.ESound.BGM);
+        }
+
+        public void changeMode(Object data = null)
+        {
+            ModeManager.Instance.TryChangeMode(ModeManager.EMode.ATTRACT_MODE, SceneManager.EScene.TUTO);
         }
 
         public void Quit(Object data = null)

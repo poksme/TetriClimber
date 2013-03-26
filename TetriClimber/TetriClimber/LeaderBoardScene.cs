@@ -39,6 +39,25 @@ namespace TetriClimber
         {
             base.Update(gameTime);
             displayTime -= gameTime.ElapsedGameTime;
+            //
+            if (App.UserInput is KeyboardInput)
+            {
+                foreach (AUserInput.EInputKeys ipt in Enum.GetValues(typeof(AUserInput.EInputKeys)))
+                    if (App.UserInput.isPressed(ipt, AUserInput.EGameMode.SOLO))
+                    {
+                        ModeManager.Instance.TryChangeMode(ModeManager.EMode.GAME_MODE);
+                        return;
+                    }
+            }
+            else
+            {
+                if ((App.UserInput as TouchInput).hasTapEvent)
+                {
+                    ModeManager.Instance.TryChangeMode(ModeManager.EMode.GAME_MODE);
+                    return;
+                }
+            }
+            //
             if (displayTime <= TimeSpan.Zero)
             {
                 SceneManager.Instance.requestRemoveScene(SceneManager.EScene.LEADER_BOARD);

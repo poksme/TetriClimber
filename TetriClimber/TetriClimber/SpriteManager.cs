@@ -9,7 +9,7 @@ namespace TetriClimber
 {
     public class SpriteManager
     {
-        public enum ESprite { Z, T, Q, S, L, P, O, PAUSE, LEFT, RIGHT, CLIMBYRED, CLIMBYBLUE, LEFT_TEXT_BUTTON, MIDDLE_TEXT_BUTTON, RIGHT_TEXT_BUTTON, NONE };
+        public enum ESprite { Z, T, Q, S, L, P, O, PAUSE, LEFT, RIGHT, CLIMBYRED, CLIMBYBLUE, LEFT_TEXT_BUTTON, MIDDLE_TEXT_BUTTON, RIGHT_TEXT_BUTTON, TUTORIAL_P1, TUTORIAL_P2, TUTORIAL_P3, LOGO, NONE };
         private Dictionary<ESprite, KeyValuePair<Rectangle, TextureManager.ETexture>> sprites = null;
         private TextureManager textureManager = null;
         private static SpriteManager instance = null;
@@ -34,6 +34,10 @@ namespace TetriClimber
             sprites.Add(ESprite.LEFT_TEXT_BUTTON, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(5 * 115, 115, 35, 115), TextureManager.ETexture.TETRIMINO));
             sprites.Add(ESprite.MIDDLE_TEXT_BUTTON, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(6 * 115, 2* 115, 53, 115), TextureManager.ETexture.TETRIMINO));
             sprites.Add(ESprite.RIGHT_TEXT_BUTTON, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(6 * 115, 115, 35, 115), TextureManager.ETexture.TETRIMINO));
+            sprites.Add(ESprite.TUTORIAL_P1, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(0, 0, 1920, 1080), TextureManager.ETexture.TUTORIAL_P1));
+            sprites.Add(ESprite.TUTORIAL_P2, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(0, 0, 1920, 1080), TextureManager.ETexture.TUTORIAL_P2));
+            sprites.Add(ESprite.TUTORIAL_P3, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(0, 0, 1920, 1080), TextureManager.ETexture.TUTORIAL_P3));
+            sprites.Add(ESprite.LOGO, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(0, 0, 1001, 402), TextureManager.ETexture.LOGO));
             sprites.Add(ESprite.NONE, new KeyValuePair<Rectangle, TextureManager.ETexture>(new Rectangle(690, 0, 115, 115), TextureManager.ETexture.TETRIMINO));
             #endregion
         }
